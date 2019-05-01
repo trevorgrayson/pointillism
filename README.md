@@ -32,3 +32,4 @@ e.g. `http://your-host.com/{username}/{project}/{filepath}.{format}` will render
 `http://pointillism.necessaryeval.com/trevorgrayson/pointillism/master/example.dot`
 
 ![example.dot](http://pointillism.necessaryeval.com/trevorgrayson/pointillism/master/example.dot)
+Embedding [DOT](https://en.wikipedia.org/wiki/DOT_(graph_description_language)) files as a Service.
