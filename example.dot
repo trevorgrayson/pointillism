@@ -1,0 +1,5 @@
+digraph Example {
+  A -> {B, C}
+  C -> D
+  B -> {1, 2, 3}
+}
