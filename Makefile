@@ -7,3 +7,7 @@ server:
 
 clean:
 	find . -name "*.pyc" -delete
+
+deploy:
+	# npm install serverless
+	serverless deploy
