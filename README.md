@@ -15,3 +15,9 @@ e.g. `http://your-host.com/{username}/{project}/{filepath}` will render that dot
 HOST=https://raw.githubusercontent.com make server
 ```
 
+
+## Hosted
+
+`http://pointillism.necessaryeval.com/trevorgrayson/pointillism/master/example.dot`
+
+![example.dot](http://pointillism.necessaryeval.com/trevorgrayson/pointillism/master/example.dot)
