@@ -1,7 +1,10 @@
+import os
 import json
 
 import renderer
 
+
+HOST = os.environ['HOST']
 
 def render(event, context):
     path = event['pathParameters']['path']

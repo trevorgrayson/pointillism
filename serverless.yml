@@ -22,13 +22,20 @@ provider:
 #            - "Ref" : "ServerlessDeploymentBucket"
 #            - "/*"
 
-environment:
-  HOST: https://raw.githubusercontent.com
+  environment:
+    HOST: https://raw.githubusercontent.com
 
 # you can add packaging information here
 package:
   include:
     - renderer.py
+    - requests
+    - graphviz
+    - chardet
+    - certifi
+    - urllib3
+    - idna
+
 
 functions:
   render:
