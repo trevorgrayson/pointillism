@@ -19,5 +19,7 @@ def render_url(path, format="png"):
                         mimetype="image/{}".format(format))
 
     except IOError as err:
-        return err.message, 400
+        return str(err), 400
 
+if __name__ == "__main__":
+    app.run(host="0.0.0.0")

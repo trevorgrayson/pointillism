@@ -1,5 +1,5 @@
 # pointillism
-Embedding [DOT](https://en.wikipedia.org/wiki/DOT_(graph_description_language)) files as a Service.
+[DOT](https://en.wikipedia.org/wiki/DOT_(graph_description_language)) file rendering/embedding as a Service.
 
 
 ## serverless
@@ -13,6 +13,12 @@ e.g. `http://your-host.com/{username}/{project}/{filepath}` will render that dot
 
 ```
 HOST=https://raw.githubusercontent.com make server
+```
+
+### Docker
+
+```
+  docker run tgrayson/pointillism
 ```
 
 
