@@ -17,6 +17,10 @@ HOST=https://raw.githubusercontent.com make server
 
 ### Docker
 
+You MUST postpend a 3 character `.{format}`.  (e.g. svg, png, jpg)
+
+e.g. `http://your-host.com/{username}/{project}/{filepath}.{format}` will render that dotfile as a PNG.
+
 ```
   docker run tgrayson/pointillism
 ```

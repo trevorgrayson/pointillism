@@ -24,6 +24,7 @@ provider:
 
   environment:
     HOST: https://raw.githubusercontent.com
+    PATH: .
 
 # you can add packaging information here
 package:
@@ -35,6 +36,7 @@ package:
     - certifi
     - urllib3
     - idna
+    - dot
 
 
 functions:
