@@ -35,10 +35,10 @@ def get_mime(format):
 def welcome():
     return "Welcome.  Configured to:{}".format(HOST)
 
-@app.route("/.<path:path>\.<regex(\"[a-zA-Z0-9]{3}\"):format>")
+@app.route("/.<path:path>\.<regex(\"[a-zA-Z0-9]{3}\"):fileFormat>\.<regex(\"[a-zA-Z0-9]{3}\"):format>")
 def render_url_with_format(path):
-    if format == 'dot':
-      render_url(".".join((path, "dot")))
+    if format == 'dot': # no filename, use default
+      render_url(".".join((path, fileFormat, "png")))
 
 def response(path, format):
     return Response(render(HOST, path, format), 
@@ -48,6 +48,10 @@ def response(path, format):
 def render_url(path):
     format = path[len(path)-3:]
     path = path[:len(path)-4]
+
+    if format in ["dot", "gv"]:
+        path = ".".join((path, format))
+        format = "png"
 
     try:
         return response(path, format)
