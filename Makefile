@@ -5,6 +5,8 @@ compile:
 
 clean:
 	find . -name "*.pyc" -delete
+	docker rm pointillism
+	docker rmi tgrayson/pointillism
 
 server:
 	test -n "$(HOST)" # set $$HOST variable
