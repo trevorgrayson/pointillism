@@ -1,4 +1,4 @@
-IMAGE := tgrayson/cribnot.es
+IMAGE := tgrayson/pointillism
 
 compile:
 	pip install -r requirements.txt
