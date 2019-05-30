@@ -18,7 +18,7 @@ HOST=https://raw.githubusercontent.com make server
 
 ### Docker
 
-You MUST postpend a 3 character `.{format}`.  (e.g. svg, png, jpg)
+You MUST append a 3 character `.{format}`.  (e.g. svg, png, jpg)
 
 e.g. `http://your-host.com/{username}/{project}/{filepath}.{format}` will render that dotfile as a PNG.
 
@@ -29,7 +29,7 @@ e.g. `http://your-host.com/{username}/{project}/{filepath}.{format}` will render
 
 ## Hosted
 
-`http://pointillism.necessaryeval.com/trevorgrayson/pointillism/master/example.dot`
+`http://pointillism.necessaryeval.com/trevorgrayson/pointillism/master/example.dot.svg`
 
-![example.dot](http://pointillism.necessaryeval.com/trevorgrayson/pointillism/master/example.dot)
+![example.dot](http://pointillism.necessaryeval.com/trevorgrayson/pointillism/master/example.dot.svg)
 Embedding [DOT](https://en.wikipedia.org/wiki/DOT_(graph_description_language)) files as a Service.
