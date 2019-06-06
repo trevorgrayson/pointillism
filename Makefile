@@ -1,4 +1,5 @@
 IMAGE := tgrayson/pointillism
+VERSION_NEW := $(shell ./bin/version_next)
 
 compile:
 	pip install -r requirements.txt
@@ -22,3 +23,7 @@ imagePush:
 deploy:
 	# npm install serverless
 	serverless deploy
+
+versionBump:
+	git tag $(VERSION_NEW)
+	git push --tags
