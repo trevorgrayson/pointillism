@@ -22,3 +22,7 @@ imagePush:
 deploy:
 	# npm install serverless
 	serverless deploy
+
+versionBump:
+	git tag `git tag -l v[0-9]* | sort | head -n1 |  awk '/v/{split($NF,v,/[.]/); $NF=v[1]"."v[2]"."++v[3]}1'`
+	git push --tags
