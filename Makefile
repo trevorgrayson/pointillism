@@ -25,5 +25,6 @@ deploy:
 	serverless deploy
 
 versionBump:
+	git pull --tags
 	git tag $(VERSION_NEW)
 	git push --tags
