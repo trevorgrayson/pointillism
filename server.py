@@ -55,7 +55,7 @@ def render_relative_path(path):
         format = "png"
 
     try:
-        return response(path, format)
+        return response(path, format, host=host)
 
     except IOError as err:
         return str(err), 400
