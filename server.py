@@ -1,8 +1,9 @@
 import os
-from flask import Flask
+from flask import Flask, request
 import werkzeug
 from werkzeug.wrappers import Response
 from renderer import render
+from urllib.parse import urlparse
 
 HOST = os.environ['HOST']
 ENV = os.environ.get('ENV', "PROD")
@@ -40,9 +41,32 @@ def render_url_with_format(path):
     if format == 'dot': # no filename, use default
       render_url(".".join((path, fileFormat, "png")))
 
-def response(path, format):
-    return Response(render(HOST, path, format), 
+def response(path, format, host=HOST):
+    return Response(render(host, path, format), 
                     mimetype="image/{}".format(get_mime(format)))
+
+
+@app.route("/rel/<path:path>")
+def render_relative_path(path):
+    """ Find the path on the referring host's server """
+    format = path[len(path)-3:]
+    path = path[:len(path)-4]
+    referer = request.headers.get('Referer')
+    if referer is None:
+        return "No referring URL.", 404
+
+    host = urlparse(referer).hostname
+
+    if format in ["dot", "gv"]:
+        path = ".".join((path, format))
+        format = "png"
+
+    try:
+        return response(path, format)
+
+    except IOError as err:
+        return str(err), 400
+
 
 @app.route("/<path:path>")
 def render_url(path):
