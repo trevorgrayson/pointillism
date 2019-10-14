@@ -31,31 +31,24 @@ MIME_MAP = {
 def get_mime(format):
   return MIME_MAP.get(format, format)
   
-
-@app.route("/")
-def welcome():
-    return "Welcome.  Configured to:{}".format(HOST)
-
-@app.route("/.<path:path>\.<regex(\"[a-zA-Z0-9]{3}\"):fileFormat>\.<regex(\"[a-zA-Z0-9]{3}\"):format>")
-def render_url_with_format(path):
-    if format == 'dot': # no filename, use default
-      render_url(".".join((path, fileFormat, "png")))
-
 def response(path, format, host=HOST):
     return Response(render(host, path, format), 
                     mimetype="image/{}".format(get_mime(format)))
 
+@app.route("/")
+def welcome():
+    return "Welcome.  Configured to:{}".format(HOST)
 
 @app.route("/rel/<path:path>")
 def render_relative_path(path):
     """ Find the path on the referring host's server """
     format = path[len(path)-3:]
     path = path[:len(path)-4]
-    referer = request.referrer or None
+    referrer = request.referrer or None
     if referer is None:
         return "No referring URL.", 404
 
-    host = urlparse(referer).hostname
+    host = urlparse(referrer).hostname
 
     if format in ["dot", "gv"]:
         path = ".".join((path, format))
@@ -67,6 +60,10 @@ def render_relative_path(path):
     except IOError as err:
         return str(err), 400
 
+@app.route("/.<path:path>\.<regex(\"[a-zA-Z0-9]{3}\"):fileFormat>\.<regex(\"[a-zA-Z0-9]{3}\"):format>")
+def render_url_with_format(path):
+    if format == 'dot': # no filename, use default
+      render_url(".".join((path, fileFormat, "png")))
 
 @app.route("/<path:path>")
 def render_url(path):
@@ -84,4 +81,4 @@ def render_url(path):
         return str(err), 400
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5001, debug=IS_DEV) 
+    app.run(host='0.0.0.0', port=5001, debug=IS_DEV) # port doesn't work?
