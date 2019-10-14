@@ -51,7 +51,7 @@ def render_relative_path(path):
     """ Find the path on the referring host's server """
     format = path[len(path)-3:]
     path = path[:len(path)-4]
-    referer = request.headers.get('Referer')
+    referer = request.referrer or None
     if referer is None:
         return "No referring URL.", 404
 
