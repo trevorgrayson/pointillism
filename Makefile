@@ -1,8 +1,10 @@
 IMAGE := tgrayson/pointillism
 VERSION_NEW := $(shell ./bin/version_next)
 
+PYTHON := python
+
 compile:
-	pip install -r requirements.txt
+	$(PYTHON) -m pip install -r requirements.txt
 
 clean:
 	find . -name "*.pyc" -delete
