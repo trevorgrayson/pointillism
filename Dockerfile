@@ -1,10 +1,10 @@
-FROM python:latest
+FROM python:3.7-alpine
 
 ENV HOST https://raw.githubusercontent.com 
 
 EXPOSE 5001
 
-RUN apt-get update && apt-get install -y graphviz
+RUN apk add --update graphviz ttf-freefont
 
 ADD *.py /
 ADD requirements.txt /
