@@ -1,7 +1,10 @@
 IMAGE := tgrayson/pointillism
 VERSION_NEW := $(shell ./bin/version_next)
 
+FLASK_RUN_PORT?=5000
 PYTHON := python
+
+export FLASK_RUN_PORT
 
 compile:
 	$(PYTHON) -m pip install -r requirements.txt
