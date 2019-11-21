@@ -63,7 +63,7 @@ def render_relative_path(path):
 @app.route("/crib/.<path:path>\.<regex(\"[a-zA-Z0-9]{3}\"):fileFormat>\.<regex(\"[a-zA-Z0-9]{3}\"):format>")
 def render_crib_with_format(path):
     if format == 'dot': # no filename, use default
-      render_url(".".join((path, fileFormat, "png")))
+      render_crib(".".join((path, fileFormat, "png")))
 
 @app.route("/crib/<path:path>")
 def render_crib(path):
@@ -75,7 +75,7 @@ def render_crib(path):
         format = "png"
 
     try:
-        return response(path, format)
+        return response(path, format, host="https://cribnot.es")
 
     except IOError as err:
         return str(err), 400
