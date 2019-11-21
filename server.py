@@ -61,7 +61,7 @@ def render_relative_path(path):
         return str(err), 400
 
 @app.route("/crib/.<path:path>\.<regex(\"[a-zA-Z0-9]{3}\"):fileFormat>\.<regex(\"[a-zA-Z0-9]{3}\"):format>")
-def render_crib(path):
+def render_crib_with_format(path):
     if format == 'dot': # no filename, use default
       render_url(".".join((path, fileFormat, "png")))
 
