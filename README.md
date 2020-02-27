@@ -26,6 +26,11 @@ e.g. `http://your-host.com/{username}/{project}/{filepath}.{format}` will render
   docker run tgrayson/pointillism
 ```
 
+## cli
+
+```
+python -m point example.dot
+```
 
 ## Hosted
 
