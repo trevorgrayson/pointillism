@@ -2,23 +2,26 @@ IMAGE := tgrayson/pointillism
 VERSION_NEW := $(shell ./bin/version_next)
 
 FLASK_RUN_PORT?=5000
-PYTHON := python
+PYTHON := python3
 VENV = .venv
+HOST ?= https://raw.githubusercontent.com
 
 export FLASK_RUN_PORT
-export PYTHONPATH=.:($VENV)
+export PYTHONPATH=.:$(VENV)
 
-compile:
+server: compile
+	@test -n "$(HOST)" # set $$HOST variable
+	FLASK_APP=server.py $(PYTHON) -m flask run
+
+compile: $(VENV)
+$(VENV): requirements.txt
 	$(PYTHON) -m pip install -t $(VENV) -r requirements.txt
+	touch $(VENV)
 
 clean:
 	find . -name "*.pyc" -delete
-	docker rm pointillism
-	docker rmi tgrayson/pointillism
-
-server:
-	test -n "$(HOST)" # set $$HOST variable
-	FLASK_APP=server.py flask run
+	# docker rm pointillism
+	# docker rmi tgrayson/pointillism
 
 image: 
 	docker build -t $(IMAGE) .
