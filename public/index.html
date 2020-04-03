@@ -67,34 +67,34 @@
     <br/>
     <br/>
     <div id="paypal-button-container"></div>
-<script src="https://www.paypal.com/sdk/js?client-id=AaJ4Lpt2noqfdOA69GdoF-yRUlCn0rD-JK0TbOQ6fg9C4kU53K03mrvwB4Z45EhAFRUtZtDXY3nHySmX&currency=USD" data-sdk-integration-source="button-factory"></script>
-<script>
-  paypal.Buttons({
-      style: {
-          shape: 'rect',
-          color: 'blue',
-          layout: 'horizontal',
-          label: 'paypal',
+    <script src="https://www.paypal.com/sdk/js?client-id=$paypal_id&currency=USD" data-sdk-integration-source="button-factory"></script>
+    <script>
+      paypal.Buttons({
+          style: {
+              shape: 'rect',
+              color: 'blue',
+              layout: 'horizontal',
+              label: 'paypal',
 
-      },
-      createOrder: function(data, actions) {
-          return actions.order.create({
-              purchase_units: [{
-                  amount: {
-                      value: '5'
+          },
+          createOrder: function(data, actions) {
+              return actions.order.create({
+                  purchase_units: [{
+                      amount: {
+                          value: '5'
+                      }
+                  }],
+                  application_context: {
+                      shipping_preference: "NO_SHIPPING"
                   }
-              }],
-              application_context: {
-                  shipping_preference: "NO_SHIPPING"
-              }
-          });
-      },
-      onApprove: function(data, actions) {
-          return actions.order.capture().then(function(details) {
-              alert('Thank you for your support, ' + details.payer.name.given_name + '!');
-          });
-      }
-  }).render('#paypal-button-container');
-</script>
+              });
+          },
+          onApprove: function(data, actions) {
+              return actions.order.capture().then(function(details) {
+                  alert('Thank you for your support, ' + details.payer.name.given_name + '!');
+              });
+          }
+      }).render('#paypal-button-container');
+    </script>
   </body>
 </html>
