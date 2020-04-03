@@ -1,9 +1,10 @@
 from flask import Flask, request
+from string import Template
 import werkzeug
 from werkzeug.wrappers import Response
 from renderer import render
 from urllib.parse import urlparse
-from config import HOST, ENV, STATIC_DIR
+from config import DOMAIN, HOST, ENV, STATIC_DIR, PAYPAL_CLIENT_ID
 
 app = Flask(__name__)
 
@@ -35,7 +36,13 @@ def response(path, format, host=HOST):
 @app.route("/")
 def welcome():
     with open(STATIC_DIR + '/index.html', 'r') as fp:
-        return fp.read()
+        template = Template(fp.read())
+
+        return template.substitute(
+            host=HOST,
+            domain=DOMAIN,
+            paypal_id=PAYPAL_CLIENT_ID
+        )
 
 @app.route("/rel/<path:path>")
 def render_relative_path(path):
