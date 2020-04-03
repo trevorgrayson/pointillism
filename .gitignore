@@ -21,3 +21,4 @@ var/
 
 # Serverless directories
 .serverless
+.venv

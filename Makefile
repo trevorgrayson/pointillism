@@ -6,6 +6,7 @@ PYTHON := python3
 VENV = .venv
 HOST ?= https://raw.githubusercontent.com
 
+export HOST
 export FLASK_RUN_PORT
 export PYTHONPATH=.:$(VENV)
 

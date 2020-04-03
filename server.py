@@ -1,12 +1,9 @@
-import os
 from flask import Flask, request
 import werkzeug
 from werkzeug.wrappers import Response
 from renderer import render
 from urllib.parse import urlparse
-
-HOST = os.environ['HOST']
-ENV = os.environ.get('ENV', "PROD")
+from config import HOST, ENV, STATIC_DIR
 
 app = Flask(__name__)
 
@@ -37,7 +34,8 @@ def response(path, format, host=HOST):
 
 @app.route("/")
 def welcome():
-    return "Welcome.  Configured to:{}".format(HOST)
+    with open(STATIC_DIR + '/index.html', 'r') as fp:
+        return fp.read()
 
 @app.route("/rel/<path:path>")
 def render_relative_path(path):
