@@ -122,4 +122,4 @@ def render_url(path):
         return str(err), 400
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5001, debug=True) # port doesn't work?
+    app.run(host='0.0.0.0', port=5001, debug=IS_DEV) # port doesn't work?
