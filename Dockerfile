@@ -13,4 +13,4 @@ ADD public /srv/vhosts/pointillism/
 RUN pip install -r requirements.txt
 
 ENTRYPOINT ["python"]
-CMD ["server.py"]
+CMD ["server/__init__.py"]
