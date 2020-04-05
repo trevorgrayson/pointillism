@@ -27,11 +27,22 @@ MIME_MAP = {
 
 
 def get_mime(format):
-  return MIME_MAP.get(format, format)
+    return MIME_MAP.get(format, format)
   
-def response(path, format, host=HOST):
-    return Response(render(host, path, format), 
+
+def get_params(request):
+    params = {}
+
+    if 'token' in request.args:
+        params['token'] = request.args['token']
+
+    return params
+
+
+def response(path, format, host=HOST, **params):
+    return Response(render(host, path, format, **params), 
                     mimetype="image/{}".format(get_mime(format)))
+
 
 @app.route("/")
 def welcome():
@@ -43,6 +54,7 @@ def welcome():
             domain=DOMAIN,
             paypal_id=PAYPAL_CLIENT_ID
         )
+
 
 @app.route("/rel/<path:path>")
 def render_relative_path(path):
@@ -60,7 +72,7 @@ def render_relative_path(path):
         format = "png"
 
     try:
-        return response(path, format, host=host)
+        return response(path, format, host=host, **get_params(request))
 
     except IOError as err:
         return str(err), 400
@@ -100,7 +112,7 @@ def render_url(path):
         format = "png"
 
     try:
-        return response(path, format)
+        return response(path, format, **get_params(request))
 
     except IOError as err:
         return str(err), 400

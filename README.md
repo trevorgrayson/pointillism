@@ -3,6 +3,18 @@
 
 ![https://travis-ci.com/trevorgrayson/pointillism/](https://travis-ci.com/trevorgrayson/pointillism.svg?branch=master)
 
+## Making a request
+
+You MUST append a 3 character `.{format}`.  (e.g. svg, png, jpg)
+
+e.g. `http://pointillism.necessaryeval.com/{username}/{project}/{filepath}.{format}` will render that dotfile as a PNG.
+
+github's `token` parameter will also pass through if you put it in the query string
+
+```
+http://pointillism.necessaryeval.com/{username}/{project}/{filepath}.{format}?token=XYZ
+```
+
 ## serverless
 
 A serverless configuration is included, and presently points to `https://raw.githubusercontent.com`. Configured this way,
@@ -17,10 +29,6 @@ HOST=https://raw.githubusercontent.com make server
 ```
 
 ### Docker
-
-You MUST append a 3 character `.{format}`.  (e.g. svg, png, jpg)
-
-e.g. `http://your-host.com/{username}/{project}/{filepath}.{format}` will render that dotfile as a PNG.
 
 ```
   docker run tgrayson/pointillism

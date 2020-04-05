@@ -1,12 +1,20 @@
 import os
+import logging
 import requests
 from graphviz import Source
 
-def url(host, path):
-    return "{}/{}".format(host, path)
+logging.basicConfig(filename='pointillism.log',level=logging.DEBUG)
+LOG = logging.getLogger(__name__)
 
-def render(host, path, format="png"):
-    dot_url = url(host, path)
+
+def url(host, path, **params):
+    ps = "&".join([f"{k}={v}" for k, v in params.items()])
+    return "{}/{}?{}".format(host, path, ps) 
+
+
+def render(host, path, format="png", **params):
+    dot_url = url(host, path, **params)
+    LOG.debug(f"GET: {dot_url}")
     response = requests.get(dot_url)
 
     if response.status_code == 200:
