@@ -5,8 +5,10 @@ from werkzeug.wrappers import Response
 from renderer import render
 from urllib.parse import urlparse
 from config import DOMAIN, HOST, ENV, STATIC_DIR, PAYPAL_CLIENT_ID
+from server.githubauth import github_routes
 
 app = Flask(__name__)
+app.register_blueprint(github_routes, url_prefix='/github')
 
 ## Extract out
 from werkzeug.routing import BaseConverter
@@ -32,6 +34,8 @@ def get_mime(format):
 
 def get_params(request):
     params = {}
+
+    params['token'] = request.cookies.get('github_token')
 
     if 'token' in request.args:
         params['token'] = request.args['token']
@@ -118,4 +122,4 @@ def render_url(path):
         return str(err), 400
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5001, debug=IS_DEV) # port doesn't work?
+    app.run(host='0.0.0.0', port=5001, debug=True) # port doesn't work?
