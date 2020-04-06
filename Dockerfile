@@ -11,10 +11,10 @@ COPY *.py /
 COPY server /server
 COPY renderer /renderer
 COPY requirements.txt /
+COPY requirements /requirements
 COPY public /srv/vhosts/pointillism/
 
 RUN pip install -r requirements.txt
 
-RUN ls /
 ENTRYPOINT ["python"]
 CMD ["-m", "server"]
