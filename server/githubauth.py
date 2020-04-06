@@ -34,19 +34,19 @@ class GitHubAuth:
             client_secret=self.secret,
             code=code,
         )
-        print(f'{self.host}/login/oauth/access_token')
-        response = requests.post(f'{self.host}/login/oauth/access_token', json=params, headers=self.headers)
+        response = requests.post(f'{self.host}/login/oauth/access_token',
+                                 json=params, headers=self.headers)
 
         if response.status_code == 200:
-            token = response.text
-            return token
+            auth = response.json()
+            return auth
         else:
             raise Exception(f'Upstream service exception: {response.status_code}')
 
     @property
     def headers(self):
         return {
-            'Accepts': 'application/json'
+            'Accept': 'application/json'
         }
 
     @classmethod
@@ -89,11 +89,11 @@ def auth():
     if code is None:
         return 400, "missing github `code`"
     
-    token = client.auth_webhook(code, state)
+    auth = client.auth_webhook(code, state)
 
     # TODO redirect to where?
     response = make_response(redirect('/github'))
-    response.set_cookie(GITHUB_TOKEN, token)
+    response.set_cookie(GITHUB_TOKEN, auth['access_token'])
 
     return response
     # TODO if token in cookie, append to request
