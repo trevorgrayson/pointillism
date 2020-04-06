@@ -9,6 +9,7 @@ RUN apk add --update graphviz ttf-freefont
 
 COPY *.py /
 COPY server /server
+COPY renderer /renderer
 COPY requirements.txt /
 COPY public /srv/vhosts/pointillism/
 
