@@ -121,5 +121,5 @@ def render_url(path):
     except IOError as err:
         return str(err), 400
 
-if __name__ == '__main__':
+def run():
     app.run(host='0.0.0.0', port=5001, debug=IS_DEV) # port doesn't work?

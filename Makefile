@@ -12,7 +12,7 @@ export PYTHONPATH=.:$(VENV)
 
 server: compile
 	@test -n "$(HOST)" # set $$HOST variable
-	FLASK_APP=server.py $(PYTHON) -m flask run
+	$(PYTHON) -m server
 
 compile: $(VENV)
 $(VENV): requirements.txt

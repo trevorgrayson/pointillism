@@ -16,4 +16,4 @@ RUN pip install -r requirements.txt
 
 RUN ls /
 ENTRYPOINT ["python"]
-CMD ["server/__init__.py"]
+CMD ["-m", "server"]
