@@ -2,7 +2,7 @@ from flask import Flask, request
 from string import Template
 import werkzeug
 from werkzeug.wrappers import Response
-from renderer import render
+from renderer import render, Forbidden
 from urllib.parse import urlparse
 from config import DOMAIN, HOST, ENV, STATIC_DIR, PAYPAL_CLIENT_ID
 from server.githubauth import github_routes
@@ -44,8 +44,12 @@ def get_params(request):
 
 
 def response(path, format, host=HOST, **params):
-    return Response(render(host, path, format, **params), 
-                    mimetype="image/{}".format(get_mime(format)))
+    try:
+        return Response(render(host, path, format, **params), 
+                        mimetype="image/{}".format(get_mime(format)))
+    except Forbidden as err:
+        return str(err), 401
+    
 
 
 @app.route("/")

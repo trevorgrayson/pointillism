@@ -1,0 +1,23 @@
+digraph Example {
+  node[shape=rectangle]
+  splines=ortho
+  rankdir=BT
+
+  subgraph cluster_Github {
+    label = Github
+
+    README
+    DotFile
+    README -> Camu
+  }
+  Camu -> Pointillism
+
+  subgraph cluster_Pointillism {
+    label="Pointillism"
+    Pointillism
+  }
+  Pointillism -> DotFile
+
+  Users -> {README}
+  Users -> Pointillism
+}
