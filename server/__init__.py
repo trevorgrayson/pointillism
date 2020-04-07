@@ -47,10 +47,14 @@ def response(path, format, host=HOST, **params):
     try:
         return Response(render(host, path, format, **params), 
                         mimetype="image/{}".format(get_mime(format)))
+    except IOError as err:
+        with open(STATIC_DIR + '/images/pointillism-404.svg', 'r') as fp:
+            return Response(fp.read(), status=404,
+                            mimetype="image/svg+xml")
     except Forbidden as err:
         with open(STATIC_DIR + '/images/pointillism-401.svg', 'r') as fp:
             return Response(fp.read(), status=401,
-                            mimetype="image/{}".format(get_mime(format)))
+                            mimetype="image/svg+xml")
 
 
 @app.route("/")

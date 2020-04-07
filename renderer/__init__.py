@@ -6,6 +6,7 @@ from graphviz import Source
 logging.basicConfig(filename='pointillism.log',level=logging.DEBUG)
 LOG = logging.getLogger(__name__)
 
+class NotFound(Exception): pass
 class Forbidden(Exception): pass
 
 def url(host, path, **params):
