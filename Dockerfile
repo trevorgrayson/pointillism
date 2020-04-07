@@ -1,15 +1,15 @@
 FROM python:3.7-alpine
 
 ENV HOST https://raw.githubusercontent.com 
-ENV PYTHONPATH .:/:$PYTHONPATH
+ENV PYTHONPATH /app:$PYTHONPATH
 
 EXPOSE 5001
 
 RUN apk add --update graphviz ttf-freefont
 
-COPY *.py /
-COPY server /server
-COPY renderer /renderer
+COPY *.py /app/
+COPY server /app/server
+COPY renderer /app/renderer
 COPY requirements.txt /
 COPY public /srv/vhosts/pointillism/
 
