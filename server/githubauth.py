@@ -1,11 +1,6 @@
-import uuid
 import requests
 from flask import Blueprint, redirect, request, make_response
-
-GITHUB_TOKEN = 'github_token'
-GITHUB_CLIENT_ID = 'Iv1.216e3a2bbb5daf1f'
-GITHUB_SECRET = 'b1988c869bcd64271843c463bc9aec61ecfa4db5'
-GITHUB_STATE = str(uuid.uuid4()) # unique for each user
+from config import GITHUB_TOKEN, GITHUB_CLIENT_ID, GITHUB_SECRET, GITHUB_STATE
 
 GIT_WEBHOOK_AUTH = '/github/auth'
 
