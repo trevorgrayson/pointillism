@@ -48,8 +48,9 @@ def response(path, format, host=HOST, **params):
         return Response(render(host, path, format, **params), 
                         mimetype="image/{}".format(get_mime(format)))
     except Forbidden as err:
-        return str(err), 401
-    
+        with open(STATIC_DIR + '/images/pointillism-401.svg', 'r') as fp:
+            return Response(fp.read(), status=401,
+                            mimetype="image/{}".format(get_mime(format)))
 
 
 @app.route("/")
