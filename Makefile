@@ -33,10 +33,13 @@ clean:
 	# docker rm pointillism
 	# docker rmi tgrayson/pointillism
 
-image: 
+image:
 	docker build -t $(IMAGE) .
 
-imagePush:
+# confirmImage: image
+# 	test docker run tgrayson/pointillism:latest
+
+imagePush: 
 	echo "$(DOCKER_PASS)" | docker login -u "$(DOCKER_USER)" --password-stdin
 	docker push $(IMAGE)
 
