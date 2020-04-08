@@ -3,6 +3,13 @@ python:
   - "3.7"
 install:
   - make compile
-script:
-  - make image
-  - make imagePush
+jobs:
+  include:
+    - stage: test
+      script: make test
+    - stage: image
+      if: branch = master
+      script: make image
+    - stage: image push
+      if: branch = master
+      script: make imagePush
