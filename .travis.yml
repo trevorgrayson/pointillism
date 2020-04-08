@@ -7,9 +7,6 @@ jobs:
   include:
     - stage: test
       script: make test
-    - stage: image
-      if: branch = master
-      script: make image
     - stage: image push
       if: branch = master
       script: make imagePush

@@ -9,6 +9,9 @@ HOST ?= https://raw.githubusercontent.com
 
 export HOST
 export FLASK_RUN_PORT
+export GITHUB_CLIENT_ID
+export GITHUB_SECRET
+export PROJECT
 export PYTHONPATH=.:$(VENV):$(VENV_BUILD)
 
 server: compile
@@ -36,13 +39,16 @@ clean:
 image: 
 	docker build -t $(IMAGE) .
 
-imagePush:
+imagePush: image
 	echo "$(DOCKER_PASS)" | docker login -u "$(DOCKER_USER)" --password-stdin
 	docker push $(IMAGE)
 
 deploy:
 	# npm install serverless
 	serverless deploy
+
+run:
+	docker run --name $(PROJECT) -e GITHUB_SECRET -e GITHUB_CLIENT_ID -e PAYPAL_CLIENT_ID -d -p 5001:5001 --restart=always tgrayson/$(PROJECT):latest
 
 versionBump:
 	git pull --tags
