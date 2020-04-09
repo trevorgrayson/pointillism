@@ -1,3 +1,5 @@
 Flask==1.0.2
 graphviz==0.10.1
 requests==2.21.0
+ldap3==2.6.1
+flask-simpleldap==1.4.0

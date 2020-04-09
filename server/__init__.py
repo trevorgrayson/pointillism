@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, g, session
 from string import Template
 import werkzeug
 from werkzeug.wrappers import Response
@@ -7,8 +7,33 @@ from urllib.parse import urlparse
 from config import DOMAIN, HOST, ENV, STATIC_DIR, PAYPAL_CLIENT_ID
 from server.githubauth import github_routes
 
+from config import ADMIN_USER, ADMIN_PASS, LDAP_BASE_DN, SECRET_KEY
+from ldapauth.flask.routes import auth_routes, register_config
+from flask_simpleldap import LDAP
+
 app = Flask(__name__)
 app.register_blueprint(github_routes, url_prefix='/github')
+app.register_blueprint(auth_routes)
+
+register_config(app,
+  ldap_host='localhost',
+  ldap_base_dn=LDAP_BASE_DN,
+  ldap_username=ADMIN_USER,
+  ldap_password=ADMIN_PASS,
+  ldap_login_view='auth.login'
+)
+app.config['SECRET_KEY'] = SECRET_KEY 
+ldap = LDAP()
+
+@app.before_request
+def before_request():
+    g.user = None
+    if 'username' in session:
+        # This is where you'd query your database to get the user info.
+        g.user = {}
+        # Create a global with the LDAP groups the user is a member of.
+        # g.ldap_groups = ldap.get_user_groups(user=session['username'])
+
 
 ## Extract out
 from werkzeug.routing import BaseConverter

@@ -86,6 +86,8 @@ def auth():
     
     auth = client.auth_webhook(code, state)
 
+    # TODO get or create user
+    # save auth id
     # TODO redirect to where?
     response = make_response(redirect('/github'))
     response.set_cookie(GITHUB_TOKEN, auth['access_token'])

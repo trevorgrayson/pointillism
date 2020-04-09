@@ -42,4 +42,3 @@ docker rmi $1
 #                      COMMAND              CREATED             STATUS              PORTS                    NAMES
 # pointillism:latest   "python server.py"   31 minutes ago      Up 31 minutes       0.0.0.0:5001->5001/tcp   pointillism
 # cribnot.es:latest    "python server.py"   About an hour ago   Up About an hour    0.0.0.0:5000->5000/tcp   cribnot.es
-

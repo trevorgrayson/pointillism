@@ -19,7 +19,9 @@ server: compile
 	$(PYTHON) -m server
 
 compile: $(VENV)
+$(VENV): requirements.txt requirements/app.txt
 	$(PYTHON) -m pip install -t $(VENV) -r requirements.txt
+	touch $(VENV)
 
 compileAll: compile $(VENV_BUILD)
 $(VENV_BUILD): requirements/build.txt
