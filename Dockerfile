@@ -5,7 +5,8 @@ ENV PYTHONPATH .:/:$PYTHONPATH
 
 EXPOSE 5001
 
-RUN apk add --update graphviz ttf-freefont
+RUN apk add --update graphviz ttf-freefont build-base openldap-dev python2-dev python3-dev
+
 
 COPY *.py /
 COPY server /server
