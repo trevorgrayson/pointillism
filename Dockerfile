@@ -10,6 +10,7 @@ RUN apk add --update graphviz ttf-freefont build-base openldap-dev python2-dev p
 
 COPY *.py /
 COPY server /server
+COPY ldapauth /ldapauth
 COPY renderer /renderer
 COPY requirements.txt /
 COPY requirements /requirements
