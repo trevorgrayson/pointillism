@@ -59,4 +59,7 @@ versionBump:
 test: compileAll
 	$(PYTHON) -m pytest
 
+console:
+	$(PYTHON) 
+
 .PHONY: test

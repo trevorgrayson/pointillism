@@ -1,8 +1,12 @@
 import requests
 from flask import Blueprint, redirect, request, make_response
 from config import GITHUB_TOKEN, GITHUB_CLIENT_ID, GITHUB_SECRET, GITHUB_STATE
+from ldapauth import LdapAuth
+from config import LDAP_HOST, LDAP_BASE_DN, ADMIN_USER, ADMIN_PASS
 
 GIT_WEBHOOK_AUTH = '/github/auth'
+
+API_HOST = 'https://api.github.com'
 
 class GitHubAuth:
     def __init__(self, host='https://github.com',
@@ -46,7 +50,7 @@ class GitHubAuth:
 
     @classmethod
     def get(cls, path, token):
-        response = requests.get(path, cls.auth_headers(token))
+        response = requests.get(path, headers=cls.auth_headers(token))
 
         if response.status_code == 200:
             return response.body
@@ -54,9 +58,19 @@ class GitHubAuth:
             raise Exception(f'Upstream service exception: {response.status_code}')
 
     @classmethod
+    def me(cls, token):
+        response = requests.get(f'{API_HOST}/user', headers=cls.auth_headers(token))
+
+        if response.status_code == 200:
+            return response.json()
+        else:
+            raise Exception(f'Upstream service exception: {response.status_code}')
+
+    @classmethod
     def auth_headers(cls, token):
         return {
-            'Authorization':  f'token {token}'
+            'Authorization':  f'token {token}',
+            'Accept': 'application/json'
         }
 
 
@@ -83,14 +97,23 @@ def auth():
     state = request.args.get('state')
     if code is None:
         return 400, "missing github `code`"
-    
-    auth = client.auth_webhook(code, state)
 
-    # TODO get or create user
+    USERS = LdapAuth(LDAP_HOST, LDAP_BASE_DN, ADMIN_USER, ADMIN_PASS)
+    auth = client.auth_webhook(code, state)
+    token = auth['access_token']
+
+    # get or create user
+    github_user = GitHubAuth.me(token)
+    github_login = github_user['login']
+    user = USERS.search(username=github_login)
     # save auth id
-    # TODO redirect to where?
+    if len(user) == 0:
+        # prompt user for name?
+        USERS.create(github_login)
+
     response = make_response(redirect('/github'))
-    response.set_cookie(GITHUB_TOKEN, auth['access_token'])
+    # TODO give them a pointillism account id
+    response.set_cookie(GITHUB_TOKEN, token)
 
     return response
     # TODO if token in cookie, append to request

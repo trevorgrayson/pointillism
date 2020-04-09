@@ -9,8 +9,6 @@ class User:
             self.name = tup[1]['cn'][0]
             # self.description
 
-        self.attributes = {}
-
     def __str__(self):
         return f"<User {self.name} {self.authentic}>"
 
