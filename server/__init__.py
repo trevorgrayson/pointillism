@@ -140,6 +140,21 @@ def render_url_with_format(path):
     if format == 'dot': # no filename, use default
       render_url(".".join((path, fileFormat, "png")))
 
+@app.route("/github/<path:path>")
+def render_github_url(path):
+    format = path[len(path)-3:]
+    path = path[:len(path)-4]
+
+    if format in ["dot", "gv"]:
+        path = ".".join((path, format))
+        format = "png"
+
+    try:
+        return response(path, format, **get_params(request))
+
+    except IOError as err:
+        return str(err), 400
+
 @app.route("/<path:path>")
 def render_url(path):
     format = path[len(path)-3:]
