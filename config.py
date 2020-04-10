@@ -14,11 +14,11 @@ else:
 
 # 3rd party
 GITHUB_TOKEN = 'github_token'
-GITHUB_CLIENT_ID = environ.get('GITHUB_CLIENT_ID')
-GITHUB_SECRET = environ.get('GITHUB_SECRET')
+GITHUB_CLIENT_ID = environ['GITHUB_CLIENT_ID']
+GITHUB_SECRET = environ['GITHUB_SECRET']
 GITHUB_STATE = str(uuid.uuid4()) # unique for each user
 
-PAYPAL_CLIENT_ID = environ.get('PAYPAL_CLIENT_ID')
+PAYPAL_CLIENT_ID = environ'PAYPAL_CLIENT_ID']
 
 SECRET_KEY = urandom(12)
 # LDAP
