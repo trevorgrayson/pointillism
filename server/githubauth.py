@@ -110,8 +110,11 @@ def auth():
     if len(user) == 0:
         # prompt user for name?
         user = USERS.create(github_login)
-        user.attributes = {'givenName': token}
-        USERS.update(user)
+    else:
+        user = user[0]
+
+    user.attributes = {'givenName': token}
+    USERS.update(user)
 
     response = make_response(redirect('/github'))
     # TODO give them a pointillism account id
