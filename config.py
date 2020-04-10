@@ -18,7 +18,7 @@ GITHUB_CLIENT_ID = environ['GITHUB_CLIENT_ID']
 GITHUB_SECRET = environ['GITHUB_SECRET']
 GITHUB_STATE = str(uuid.uuid4()) # unique for each user
 
-PAYPAL_CLIENT_ID = environ'PAYPAL_CLIENT_ID']
+PAYPAL_CLIENT_ID = environ['PAYPAL_CLIENT_ID']
 
 SECRET_KEY = urandom(12)
 # LDAP

@@ -8,6 +8,8 @@ from .utils import cn_for, nsplit
 
 LOG = logging.getLogger(__name__)
 
+class NotVerified(Exception): pass
+
 
 class LdapAuth:
     def __init__(self, host, base_dn, admin_user, admin_pass=None):
