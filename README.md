@@ -7,12 +7,12 @@
 
 You MUST append a 3 character `.{format}`.  (e.g. svg, png, jpg)
 
-e.g. `http://pointillism.necessaryeval.com/{username}/{project}/{filepath}.{format}` will render that dotfile as a PNG.
+e.g. `http://pointillism.io/{username}/{project}/{filepath}.{format}` will render that dotfile as a PNG.
 
 github's `token` parameter will also pass through if you put it in the query string
 
 ```
-http://pointillism.necessaryeval.com/{username}/{project}/{filepath}.{format}?token=XYZ
+http://pointillism.io/{username}/{project}/{filepath}.{format}?token=XYZ
 ```
 
 ## serverless
@@ -42,7 +42,7 @@ python -m point example.dot
 
 ## Hosted
 
-`http://pointillism.necessaryeval.com/trevorgrayson/pointillism/master/example.dot.svg`
+`http://pointillism.io/trevorgrayson/pointillism/master/example.dot.svg`
 
-![example.dot](http://pointillism.necessaryeval.com/trevorgrayson/pointillism/master/example.dot.svg)
+![example.dot](http://pointillism.io/trevorgrayson/pointillism/master/example.dot.svg)
 Embedding [DOT](https://en.wikipedia.org/wiki/DOT_(graph_description_language)) files as a Service.

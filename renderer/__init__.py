@@ -23,7 +23,7 @@ def render(host, path, format="png", **params):
         src = Source(response.text)
         return src.pipe(format=format)
     elif response.status_code == 401:
-        raise Forbidden('Forbidden! http://pointillism.necessaryeval.com/github/login')
+        raise Forbidden('Forbidden! http://pointillism.io/github/login')
     else:
         raise IOError("Problem finding: {}".format(dot_url))
 

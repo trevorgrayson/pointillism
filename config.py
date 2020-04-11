@@ -1,7 +1,7 @@
 from os import environ, path, getcwd, urandom
 import uuid
 
-DOMAIN = environ.get('domain', 'pointillism.necessaryeval.com')
+DOMAIN = environ.get('domain', 'pointillism.io')
 HOST = environ['HOST']
 ENV = environ.get('ENV', "PROD")
 
