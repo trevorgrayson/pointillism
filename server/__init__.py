@@ -5,7 +5,7 @@ from werkzeug.wrappers import Response
 from renderer import render, Forbidden
 from urllib.parse import urlparse
 from config import DOMAIN, HOST, ENV, STATIC_DIR, PAYPAL_CLIENT_ID
-from server.githubauth import github_routes
+from server.github import github_routes
 
 from config import ADMIN_USER, ADMIN_PASS, LDAP_BASE_DN, SECRET_KEY
 from ldapauth.flask.routes import auth_routes, register_config
