@@ -12,14 +12,6 @@ if not STATIC_DIR or STATIC_DIR == '/':
 else:
     STATIC_DIR += '/public'
 
-# 3rd party
-GITHUB_TOKEN = 'github_token'
-GITHUB_CLIENT_ID = environ['GITHUB_CLIENT_ID']
-GITHUB_SECRET = environ['GITHUB_SECRET']
-GITHUB_STATE = str(uuid.uuid4()) # unique for each user
-
-PAYPAL_CLIENT_ID = environ['PAYPAL_CLIENT_ID']
-
 SECRET_KEY = urandom(12)
 # LDAP
 LDAP_HOST = environ.get('LDAP_HOST')  
@@ -32,3 +24,11 @@ LDAP_BASE_DN = environ.get('BASE_DN', "dc=ipsumllc,dc=com")
 
 ADMIN_USER = environ.get('ADMIN_USER')
 ADMIN_PASS = environ.get('ADMIN_PASS')
+
+# 3rd party
+GITHUB_TOKEN = 'github_token'
+GITHUB_CLIENT_ID = environ['GITHUB_CLIENT_ID']
+GITHUB_SECRET = environ['GITHUB_SECRET']
+GITHUB_STATE = str(uuid.uuid4()) # unique for each user
+
+PAYPAL_CLIENT_ID = environ['PAYPAL_CLIENT_ID']
