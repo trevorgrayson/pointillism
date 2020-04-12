@@ -30,14 +30,18 @@ class LDIFRecord:
         return TYPE_MAP[cls.type]
 
     @classmethod
-    def create(cls, *node):
+    def create(cls, *node, **attributes):
         dn = cls.base_dn
+        if 'base_dn' in attributes:
+            dn = ','.join((attributes['base_dn'], dn))
+            del attributes['base_dn'] 
+
         CONN.bind()
         desc = None
 
         for name in node:
             dn = f'{cls.type}={name},{dn}'
-            CONN.add(dn, [cls.type_name()]) # , {'sn': dn})
+            CONN.add(dn, [cls.type_name()], attributes=attributes)
 
             desc = CONN.result['description']
 
@@ -50,7 +54,11 @@ class LDIFRecord:
         return desc in SUCCESS_RESPONSES
 
     @classmethod
-    def search(cls, name):
+    def search(cls, name, **attributes):
+        base_dn = cls.base_dn
+        if 'base_dn' in attributes:
+            base_dn = ','.join((attributes['base_dn'], base_dn))
+            del attributes['base_dn'] 
         search = f'{cls.type}={name}'
         search_filter = f'(&(objectClass={cls.type_name()})({search}))'
         LOG.debug(search_filter)
@@ -60,10 +68,10 @@ class LDIFRecord:
                 LOG.error(CONN.result)
                 raise Exception(f"Connection Exception: {CONN.result}")
 
-            CONN.search(cls.base_dn,
+            CONN.search(base_dn,
                         search_filter=search_filter,
                         search_scope=SUBTREE,
-                        attributes = cls.attributes
+                        attributes=cls.attributes
                         )
 
             results = CONN.result
@@ -88,3 +96,15 @@ class LDIFRecord:
         CONN.unbind() 
 
         return desc
+
+
+class GitHubRepo(LDIFRecord):
+    type = 'ou'
+    base_dn = 'dc=github,' + LDAP_BASE_DN
+    attributes = ['ou', 'description']
+
+
+class GitHubUser(LDIFRecord):
+    type = 'cn'
+    base_dn = 'dc=github,' + LDAP_BASE_DN
+    attributes = ['sn', 'cn', 'description', 'givenName']
