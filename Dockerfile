@@ -12,6 +12,7 @@ COPY *.py /
 COPY server /server
 COPY ldapauth /ldapauth
 COPY renderer /renderer
+COPY models /models
 COPY requirements.txt /
 COPY requirements /requirements
 COPY public /srv/vhosts/pointillism/
