@@ -25,6 +25,8 @@ TYPE_MAP = {
 
 
 class LDIFRecord:
+    base_dn = LDAP_BASE_DN  # 'dc=github,' + LDAP_BASE_DN
+
     @classmethod
     def type_name(cls):
         return TYPE_MAP[cls.type]
@@ -54,29 +56,12 @@ class LDIFRecord:
         return desc in SUCCESS_RESPONSES
 
     @classmethod
-    def search_token(cls, token, **attributes):
-        base_dn = 'dc=ipsumllc,dc=com' # cls.base_dn
-        # if 'base_dn' in attributes:
-        #     base_dn = ','.join((attributes['base_dn'], base_dn))
-        #     del attributes['base_dn'] 
-        search = f'givenName={token}'
-        search_filter = f'(givenName={token})' # f'(&(objectClass={cls.type_name()})({search}))'
-        LOG.debug(f'SEARCHING {base_dn} with: {search_filter}')
-
-        response = cls._search(base_dn, search_filter, **attributes)
-        return list([User(**args) for args in response])
-
-    @classmethod
-    def search_repo(cls, user, org, name, **attributes):
-        base_dn = f'ou={org},cn={user},dc=ipsumllc,dc=com' # cls.base_dn
-        search_filter = f'(ou={name})'
-        LOG.debug(f'SEARCHING {base_dn} with: {search_filter}')
-
-        response =  cls._search(base_dn, search_filter, **attributes)
-        return list([Repo(**args) for args in response])
+    def first_repo(cls, org, name, **attributes):
+        return next(iter(cls.search_repo(org, name, **attributes)))
 
     @classmethod
     def _search(cls, base_dn, search_filter, **attributes):
+        LOG.debug(f'SEARCHING {base_dn} with: {search_filter}')
 
         try:
             if not CONN.bind():
@@ -111,41 +96,3 @@ class LDIFRecord:
         CONN.unbind() 
 
         return desc
-
-
-class GitHubRepo(LDIFRecord):
-    type = 'ou'
-    base_dn = LDAP_BASE_DN  # 'dc=github,' + LDAP_BASE_DN
-    attributes = ['ou', 'description']
-
-
-class User:
-    def __init__(self, **record):
-        attrs = record.get('attributes', {})
-        self.name = next(iter(attrs.get('cn')), None)
-        self.cn = next(iter(attrs.get('cn')), None)
-        self.dn = attrs.get('dn')
-        self.token = next(iter(attrs.get('givenName')), None)
-
-        if self.token:
-            self.token = self.token[-1]
-
-    def __str__(self):
-        return f'User<{self.name}>'
-
-    def __repr__(self):
-        return f'User<{self.name}>'
-
-class Repo:
-    def __init__(self, **record):
-        attrs = record.get('attributes', {})
-        self.name = next(iter(attrs.get('ou')), None)
-        self.dn = attrs.get('dn')
-
-    def owner(self):
-        pass
-    
-class GitHubUser(LDIFRecord):
-    type = 'cn'
-    base_dn = LDAP_BASE_DN  # 'dc=github,' + LDAP_BASE_DN
-    attributes = ['sn', 'cn', 'description', 'givenName']

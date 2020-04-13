@@ -8,7 +8,7 @@ from urllib.parse import urlparse
 from config import DOMAIN, HOST, ENV, STATIC_DIR, PAYPAL_CLIENT_ID
 from server.github import github_routes
 from server.repos import repo_routes
-from models.base import GitHubRepo
+from models import GitHubRepo
 
 from config import ADMIN_USER, ADMIN_PASS, LDAP_BASE_DN, SECRET_KEY
 from ldapauth.flask.routes import auth_routes, register_config
@@ -150,15 +150,13 @@ def render_url_with_format(path):
 @app.route("/github/<path:path>")
 def render_github_url(path):
     # BUG: don't want to require owner to load first. or do you?
-    user = get_me() 
+    credentials = None
 
     if user is not None:
         org, project, *_tail = path.split('/')
-        repo = GitHubRepo.search_repo(user.name, org, project)
+        repo = next(iter(GitHubRepo.search_repo(org, project)))
+        credentials = repo.credentials
 
-        if repo:
-        raise Exception(str(repo))
-    # TODO if repo in db, use creds
     format = path[len(path)-3:]
     path = path[:len(path)-4]
 

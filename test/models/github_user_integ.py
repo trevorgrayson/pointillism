@@ -1,4 +1,4 @@
-from models.base import GitHubUser
+from models import GitHubUser
 
 
 class TestGitHubUser:

@@ -5,7 +5,7 @@ from string import Template
 from ldapauth import LdapAuth
 from config import LDAP_HOST, ADMIN_USER, ADMIN_PASS
 from server.base import login_required, get_me
-from models.base import GitHubRepo
+from models import GitHubRepo
 
 GITHUB_BASE_DN = 'dc=ipsumllc,dc=com'
 API_HOST = 'https://api.github.com'
@@ -26,7 +26,7 @@ def repo_claim():
         raise Exception("github `repo` variable required.")
 
     base_dn = GitHubRepo.create(*repo, base_dn=f'cn={me.cn}')
-    response = make_response(redirect('/github'))
+    response = make_response(redirect('/repos'))
     return response
 
 

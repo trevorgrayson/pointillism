@@ -1,7 +1,7 @@
 import logging
 from functools import wraps
 from flask import redirect, request, make_response
-from models.base import GitHubUser
+from models import GitHubUser
 
 LOG = logging.getLogger(__name__)
 

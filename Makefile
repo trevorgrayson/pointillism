@@ -59,6 +59,9 @@ versionBump:
 test: compileAll
 	$(PYTHON) -m pytest
 
+integ: compileAll
+	$(PYTHON) -s -m pytest -s test/models/*_integ.py
+
 console:
 	$(PYTHON) 
 
