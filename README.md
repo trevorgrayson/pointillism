@@ -44,5 +44,23 @@ python -m point example.dot
 
 `http://pointillism.io/trevorgrayson/pointillism/master/example.dot.svg`
 
+
+## GitHub Login
+
+There is real method to test github integration at this time, so changing `/etc/hosts` with
+
+```
+127.0.0.1 pointillism.io
+```
+
+Then, 
+
+1. run `/github/login`
+2. take the forwarded url and
+  - change the protocol to `http`.
+  - add a port if necessary
+
+TODO: set up test service that points to `pointillism.local`
+
 ![example.dot](http://pointillism.io/trevorgrayson/pointillism/master/example.dot.svg)
 Embedding [DOT](https://en.wikipedia.org/wiki/DOT_(graph_description_language)) files as a Service.

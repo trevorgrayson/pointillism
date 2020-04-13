@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <title>pointillism</title>
+  </head>
+  <style>
+    body {
+      margin: 0 auto;
+      max-width: 800px;
+    }
+
+    .example * {
+      margin-bottom: 20px;
+    }
+
+    h1 a {
+      color: black;
+      text-decoration: none;
+
+    }
+  </style>
+  <body>
+    <h1><a href="//$host">pointillism</a></h1>
+    <p class="tagline">Hosted Diagrams for your git repos.</p>
+
+    <p>Hello, $username!</p>
+    <fieldset>
+      <legend>Add Repo</legend>
+
+      <p>
+        Adding a repo will permit pointillism to retrieve dot files using your credentials.  
+        This will not limit access to your requests. If a colleague or even stranger attempts to 
+        access a file, they may.  This would require them to know the file name.
+      </p>
+      <ul>
+        <li>Displayed files will be limited to dotfiles.</li> 
+      </ul>
+        
+      <form action="/repos" method="post">
+         <label for="repo">repo</label> <input name="repo" placeholder="trevorgrayson/pointillism" /> 
+         <input name="add" type="submit" />
+      </form>
+
+    </fieldset>
+  </body>
+</html>

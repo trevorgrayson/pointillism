@@ -1,3 +1,4 @@
+import logging
 from flask import Flask, request, g, session
 from string import Template
 import werkzeug
@@ -6,14 +7,20 @@ from renderer import render, Forbidden
 from urllib.parse import urlparse
 from config import DOMAIN, HOST, ENV, STATIC_DIR, PAYPAL_CLIENT_ID
 from server.github import github_routes
+from server.repos import repo_routes
+from models.base import GitHubRepo
 
 from config import ADMIN_USER, ADMIN_PASS, LDAP_BASE_DN, SECRET_KEY
 from ldapauth.flask.routes import auth_routes, register_config
 from flask_simpleldap import LDAP
+from server.base import get_me
+
+LOG = logging.getLogger(__name__)
 
 app = Flask(__name__)
 app.register_blueprint(github_routes, url_prefix='/github')
 app.register_blueprint(auth_routes)
+app.register_blueprint(repo_routes)
 
 register_config(app,
   ldap_host='localhost',
@@ -142,6 +149,16 @@ def render_url_with_format(path):
 
 @app.route("/github/<path:path>")
 def render_github_url(path):
+    # BUG: don't want to require owner to load first. or do you?
+    user = get_me() 
+
+    if user is not None:
+        org, project, *_tail = path.split('/')
+        repo = GitHubRepo.search_repo(user.name, org, project)
+
+        if repo:
+        raise Exception(str(repo))
+    # TODO if repo in db, use creds
     format = path[len(path)-3:]
     path = path[:len(path)-4]
 

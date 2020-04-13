@@ -2,6 +2,8 @@ from flask import Blueprint, redirect, request, make_response
 from config import GITHUB_TOKEN, GITHUB_CLIENT_ID, GITHUB_SECRET, GITHUB_STATE
 
 from .githubauth import GitHubAuth
+from ldapauth import LdapAuth
+from config import LDAP_HOST, ADMIN_USER, ADMIN_PASS, LDAP_BASE_DN
 
 client = GitHubAuth(client_id=GITHUB_CLIENT_ID, 
                     secret=GITHUB_SECRET)
