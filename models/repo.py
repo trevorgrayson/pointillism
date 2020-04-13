@@ -19,8 +19,11 @@ class Repo:
     def __init__(self, **record):
         attrs = record.get('attributes', {})
         self.name = next(iter(attrs.get('ou')), None)
-        self.dn = attrs.get('dn')
+        self.dn = record.get('dn')
 
     @property
-    def credentials(self):
-        pass
+    def owner(self):
+        if self.dn:
+            _, owner, *tail = self.dn.split('cn=')
+            owner = owner.split(',')[0]
+            return owner

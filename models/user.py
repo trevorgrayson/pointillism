@@ -6,6 +6,14 @@ class GitHubUser(LDIFRecord):
     attributes = ['sn', 'cn', 'description', 'givenName']
 
     @classmethod
+    def first(cls, cn, **attributes):
+        base_dn = 'dc=ipsumllc,dc=com' # cls.base_dn
+        search_filter = f'(cn={cn})'
+
+        response = cls._search(base_dn, search_filter, **attributes)
+        return next(iter([User(**args) for args in response]))
+
+    @classmethod
     def search_token(cls, token, **attributes):
         base_dn = 'dc=ipsumllc,dc=com' # cls.base_dn
         # if 'base_dn' in attributes:
@@ -19,11 +27,11 @@ class GitHubUser(LDIFRecord):
 
 class User:
     def __init__(self, **record):
+        self.dn = record.get('dn')
         attrs = record.get('attributes', {})
         self.name = next(iter(attrs.get('cn')), None)
         self.cn = next(iter(attrs.get('cn')), None)
-        self.dn = attrs.get('dn')
-        self.token = next(iter(attrs.get('givenName')), None)
+        self.token = attrs.get('givenName')
 
         if self.token:
             self.token = self.token[-1]

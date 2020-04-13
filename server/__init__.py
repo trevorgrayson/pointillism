@@ -8,7 +8,7 @@ from urllib.parse import urlparse
 from config import DOMAIN, HOST, ENV, STATIC_DIR, PAYPAL_CLIENT_ID
 from server.github import github_routes
 from server.repos import repo_routes
-from models import GitHubRepo
+from models import GitHubRepo, GitHubUser
 
 from config import ADMIN_USER, ADMIN_PASS, LDAP_BASE_DN, SECRET_KEY
 from ldapauth.flask.routes import auth_routes, register_config
@@ -16,6 +16,16 @@ from flask_simpleldap import LDAP
 from server.base import get_me
 
 LOG = logging.getLogger(__name__)
+
+
+def headers(user=None, **config):
+    heads = {}
+
+    if user and user.token:
+        heads['Authorization'] = f'token {user.token}'
+
+    return heads
+
 
 app = Flask(__name__)
 app.register_blueprint(github_routes, url_prefix='/github')
@@ -122,10 +132,54 @@ def render_relative_path(path):
     except IOError as err:
         return str(err), 400
 
+
+@app.route("/.<path:path>\.<regex(\"[a-zA-Z0-9]{3}\"):fileFormat>\.<regex(\"[a-zA-Z0-9]{3}\"):format>")
+def render_url_with_format(path):
+    if format == 'dot': # no filename, use default
+      render_url(".".join((path, fileFormat, "png")))
+
+
+@app.route("/github/<path:path>")
+def render_github_url(path):
+    # BUG: don't want to require owner to load first. or do you?
+    org, project, *_tail = path.split('/')
+
+    repo = GitHubRepo.first_repo(org, project)
+    owner = repo.owner
+
+    if owner:
+        owner = GitHubUser.first(repo.owner)
+
+    return render_url(path, headers=headers(user=owner))
+
+
+@app.route("/<path:path>")
+def render_url(path, headers=None, **kwargs):
+    format = path[len(path)-3:]
+    path = path[:len(path)-4]
+
+    if format in ["dot", "gv"]:
+        path = ".".join((path, format))
+        format = "png"
+
+    params = get_params(request)
+    if headers:
+        params['headers'] = headers
+    try:
+        print(str((path, format, params)))
+        return response(path, format, **params)
+
+    except IOError as err:
+        return str(err), 400
+
+#
+# cribnotes exclusive
+#
 @app.route("/crib/.<path:path>\.<regex(\"[a-zA-Z0-9]{3}\"):fileFormat>\.<regex(\"[a-zA-Z0-9]{3}\"):format>")
 def render_crib_with_format(path):
     if format == 'dot': # no filename, use default
       render_crib(".".join((path, fileFormat, "png")))
+
 
 @app.route("/crib/<path:path>")
 def render_crib(path):
@@ -138,49 +192,6 @@ def render_crib(path):
 
     try:
         return response(path, format, host="https://cribnot.es")
-
-    except IOError as err:
-        return str(err), 400
-
-@app.route("/.<path:path>\.<regex(\"[a-zA-Z0-9]{3}\"):fileFormat>\.<regex(\"[a-zA-Z0-9]{3}\"):format>")
-def render_url_with_format(path):
-    if format == 'dot': # no filename, use default
-      render_url(".".join((path, fileFormat, "png")))
-
-@app.route("/github/<path:path>")
-def render_github_url(path):
-    # BUG: don't want to require owner to load first. or do you?
-    credentials = None
-
-    if user is not None:
-        org, project, *_tail = path.split('/')
-        repo = next(iter(GitHubRepo.search_repo(org, project)))
-        credentials = repo.credentials
-
-    format = path[len(path)-3:]
-    path = path[:len(path)-4]
-
-    if format in ["dot", "gv"]:
-        path = ".".join((path, format))
-        format = "png"
-
-    try:
-        return response(path, format, **get_params(request))
-
-    except IOError as err:
-        return str(err), 400
-
-@app.route("/<path:path>")
-def render_url(path):
-    format = path[len(path)-3:]
-    path = path[:len(path)-4]
-
-    if format in ["dot", "gv"]:
-        path = ".".join((path, format))
-        format = "png"
-
-    try:
-        return response(path, format, **get_params(request))
 
     except IOError as err:
         return str(err), 400

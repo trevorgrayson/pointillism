@@ -14,10 +14,11 @@ def url(host, path, **params):
     return "{}/{}?{}".format(host, path, ps) 
 
 
-def render(host, path, format="png", **params):
+# look up this dict method
+def render(host, path, format="png", headers={}, **params):
     dot_url = url(host, path, **params)
     LOG.debug(f"GET: {dot_url}")
-    response = requests.get(dot_url)
+    response = requests.get(dot_url, headers=headers)
 
     if response.status_code == 200:
         src = Source(response.text)

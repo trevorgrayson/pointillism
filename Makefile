@@ -12,6 +12,7 @@ export FLASK_RUN_PORT
 export GITHUB_CLIENT_ID
 export GITHUB_SECRET
 export PROJECT
+export ENV=develop
 export PYTHONPATH=.:$(VENV):$(VENV_BUILD)
 
 server: compile
