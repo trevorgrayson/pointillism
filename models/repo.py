@@ -11,8 +11,14 @@ class GitHubRepo(LDIFRecord):
         base_dn = f'dc=ipsumllc,dc=com'
         search_filter = f'(ou={name})'
 
-        response =  cls._search(base_dn, search_filter, **attributes)
+        response = cls._search(base_dn, search_filter, **attributes)
         return list([Repo(**args) for args in response])
+
+    @classmethod
+    def first_repo(cls, org, name, **attributes):
+        repo = cls.search_repo(org, name, **attributes)
+        if repo:
+            return repo[0]
 
 
 class Repo:
@@ -27,3 +33,7 @@ class Repo:
             _, owner, *tail = self.dn.split('cn=')
             owner = owner.split(',')[0]
             return owner
+
+    @property
+    def has_owner(self):
+        return self.owner is not None

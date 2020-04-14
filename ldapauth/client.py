@@ -1,6 +1,7 @@
 import logging
 from ldap3 import Server, Connection, core, extend, MODIFY_REPLACE, MODIFY_ADD, HASHED_SALTED_SHA, SUBTREE
 from ldap3.utils.hashed import hashed
+from ldap3.core.exceptions import LDAPChangeError
 
 from config import ADMIN_PASS, LDAP_HOST, LDAP_BASE_DN, ADMIN_USER
 from .models import User

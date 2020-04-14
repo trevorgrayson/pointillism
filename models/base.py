@@ -43,21 +43,16 @@ class LDIFRecord:
 
         for name in node:
             dn = f'{cls.type}={name},{dn}'
+            LOG.info(f'CREATING {dn}({cls.type_name()}: {attributes}')
             CONN.add(dn, [cls.type_name()], attributes=attributes)
 
             desc = CONN.result['description']
-
-
             if desc not in SUCCESS_RESPONSES:
                 raise Exception(f'{dn}: {desc} {CONN.result}')
 
         CONN.unbind() 
 
         return desc in SUCCESS_RESPONSES
-
-    @classmethod
-    def first_repo(cls, org, name, **attributes):
-        return next(iter(cls.search_repo(org, name, **attributes)))
 
     @classmethod
     def _search(cls, base_dn, search_filter, **attributes):
@@ -78,6 +73,7 @@ class LDIFRecord:
 
             # TODO is over matching. confirm tree works
             if results['description'] == 'success':
+                LOG.debug(f'RESPONSE: {CONN.response}')
                 return CONN.response
             else:
                 raise Exception(f'Request Exception: {results}')

@@ -21,8 +21,8 @@ LOG = logging.getLogger(__name__)
 def headers(user=None, **config):
     heads = {}
 
-    if user and user.token:
-        heads['Authorization'] = f'token {user.token}'
+    if user and user.git_token:
+        heads['Authorization'] = f'token {user.git_token}'
 
     return heads
 
@@ -33,12 +33,12 @@ app.register_blueprint(auth_routes)
 app.register_blueprint(repo_routes)
 
 register_config(app,
-  ldap_host='localhost',
-  ldap_base_dn=LDAP_BASE_DN,
-  ldap_username=ADMIN_USER,
-  ldap_password=ADMIN_PASS,
-  ldap_login_view='auth.login'
-)
+                ldap_host='localhost',
+                ldap_base_dn=LDAP_BASE_DN,
+                ldap_username=ADMIN_USER,
+                ldap_password=ADMIN_PASS,
+                ldap_login_view='auth.login'
+                )
 app.config['SECRET_KEY'] = SECRET_KEY 
 ldap = LDAP()
 
@@ -145,9 +145,9 @@ def render_github_url(path):
     org, project, *_tail = path.split('/')
 
     repo = GitHubRepo.first_repo(org, project)
-    owner = repo.owner
+    owner = None
 
-    if owner:
+    if repo and repo.has_owner:
         owner = GitHubUser.first(repo.owner)
 
     return render_url(path, headers=headers(user=owner))
@@ -175,6 +175,8 @@ def render_url(path, headers=None, **kwargs):
 #
 # cribnotes exclusive
 #
+
+
 @app.route("/crib/.<path:path>\.<regex(\"[a-zA-Z0-9]{3}\"):fileFormat>\.<regex(\"[a-zA-Z0-9]{3}\"):format>")
 def render_crib_with_format(path):
     if format == 'dot': # no filename, use default
@@ -195,6 +197,7 @@ def render_crib(path):
 
     except IOError as err:
         return str(err), 400
+
 
 def run():
     app.run(host='0.0.0.0', port=5001, debug=IS_DEV) # port doesn't work?

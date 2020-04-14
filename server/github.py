@@ -28,6 +28,7 @@ def auth():
     state = request.args.get('state')
     if code is None:
         return 400, "missing github `code`"
+    # if code is not ...
 
     USERS = LdapAuth(LDAP_HOST, LDAP_BASE_DN, ADMIN_USER, ADMIN_PASS)
     auth = client.auth_webhook(code, state)
@@ -52,4 +53,3 @@ def auth():
     response.set_cookie(GITHUB_TOKEN, token)
 
     return response
-    # TODO if token in cookie, append to request

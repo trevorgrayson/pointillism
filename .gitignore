@@ -22,5 +22,7 @@ var/
 *.log
 # Serverless directories
 .serverless
+venv
 .venv
 .venv.build
+.idea/*
