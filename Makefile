@@ -51,7 +51,7 @@ deploy:
 	serverless deploy
 
 run:
-	docker run --name $(PROJECT) -e GITHUB_SECRET -e GITHUB_CLIENT_ID -e PAYPAL_CLIENT_ID -d -p 5001:5001 --restart=always tgrayson/$(PROJECT):latest
+	docker run --name $(PROJECT) -e ADMIN_USER -e ADMIN_PASS -e LDAP_HOST -e GITHUB_SECRET -e GITHUB_CLIENT_ID -e PAYPAL_CLIENT_ID -d -p 5001:5001 --restart=always tgrayson/$(PROJECT):latest
 
 versionBump:
 	git pull --tags
