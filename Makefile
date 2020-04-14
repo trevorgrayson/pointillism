@@ -6,6 +6,7 @@ PYTHON := python3
 VENV = .venv
 VENV_BUILD = .venv.build
 HOST ?= https://raw.githubusercontent.com
+PROJECT=pointillism
 
 export HOST
 export FLASK_RUN_PORT
@@ -13,6 +14,8 @@ export GITHUB_CLIENT_ID
 export GITHUB_SECRET
 export PROJECT
 export ENV=develop
+export ADMIN_USER, ADMIN_PASS
+export LDAP_HOST=ipsumllc.com
 export PYTHONPATH=.:$(VENV):$(VENV_BUILD)
 
 server: compile
@@ -47,11 +50,8 @@ imagePush: image
 	docker push $(IMAGE)
 
 deploy:
-	# npm install serverless
-	serverless deploy
-
-run:
-	docker run --name $(PROJECT) -e ADMIN_USER -e ADMIN_PASS -e LDAP_HOST -e GITHUB_SECRET -e GITHUB_CLIENT_ID -e PAYPAL_CLIENT_ID -d -p 5001:5001 --restart=always tgrayson/$(PROJECT):latest
+	@# cat this into | ssh pointillism.io
+	@echo "~/bin/deploy pointillism; $(shell paste -sd ';' ENV); docker run --name $(PROJECT) -e ADMIN_USER -e ADMIN_PASS -e LDAP_HOST -e GITHUB_SECRET -e GITHUB_CLIENT_ID -e PAYPAL_CLIENT_ID -d -p 5001:5001 --restart=always tgrayson/$(PROJECT):latest"
 
 versionBump:
 	git pull --tags
@@ -65,5 +65,7 @@ integ: compileAll
 
 console:
 	$(PYTHON) 
+
+validate: test integ image
 
 .PHONY: test
