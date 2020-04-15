@@ -48,7 +48,7 @@ def auth():
     user.attributes = {'givenName': token}
     USERS.update(user)
 
-    response = make_response(redirect('/github'))
+    response = make_response(redirect('/'))
     # TODO give them a pointillism account id
     response.set_cookie(GITHUB_TOKEN, token)
 
