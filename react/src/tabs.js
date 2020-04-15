@@ -48,12 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TabNav() {
-  const repos = [
-    'trevorgrayson/private',
-    'ipsumllc/private'
-  ]
-
+export default function TabNav({repos}) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -61,14 +56,14 @@ export default function TabNav() {
     setValue(newValue);
   };
 
+  //<Tab label="Getting Started" {...a11yProps(1)} />
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-          <Tab label="Home" {...a11yProps(0)} />
-          <Tab label="Getting Started" {...a11yProps(1)} />
+          <Tab label="Mission" {...a11yProps(0)} />
+          <Tab label="About" {...a11yProps(1)} />
           <Tab label="Your Repositories" {...a11yProps(2)} />
-          <Tab label="About" {...a11yProps(3)} />
           <Tab label="login" href="/github/login"/>
         </Tabs>
       </AppBar>
@@ -76,13 +71,10 @@ export default function TabNav() {
         <Manifesto/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        iou
+        <About/>
       </TabPanel>
       <TabPanel value={value} index={2}>
         <Repos repos={repos} />
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        <About/>
       </TabPanel>
     </div>
   );
