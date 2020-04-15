@@ -9,6 +9,7 @@ node_modules: package.json
 package: compile
 	npm run build
 	cp -rf build/* ../server/static/
+	cp build/index.html ../public/index.html
 
 clean:
 	rm -rf build

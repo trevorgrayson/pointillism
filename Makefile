@@ -31,10 +31,6 @@ compileAll: compile $(VENV_BUILD)
 $(VENV_BUILD): requirements/build.txt
 	$(PYTHON) -m pip install -t $(VENV) -r requirements/build.txt
 	touch $(VENV_BUILD)
-	
-$(VENV): requirements.txt
-	$(PYTHON) -m pip install -t $(VENV) -r requirements.txt
-	touch $(VENV)
 
 clean:
 	find . -name "*.pyc" -delete
