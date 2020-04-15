@@ -18,7 +18,7 @@ function Repos(props) {
     <div>
       <RepoForm/>
       <h2>Authorized Repos ({props.repos.length})</h2>
-      <ul class="repos">
+      <ul className="repos">
         {props.repos.map((value, index) => {
           return <li key={index}>{value}</li>
         })}
