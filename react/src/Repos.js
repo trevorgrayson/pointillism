@@ -42,8 +42,8 @@ class Repos extends React.Component {
     this.state = {
         repos: []
     };
-    (new RepoClient()).getRepos()
-                      .then( (result) => {
+    RepoClient.getRepos()
+              .then( (result) => {
         this.setState({repos: result})
     });
   }

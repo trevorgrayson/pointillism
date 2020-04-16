@@ -5,8 +5,8 @@ from .githubauth import GitHubAuth
 from ldapauth import LdapAuth
 from config import LDAP_HOST, ADMIN_USER, ADMIN_PASS, LDAP_BASE_DN
 
-client = GitHubAuth(client_id=GITHUB_CLIENT_ID, 
-                    secret=GITHUB_SECRET)
+gitclient = GitHubAuth(client_id=GITHUB_CLIENT_ID,
+                       secret=GITHUB_SECRET)
 
 
 github_routes = Blueprint('github_routes', __name__)
@@ -19,7 +19,7 @@ def welcome():
 
 @github_routes.route('/login')
 def login():
-    return redirect(client.login())
+    return redirect(gitclient.login())
     
 
 @github_routes.route('/auth')
@@ -30,23 +30,25 @@ def auth():
         return 400, "missing github `code`"
     # if code is not ...
 
-    USERS = LdapAuth(LDAP_HOST, LDAP_BASE_DN, ADMIN_USER, ADMIN_PASS)
-    auth = client.auth_webhook(code, state)
-    token = auth['access_token']
+    ldapclient = LdapAuth(LDAP_HOST, LDAP_BASE_DN, ADMIN_USER, ADMIN_PASS)
+    event = gitclient.auth_webhook(code, state)
+    token = event.get('access_token')
+    if token is None:
+        return '{"message": "token not found."}', 400
 
     # get or create user
     github_user = GitHubAuth.me(token)
     github_login = github_user['login']
-    user = USERS.search(username=github_login)
+    user = ldapclient.search(username=github_login)
     # save auth id
     if len(user) == 0:
         # prompt user for name?
-        user = USERS.create(github_login)
+        user = ldapclient.create(github_login)
     else:
         user = user[0]
 
     user.attributes = {'givenName': token}
-    USERS.update(user)
+    ldapclient.update(user)
 
     response = make_response(redirect('/'))
     # TODO give them a pointillism account id

@@ -11,14 +11,12 @@ v1_routes = Blueprint('api_v1', __name__)
 def create():
     me = get_me()
     repo = request.form.get('repo')
-
     if repo:
         repo = repo.split('/')
     else:
         raise Exception("github `repo` variable required.")
 
     base_dn = GitHubRepo.create(*repo, base_dn=f'cn={me.cn}')
-
     if base_dn:
         return fmt({"message": "OK"})
 
@@ -26,7 +24,6 @@ def create():
 @v1_routes.route('/repos', methods=['get'])
 def index():
     me = get_me()
-
     if me:
         repos = GitHubRepo.of(me.name)
         return fmt(list(map(lambda r: r.as_json, repos)))

@@ -54,7 +54,7 @@ class LdapAuth:
             return self.conn
         except core.exceptions.LDAPSocketOpenError as err:
             LOG.error(err)
-            return False
+            raise err
 
     def create(self, username, password=None):
         new_cn = cn_for(username, self.base_dn)
@@ -77,7 +77,7 @@ class LdapAuth:
 
             if not conn.bind():
                 LOG.error(conn.result)
-                return False
+                return []
 
             conn.search(self.base_dn,
                         search_filter=search_filter,
@@ -86,13 +86,11 @@ class LdapAuth:
 
             results = conn.response
             # conn.unbind()
-            print(results)
             return list(map(record2user, results))
-            # return User(name=username, authentic=None)
 
         except core.exceptions.LDAPSocketOpenError as err:
             LOG.error(err)
-            return False
+            return []
 
     def delete(self, user):
         conn = self.connect()
