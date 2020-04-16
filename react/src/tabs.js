@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TabNav({repos}) {
+export default function TabNav({host, domain, repos}) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -68,7 +68,7 @@ export default function TabNav({repos}) {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <Manifesto/>
+        <Manifesto host={host} domain={domain}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <About/>
