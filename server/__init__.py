@@ -107,7 +107,7 @@ def welcome():
         return template.substitute(
             host=HOST,
             domain=DOMAIN,
-            paypal_id=PAYPAL_CLIENT_ID
+            paypalId=PAYPAL_CLIENT_ID
         )
 
 
