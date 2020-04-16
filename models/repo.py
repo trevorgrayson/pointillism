@@ -20,6 +20,16 @@ class GitHubRepo(LDIFRecord):
         if repo:
             return repo[0]
 
+    @classmethod
+    def of(cls, username, **attributes):
+        """ return repos owned by username """
+        base_dn = f'cn={username},dc=ipsumllc,dc=com'
+        search_filter = f'(ou=*)'
+
+        response = cls._search(base_dn, search_filter, **attributes)
+        response = filter(lambda r: r['dn'].count('ou') == 2, response)
+        return list([Repo(**args) for args in response])
+
 
 class Repo:
     def __init__(self, **record):
@@ -37,3 +47,11 @@ class Repo:
     @property
     def has_owner(self):
         return self.owner is not None
+
+    @property
+    def label(self):
+        repo, org, *tail = self.dn[2:].split(',')
+        repo = repo.split('=')[1]
+        org = org.split('=')[1]
+
+        return f"{org}/{repo}"
