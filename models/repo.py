@@ -55,3 +55,9 @@ class Repo:
         org = org.split('=')[1]
 
         return f"{org}/{repo}"
+
+    @property
+    def as_json(self):
+        return {
+            'name': self.label
+        }

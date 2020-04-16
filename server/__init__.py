@@ -167,7 +167,6 @@ def render_url(path, headers=None, **kwargs):
     if headers:
         params['headers'] = headers
     try:
-        print(str((path, format, params)))
         return response(path, format, **params)
 
     except IOError as err:

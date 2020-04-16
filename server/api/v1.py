@@ -25,4 +25,10 @@ def create():
 
 @v1_routes.route('/repos', methods=['get'])
 def index():
-    return fmt(['trevorgrayson/private'])
+    me = get_me()
+
+    if me:
+        repos = GitHubRepo.of(me.name)
+        return fmt(list(map(lambda r: r.as_json, repos)))
+    else:
+        return fmt({'message': 'unavailable'}), 401
