@@ -20,7 +20,7 @@ def create():
     base_dn = GitHubRepo.create(*repo, base_dn=f'cn={me.cn}')
 
     if base_dn:
-        return 200, fmt({"message": "OK"})
+        return fmt({"message": "OK"})
 
 
 @v1_routes.route('/repos', methods=['get'])

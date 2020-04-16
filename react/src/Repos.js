@@ -12,13 +12,16 @@ class RepoForm extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const data = new FormData(event.target);
+    const data = new FormData(document.forms[0]);
 
-    fetch('/', {
+    fetch('/v1/repos', {
         method: "POST",
         body: data
     }).then((result) => {
-//        console.log(result)
+        // TODO 404
+        alert("OK")
+    }).catch((result) => {
+        alert("FAILED! " + result)
     });
   }
 
@@ -26,8 +29,8 @@ class RepoForm extends React.Component {
     return (
       <form className="repo">
         <h2>Authorize New Repo</h2>
-        <TextField label="Authorize Repository" />
-        <Button variant="contained" color="primary">Authorize</Button>
+        <TextField name="repo" label="Authorize Repository" />
+        <Button variant="contained" color="primary" onClick={this.handleSubmit}>Authorize</Button>
       </form>
     )
   }
