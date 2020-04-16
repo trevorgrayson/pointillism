@@ -43,6 +43,15 @@ function Manifesto({host, domain, paypalId}) {
                 <img src={imageUrl}/>
               </center>
             </div>
+
+            <h2>As a Service</h2>
+            <p>
+              If you want to help keep this economy going during these COVID-19 times,
+              please consider paying a small fee for the hosting services. <b>Early adopters will be favored.</b>
+            </p>
+            <p>
+              <code>pointillism</code> is and always will be <a href="https://github.com/trevorgrayson/pointillism">open source</a>.
+            </p>
         </Typography>
     )
 
