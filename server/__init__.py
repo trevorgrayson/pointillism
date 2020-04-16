@@ -1,13 +1,13 @@
 import logging
 from flask import Flask, request, g, session
 from string import Template
-import werkzeug
 from werkzeug.wrappers import Response
 from renderer import render, Forbidden
 from urllib.parse import urlparse
 from config import DOMAIN, HOST, ENV, STATIC_DIR, PAYPAL_CLIENT_ID
 from server.github import github_routes
 from server.repos import repo_routes
+from server.api.v1 import v1_routes
 from models import GitHubRepo, GitHubUser
 
 from config import ADMIN_USER, ADMIN_PASS, LDAP_BASE_DN, SECRET_KEY
@@ -29,6 +29,7 @@ def headers(user=None, **config):
 
 app = Flask(__name__)
 app.register_blueprint(github_routes, url_prefix='/github')
+app.register_blueprint(v1_routes, url_prefix='/v1')
 app.register_blueprint(auth_routes)
 app.register_blueprint(repo_routes)
 
@@ -117,7 +118,7 @@ def render_relative_path(path):
     format = path[len(path)-3:]
     path = path[:len(path)-4]
     referrer = request.referrer or None
-    if referer is None:
+    if referrer is None:
         return "No referring URL.", 404
 
     host = urlparse(referrer).hostname

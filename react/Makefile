@@ -8,6 +8,7 @@ node_modules: package.json
 
 package: compile
 	npm run build
+	rm -rf ../server/static/static
 	cp -rf build/* ../server/static/
 	cp build/index.html ../public/index.html
 

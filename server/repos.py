@@ -1,9 +1,7 @@
 from flask import Blueprint, redirect, request, make_response
-from config import DOMAIN, HOST, ENV, STATIC_DIR, PAYPAL_CLIENT_ID
-from config import GITHUB_TOKEN, GITHUB_CLIENT_ID, GITHUB_SECRET, GITHUB_STATE
+from config import HOST, STATIC_DIR
 from string import Template
-from ldapauth import LdapAuth
-from config import LDAP_HOST, ADMIN_USER, ADMIN_PASS
+
 from server.base import login_required, get_me
 from models import GitHubRepo
 

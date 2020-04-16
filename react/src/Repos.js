@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import TextField from '@material-ui/core/TextField';
-import { FormControl } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
+import RepoClient from './clients/RepoClient';
 
-
-class RepoForm extends Component {
+class RepoForm extends React.Component {
   constructor(props) {
-   super();
+   super(props);
    this.setState(props)
    this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -15,39 +14,52 @@ class RepoForm extends Component {
     event.preventDefault();
     const data = new FormData(event.target);
 
-    console.log(data)
-
     fetch('/', {
         method: "POST",
         body: data
     }).then((result) => {
-        console.log(result)
+//        console.log(result)
     });
   }
 
   render() {
-      return (
-        <form className="repo">
-          <h2>Authorize New Repo</h2>
-          <TextField label="Authorize Repository" />
-          <Button variant="contained" color="primary">Authorize</Button>
-        </form>
-      )
+    return (
+      <form className="repo">
+        <h2>Authorize New Repo</h2>
+        <TextField label="Authorize Repository" />
+        <Button variant="contained" color="primary">Authorize</Button>
+      </form>
+    )
   }
 }
 
-function Repos(props) {
-  return (
+class Repos extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+        repos: []
+    };
+    (new RepoClient()).getRepos()
+                      .then( (result) => {
+        this.setState({repos: result})
+    });
+  }
+
+  render() {
+    const {repos} = this.state;
+
+    return (
     <div>
       <RepoForm/>
-      <h2>Authorized Repos ({props.repos.length})</h2>
+      <h2>Authorized Repos ({repos.length})</h2>
       <ul className="repos">
-        {props.repos.map((value, index) => {
+        {repos.map((value, index) => {
           return <li key={index}>{value}</li>
         })}
       </ul>
     </div>
-  )
+    )
+  }
 }
   
 export default Repos;
