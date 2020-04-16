@@ -7,9 +7,11 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
+import Manifesto from './Manifesto';
+import GettingStarted from './GettingStarted';
 import Repos from './Repos';
 import About from './About';
-import Manifesto from './Manifesto';
+
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -56,24 +58,27 @@ export default function TabNav({host, domain, repos}) {
     setValue(newValue);
   };
 
-  //<Tab label="Getting Started" {...a11yProps(1)} />
+  //  <Tab label="Your Repositories" {...a11yProps(3)} />
+  //  <Tab label="login" href="/github/login"/>
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
           <Tab label="Mission" {...a11yProps(0)} />
-          <Tab label="About" {...a11yProps(1)} />
-          <Tab label="Your Repositories" {...a11yProps(2)} />
-          <Tab label="login" href="/github/login"/>
+          <Tab label="Getting Started" {...a11yProps(1)} />
+          <Tab label="About" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
         <Manifesto host={host} domain={domain}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <About/>
+        <GettingStarted host={host} domain={domain}/>
       </TabPanel>
       <TabPanel value={value} index={2}>
+        <About/>
+      </TabPanel>
+      <TabPanel value={value} index={3}>
         <Repos repos={repos} />
       </TabPanel>
     </div>

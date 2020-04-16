@@ -12,10 +12,6 @@ digraph Example {
   }
   Camu -> Pointillism
 
-  subgraph cluster_Pointillism {
-    label="Pointillism"
-    Pointillism
-  }
   Pointillism -> DotFile
 
   Users -> {README}

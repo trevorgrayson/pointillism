@@ -11,51 +11,38 @@ function Manifesto({host, domain, paypalId}) {
             </p>
 
             <p>
-            <code>`pointillism`</code> is not just an <a href="https://github.com/trevorgrayson/pointillism">open source project</a>,
+            <code>`pointillism.io`</code> is not just an <a href="https://github.com/trevorgrayson/pointillism">open source project</a>,
              or a service.  It's a different way to express yourself.
             </p>
 
             <ul>
-              <li>GitHub <code>README</code>`s become instantly understandable with diagrams.</li>
+              <li>GitHub <code>README</code>s become instantly understandable with diagrams.</li>
               <li>Wikis stay up to date when they point to <code>pointillism's</code> checked-in links.</li>
             </ul>
 
             <p>
-            When you have your diagrams checked into github, with the project, you can defend your documentation from
-            getting out of date during Pull Reviews.
+            When you have your diagrams checked into github <b>with the project</b>, you can defend your documentation
+            from getting out of date during Pull Reviews.
             </p>
 
             <h2>Getting Started</h2>
-
             <p>
-              No app installation is necessary, just check in <a href="https://en.wikipedia.org/wiki/DOT_(graph_description_language)">dot graphs</a> and start using pointillism urls in your documentation.&nbsp;
-              <code>pointillism</code> image urls reflect github s <code>raw</code> content urls, so you can simply switch the domain to get started.
+              No app installation is necessary. Check in <a href="https://en.wikipedia.org/wiki/DOT_(graph_description_language)">dot graph files</a> and start using pointillism urls in your documentation.&nbsp;
+              <code>pointillism.io</code> image urls reflect github's <code>raw</code> content urls, so it's easy getting started.
             </p>
-
             <p>
-              If I have the github link of <code>https://{host}/trevorgrayson/pointillism/master/example.dot</code> I
-              may just replace <code>{host}</code> with <code>{domain}</code>, and append your desired format (<code>jpg</code>, <code>svg</code>)
+              If you have a github file such as <code>https://{host}/trevorgrayson/pointillism/master/example.dot</code>,
+              just replace <code>{host}</code> with <code>{domain}</code>, and append your desired format (<code>.svg</code>, <code>.png</code>, <code>.jpg</code>).
             </p>
 
             <div class="example">
               <p>
                 <code>&lt;img src="{imageUrl}"/&gt;</code>
               </p>
-              <div>
+              <center>
                 <img src={imageUrl}/>
-              </div>
+              </center>
             </div>
-
-            <h2>As a Service</h2>
-
-            <p>
-              If you want to help keep this economy going during these COVID-19 times,
-              please consider paying a small fee for the hosting services.
-              <b>Early adopters will be favored.</b>
-            </p>
-            <p>
-              <code>pointillism</code> is and always will be <a href="https://github.com/trevorgrayson/pointillism">open source</a>.
-            </p>
         </Typography>
     )
 

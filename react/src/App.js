@@ -17,7 +17,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <h2>pointillism.</h2>
+          <h2>pointillism.io</h2>
         </div>
         <TabNav host={host} domain={domain} repos={repos} />
       </div>
