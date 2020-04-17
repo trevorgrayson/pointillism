@@ -1,5 +1,7 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
+import PayPalExpressButton from './payments/PayPalExpressButton'
+
 
 function Manifesto({host, domain, paypalId}) {
     const imageUrl = `https://${domain}/trevorgrayson/pointillism/master/example.dot.svg`
@@ -52,9 +54,9 @@ function Manifesto({host, domain, paypalId}) {
             <p>
               <code>pointillism</code> is and always will be <a href="https://github.com/trevorgrayson/pointillism">open source</a>.
             </p>
+            <PayPalExpressButton/>
         </Typography>
     )
-
 }
 
 export default Manifesto;
