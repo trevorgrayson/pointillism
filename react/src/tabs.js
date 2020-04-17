@@ -36,6 +36,10 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
+function loggedIn() {
+    return false;
+}
+
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
@@ -58,29 +62,41 @@ export default function TabNav({host, domain, repos}) {
     setValue(newValue);
   };
 
-  //  <Tab label="Your Repositories" {...a11yProps(3)} />
-  //  <Tab label="login" href="/github/login"/>
+  var tabs = [
+    <Tab label="Mission" {...a11yProps(0)} />,
+    <Tab label="Getting Started" {...a11yProps(1)} />,
+    <Tab label="About" {...a11yProps(2)} />
+  ]
+
+  var tabPanels = [
+      <TabPanel value={value} index={0}>
+        <Manifesto host={host} domain={domain}/>
+      </TabPanel>,
+      <TabPanel value={value} index={1}>
+        <GettingStarted host={host} domain={domain}/>
+      </TabPanel>,
+      <TabPanel value={value} index={2}>
+        <About/>
+      </TabPanel>,
+      <TabPanel value={value} index={3}>
+        <Repos repos={repos} />
+      </TabPanel>
+  ]
+
+  if (loggedIn()) {
+    tabs.push(<Tab label="Your Repositories" {...a11yProps(3)} />)
+  } else {
+    // tabs.push(<Tab label="login" href="/github/login"/>)
+  }
+
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-          <Tab label="Mission" {...a11yProps(0)} />
-          <Tab label="Getting Started" {...a11yProps(1)} />
-          <Tab label="About" {...a11yProps(2)} />
+          {tabs}
         </Tabs>
       </AppBar>
-      <TabPanel value={value} index={0}>
-        <Manifesto host={host} domain={domain}/>
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <GettingStarted host={host} domain={domain}/>
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <About/>
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        <Repos repos={repos} />
-      </TabPanel>
+      {tabPanels}
     </div>
   );
 }
