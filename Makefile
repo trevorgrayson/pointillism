@@ -39,11 +39,15 @@ clean:
 	# docker rmi tgrayson/pointillism
 
 image: 
+	cd react && make -f Makefile package
 	docker build -t $(IMAGE) .
 
 imagePush: image
 	echo "$(DOCKER_PASS)" | docker login -u "$(DOCKER_USER)" --password-stdin
 	docker push $(IMAGE)
+
+imageTest:
+	@docker run --name $(PROJECT) --env-file ENV -d -p 5001:5001 --restart=always tgrayson/$(PROJECT):latest
 
 deploy:
 	@# cat this into | ssh pointillism.io
