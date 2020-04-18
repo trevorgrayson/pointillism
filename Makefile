@@ -39,7 +39,7 @@ clean:
 	# docker rmi tgrayson/pointillism
 
 image: 
-	cd react && make -f Makefile package
+	# cd react && make -f Makefile package
 	docker build -t $(IMAGE) .
 
 imagePush: image
