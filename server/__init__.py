@@ -76,9 +76,10 @@ def get_mime(format):
   
 
 def get_params(request):
-    params = {}
-
-    params['token'] = request.cookies.get('github_token')
+    params = {
+        'theme': request.args.get('theme'),
+        'token': request.cookies.get('github_token')  # TODO
+    }
 
     if 'token' in request.args:
         params['token'] = request.args['token']
@@ -200,4 +201,4 @@ def render_crib(path):
 
 
 def run():
-    app.run(host='0.0.0.0', port=5001, debug=IS_DEV) # port doesn't work?
+    app.run(host='0.0.0.0', port=5001, debug=IS_DEV)

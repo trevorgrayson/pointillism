@@ -5,7 +5,8 @@ DOMAIN = environ.get('domain', 'pointillism.io')
 HOST = environ['HOST']
 ENV = environ.get('ENV', "PROD")
 
-STATIC_DIR = getcwd() 
+STATIC_DIR = getcwd()
+THEME_DIR = path.join(STATIC_DIR, "themes")
 
 if not STATIC_DIR or STATIC_DIR == '/':
     STATIC_DIR = '/srv/vhosts/pointillism'

@@ -1,1 +1,7 @@
+rankdir=BT
+splines=ortho
+style=filled
+bgcolor=white
+node[shape=rectangle, fontname="Calibre", fontcolor=white,
      fillcolor="#ea7200", color="#b5b5b5", style="filled, solid"]
+graph[color="#b5b5b5"]
