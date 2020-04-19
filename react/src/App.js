@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import TabNav from './tabs'
-
+import TabNav from './Navigation'
 
 class App extends Component {
   constructor(props) {
@@ -20,6 +19,9 @@ class App extends Component {
           <h2>pointillism.io</h2>
         </div>
         <TabNav host={host} domain={domain} repos={repos} />
+        <div className="footer">
+          <a href="/static/privacy.html">Privacy Policy</a>
+        </div>
       </div>
     );
   }

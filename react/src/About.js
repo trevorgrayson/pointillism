@@ -5,8 +5,8 @@ import Typography from '@material-ui/core/Typography';
 class About extends Component {
   // COVID-19
   //<p>After working in software for over 15 years it becomes obvious that writing software isn't the key challenge, communication is.</p>
-//  <p>trevor has been working in software for over 15 years across start ups, private contracting, and enterprise.</p>
-//        <p>Good Communication remains the biggest predictor of project success.</p>
+  //  <p>trevor has been working in software for over 15 years across start ups, private contracting, and enterprise.</p>
+  //        <p>Good Communication remains the biggest predictor of project success.</p>
   render() {
     return (
       <Typography align="left" paragraph={true}>

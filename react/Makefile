@@ -10,7 +10,9 @@ package: compile
 	npm run build
 	rm -rf ../server/static/static
 	cp -rf build/* ../server/static/
+	cp build/privacy.html ../server/static/privacy.html
 	cp build/index.html ../public/index.html
+
 
 clean:
 	rm -rf build
