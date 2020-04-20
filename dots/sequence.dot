@@ -1,0 +1,35 @@
+SequenceDiagram [frame=true framecolor=steelblue label="Sequence Diagram"] {
+  actor user
+  lifeline ":Web Browser" as web
+  lifeline ":Application" as app autoactivate
+  lifeline ":Auth server" as auth autoactivate
+  entity "Content server" as content autoactivate
+  
+  user --> web "get ressource"
+  activate web
+  web --> app "request access"
+  app -r-> web "Http redirect"
+
+  web --> auth "auth request"
+  auth -r-> web "permission form"
+  web -r-> user "permission form"
+
+  user --> web "user permission"
+  web --> auth "process permission"
+  auth -r-> web "Http redirect"
+  
+  fragment alt "[Permission granted]" {
+    web --> app "authorization code"
+    app --> auth "authorization code"
+    app <-r- auth "access token"
+    app --> content "access protected resources"
+    app <-r- content "protected resources"
+    web <-r- app "protected resources"
+    user <-r- web "protected resources"
+  case "[no permission]"
+    web --> app "no authorization"
+    web <-r- app "resource not available"
+    user <-r- web "resource not available"
+  	deactivate web
+  }
+}
