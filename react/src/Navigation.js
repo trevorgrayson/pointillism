@@ -37,7 +37,7 @@ TabPanel.propTypes = {
 };
 
 function loggedIn() {
-    return false;
+    return true;
 }
 
 function a11yProps(index) {
@@ -86,7 +86,7 @@ export default function TabNav({host, domain, repos}) {
   if (loggedIn()) {
     tabs.push(<Tab label="Your Repositories" {...a11yProps(3)} />)
   } else {
-    // tabs.push(<Tab label="login" href="/github/login"/>)
+    tabs.push(<Tab label="login" href="/github/login"/>)
   }
 
   return (

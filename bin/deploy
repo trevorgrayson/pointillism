@@ -1,1 +1,1 @@
-cat ./deploy.remote.sh | ssh pointillism.io 
+cat ./bin/deploy.remote.sh | ssh pointillism.io 

@@ -1,9 +1,9 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 
-function rawUrl(host, org, username, path) {
-    return "https://{host}/{org}/{username}/raw/{path}"
-}
+// function rawUrl(host, org, username, path) {
+//     return "https://{host}/{org}/{username}/raw/{path}"
+// }
 
 function GettingStarted({host, domain, paypalId}) {
     return (
@@ -41,7 +41,7 @@ function GettingStarted({host, domain, paypalId}) {
                 </code>
             </p>
             <center>
-                <img src="https://pointillism.io/trevorgrayson/pointillism/master/pointillism.dot.svg"/>
+                <img src="https://pointillism.io/trevorgrayson/pointillism/master/pointillism.dot.svg" alt="pointillism architecture" />
             </center>
 
             <h3>step by step</h3>

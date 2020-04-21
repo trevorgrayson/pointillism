@@ -42,7 +42,7 @@ function Manifesto({host, domain, paypalId}) {
                 <code>&lt;img src="{imageUrl}"/&gt;</code>
               </p>
               <center>
-                <img src={imageUrl}/>
+                <img src={imageUrl} alt="example graph" />
               </center>
             </div>
 
