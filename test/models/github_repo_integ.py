@@ -1,4 +1,4 @@
-from models import GitHubRepo
+from point.models import GitHubRepo
 
 
 class TestGithubRepo:

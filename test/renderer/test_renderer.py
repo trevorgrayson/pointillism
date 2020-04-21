@@ -1,4 +1,4 @@
-from renderer import url
+from point.renderer import url
 
 HOST = 'http://lolcatsho.local'
 

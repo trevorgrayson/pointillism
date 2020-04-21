@@ -1,5 +1,5 @@
 from pytest import fixture
-from server import app
+from point.server import app
 
 
 class TestRender:

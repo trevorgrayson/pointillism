@@ -1,6 +1,6 @@
 from werkzeug.routing import BaseConverter
 from werkzeug.wrappers import Response
-from renderer import render, Forbidden
+from point.renderer import render, Forbidden
 from config import HOST, STATIC_DIR
 
 MIME_MAP = {

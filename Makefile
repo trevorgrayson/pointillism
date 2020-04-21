@@ -20,7 +20,7 @@ export PYTHONPATH=.:$(VENV):$(VENV_BUILD)
 
 server: compile
 	@test -n "$(HOST)" # set $$HOST variable
-	$(PYTHON) -m server
+	$(PYTHON) -m point.server
 
 compile: $(VENV)
 $(VENV): requirements.txt requirements/app.txt

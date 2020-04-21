@@ -1,8 +1,8 @@
 from json import dumps as fmt
 from flask import Blueprint, request
 
-from server.base import login_required, get_me
-from models import GitHubRepo
+from point.server.base import get_me
+from point.models import GitHubRepo
 
 v1_routes = Blueprint('api_v1', __name__)
 

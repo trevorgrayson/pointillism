@@ -1,4 +1,4 @@
-from models.base import LDIFRecord
+from point.models.base import LDIFRecord
 
 
 class GitHubRepo(LDIFRecord):

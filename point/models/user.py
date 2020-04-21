@@ -1,7 +1,8 @@
 import uuid
-from models.base import LDIFRecord
+from point.models.base import LDIFRecord
 
 TOKEN = 'employeeNumber'
+SESSION = 'initials'
 
 
 class GitHubUser(LDIFRecord):
@@ -50,9 +51,13 @@ class User:
         if len(self.git_token) > 0:
             self.git_token = self.git_token[0]
         self.token = attrs.get(TOKEN)
+        self.session = attrs.get(SESSION)
 
         if self.token:
             self.token = self.token[-1]
+
+    def is_authentic(self, session_token):
+        return session_token == self.session
 
     def __str__(self):
         return f'User<{self.name}>'

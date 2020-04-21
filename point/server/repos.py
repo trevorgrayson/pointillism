@@ -2,8 +2,8 @@ from flask import Blueprint, redirect, request, make_response
 from config import HOST, STATIC_DIR
 from string import Template
 
-from server.base import login_required, get_me
-from models import GitHubRepo
+from point.server.base import login_required, get_me
+from point.models import GitHubRepo
 
 GITHUB_BASE_DN = 'dc=ipsumllc,dc=com'
 API_HOST = 'https://api.github.com'

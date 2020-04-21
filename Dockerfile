@@ -10,10 +10,10 @@ RUN apk add --update graphviz ttf-freefont build-base openldap-dev python2-dev p
 
 COPY *.py /
 COPY point /point
-COPY server /server
+COPY point/server /server
 COPY ldapauth /ldapauth
-COPY renderer /renderer
-COPY models /models
+COPY point/renderer /renderer
+COPY point/models /models
 COPY requirements.txt /
 COPY requirements /requirements
 COPY public /srv/vhosts/pointillism/
@@ -22,4 +22,4 @@ COPY themes /themes
 RUN pip install -r requirements.txt
 
 ENTRYPOINT ["python"]
-CMD ["-m", "server"]
+CMD ["-m", "point.server"]

@@ -1,4 +1,4 @@
-from models import GitHubUser, User
+from point.models import GitHubUser, User
 
 
 class TestGitHubUser:

@@ -1,8 +1,6 @@
 import os
-import json
 
-import renderer
-
+from point import renderer
 
 HOST = os.environ['HOST']
 

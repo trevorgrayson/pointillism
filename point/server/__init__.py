@@ -4,18 +4,16 @@ from string import Template
 
 from urllib.parse import urlparse
 from config import DOMAIN, HOST, ENV, STATIC_DIR, PAYPAL_CLIENT_ID, LDAP_HOST
-from server.github import github_routes
-from server.repos import repo_routes
-from server.api.v1 import v1_routes
-from models import GitHubRepo, GitHubUser
+from point.server.github import github_routes
+from point.server.repos import repo_routes
+from point.server.api.v1 import v1_routes
+from point.models import GitHubRepo, GitHubUser
 
 from config import ADMIN_USER, ADMIN_PASS, LDAP_BASE_DN, SECRET_KEY
 from ldapauth.flask.routes import auth_routes, register_config
 from .utils import headers, RegexConverter, response
 
 from flask_simpleldap import LDAP
-from server.base import get_me
-
 
 LOG = logging.getLogger(__name__)
 
