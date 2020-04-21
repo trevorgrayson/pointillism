@@ -55,3 +55,11 @@ def auth():
     response.set_cookie(GITHUB_TOKEN, token)
 
     return response
+
+
+@github_routes.route('logout')
+def logout():
+    response = make_response(redirect('/'))
+    response.set_cookie(GITHUB_TOKEN, '', expires=0)
+
+    return response

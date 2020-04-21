@@ -49,7 +49,7 @@ class LdapAuth:
 
             if not self.conn.bind():
                 LOG.error(self.conn.result)
-                return False
+                raise NotVerified(self.conn.result)
 
             return self.conn
         except core.exceptions.LDAPSocketOpenError as err:
@@ -59,11 +59,12 @@ class LdapAuth:
     def create(self, username, password=None):
         new_cn = cn_for(username, self.base_dn)
         conn = self.connect()
+
         conn.add(new_cn, ['inetOrgPerson'], {'sn': new_cn})
         if password is not None:
             modify_password(conn, new_cn, password)
 
-        conn.unbind() # TODO needs to be cleaned up
+        conn.unbind()  # TODO needs to be cleaned up
         return User(name=username, authentic=None)
 
     def search(self, **params):

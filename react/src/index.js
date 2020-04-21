@@ -4,6 +4,6 @@ import App from './App';
 import './index.css';
 
 ReactDOM.render(
-  <App host={document.HOST} domain={document.DOMAIN} paypalId={document.PAYPALID} />,
+  <App host={document.HOST} domain={document.DOMAIN} paypalId={document.PAYPALID} username={document.username} />,
   document.getElementById('root')
 );

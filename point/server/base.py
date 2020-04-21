@@ -7,6 +7,7 @@ LOG = logging.getLogger(__name__)
 
 
 def get_me():
+    """ returns User object"""
     token = request.cookies.get("github_token")
 
     if token is not None:

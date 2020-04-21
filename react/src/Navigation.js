@@ -36,8 +36,8 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-function loggedIn() {
-    return true;
+function loggedIn(username) {
+    return username != undefined && username.length > 0;
 }
 
 function a11yProps(index) {
@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TabNav({host, domain, repos}) {
+export default function TabNav({host, domain, repos, username}) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -83,8 +83,9 @@ export default function TabNav({host, domain, repos}) {
       </TabPanel>
   ]
 
-  if (loggedIn()) {
+  if (loggedIn(username)) {
     tabs.push(<Tab label="Your Repositories" {...a11yProps(3)} />)
+    tabs.push(<Tab label="logout" href="/github/logout" />)
   } else {
     tabs.push(<Tab label="login" href="/github/login"/>)
   }

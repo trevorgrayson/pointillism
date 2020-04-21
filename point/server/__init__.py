@@ -12,7 +12,7 @@ from point.models import GitHubRepo, GitHubUser
 from config import ADMIN_USER, ADMIN_PASS, LDAP_BASE_DN, SECRET_KEY
 from ldapauth.flask.routes import auth_routes, register_config
 from .utils import headers, RegexConverter, response
-
+from point.server.base import get_me
 from flask_simpleldap import LDAP
 
 LOG = logging.getLogger(__name__)
@@ -61,13 +61,19 @@ def get_params(request):
 
 @app.route("/")
 def welcome():
+    me = get_me()
+    username = ''
+    if me:
+        username = me.cn
+
     with open(STATIC_DIR + '/index.html', 'r') as fp:
         template = Template(fp.read())
 
         return template.substitute(
             host=HOST,
             domain=DOMAIN,
-            paypalId=PAYPAL_CLIENT_ID
+            paypalId=PAYPAL_CLIENT_ID,
+            username=username
         )
 
 

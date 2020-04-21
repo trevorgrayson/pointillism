@@ -11,6 +11,7 @@ class App extends Component {
     const host = this.state.host;
     const domain = this.state.domain;
     const paypalId = this.state.paypalId;
+    const username = this.state.username;
     const repos = []
 
     return (
@@ -18,7 +19,7 @@ class App extends Component {
         <div className="App-header">
           <h2>pointillism.io</h2>
         </div>
-        <TabNav host={host} domain={domain} repos={repos} />
+        <TabNav host={host} domain={domain} repos={repos} username={username} />
         <div className="footer">
           <a href="/static/privacy.html">Privacy Policy</a>
         </div>
