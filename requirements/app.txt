@@ -3,4 +3,4 @@ graphviz==0.10.1
 requests==2.21.0
 ldap3==2.6.1
 flask-simpleldap==1.4.0
-PyGithub==1.47
+Pillow==7.1.1
