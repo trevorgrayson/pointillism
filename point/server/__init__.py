@@ -14,6 +14,8 @@ from ldapauth.flask.routes import auth_routes, register_config
 from .utils import headers, RegexConverter, response
 from point.server.base import get_me
 from flask_simpleldap import LDAP
+from point.clients.gitcontent import GitContent
+from point.renderer import render
 
 LOG = logging.getLogger(__name__)
 
@@ -41,7 +43,7 @@ def before_request():
     g.user = None
     if 'username' in session:
         # This is where you'd query your database to get the user info.
-        g.user = {}
+        g.user = get_me()
         # Create a global with the LDAP groups the user is a member of.
         # g.ldap_groups = ldap.get_user_groups(user=session['username'])
 
@@ -57,6 +59,7 @@ def get_params(request):
     # if authorized
     # has resource token
     # TODO include token from account
+    # GitHubRepo.first_repo(org, name)
 
     if 'token' in request.args:
         params['token'] = request.args['token']
@@ -82,46 +85,22 @@ def welcome():
         )
 
 
-@app.route("/rel/<path:path>")
-def render_relative_path(path):
-    """ Find the path on the referring host's server """
-    format = path[len(path)-3:]
-    path = path[:len(path)-4]
-    referrer = request.referrer or None
-    if referrer is None:
-        return "No referring URL.", 404
-
-    host = urlparse(referrer).hostname
-
-    if format in ["dot", "gv"]:
-        path = ".".join((path, format))
-        format = "png"
-
-    try:
-        return response(path, format, host=host, **get_params(request))
-
-    except IOError as err:
-        return str(err), 400
-
-
-@app.route("/.<path:path>\.<regex(\"[a-zA-Z0-9]{3}\"):fileFormat>\.<regex(\"[a-zA-Z0-9]{3}\"):format>")
-def render_url_with_format(path):
-    if format == 'dot': # no filename, use default
-      render_url(".".join((path, fileFormat, "png")))
-
-
 @app.route("/github/<path:path>")
 def render_github_url(path):
     # BUG: don't want to require owner to load first. or do you?
-    org, project, *_tail = path.split('/')
+    org, project, branch, *tail = path.split('/')
+    path = '/'.join(tail)
+    path = path[:len(path)-4]
+    token = None
 
     repo = GitHubRepo.first_repo(org, project)
-    owner = None
-
     if repo and repo.has_owner:
         owner = GitHubUser.first(repo.owner)
+        # if owner: # TODO and is authorized
+        token = owner.git_token
 
-    return render_url(path, headers=headers(user=owner))
+    body = GitContent(token).get(org, project, path)
+    return render(body)
 
 
 @app.route("/<path:path>")

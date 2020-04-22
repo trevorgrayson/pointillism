@@ -35,6 +35,7 @@ class GitHubAuth:
 
         if response.status_code == 200:
             auth = response.json()
+            print(auth)
             return auth
         else:
             raise Exception(f'Upstream service exception: {response.status_code}')

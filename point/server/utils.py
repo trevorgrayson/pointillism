@@ -1,6 +1,6 @@
 from werkzeug.routing import BaseConverter
 from werkzeug.wrappers import Response
-from point.renderer import render, Forbidden
+from point.renderer import get_and_render, Forbidden
 from config import HOST, STATIC_DIR
 
 MIME_MAP = {
@@ -19,7 +19,9 @@ class RegexConverter(BaseConverter):
 
 
 def headers(user=None, **config):
-    heads = {}
+    heads = {
+
+    }
 
     if user and user.git_token:
         heads['Authorization'] = f'token {user.git_token}'
@@ -29,7 +31,7 @@ def headers(user=None, **config):
 
 def response(path, format, host=HOST, **params):
     try:
-        return Response(render(host, path, format, **params),
+        return Response(get_and_render(host, path, format, **params),
                         mimetype="image/{}".format(get_mime(format)))
     except IOError as err:
         with open(STATIC_DIR + '/images/pointillism-404.svg', 'r') as fp:

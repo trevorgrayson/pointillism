@@ -50,7 +50,7 @@ class User:
         self.cn = next(iter(attrs.get('cn')), None)
         self.git_token = attrs.get(GIT_TOKEN)
         if len(self.git_token) > 0:
-            self.git_token = self.git_token[0]
+            self.git_token = self.git_token[-1]
         self.token = attrs.get(PT_SESSION_TOKEN)
         if self.token:
             self.token = self.token[-1]

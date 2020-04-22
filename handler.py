@@ -9,7 +9,7 @@ def render(event, context):
 
     response = {
         "statusCode": 200,
-        "body": renderer.render(HOST, path)
+        "body": renderer.get_and_render(HOST, path)
     }
 
     return response
