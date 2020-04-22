@@ -1,9 +1,11 @@
 from flask import Blueprint, redirect, request, make_response
-from config import GITHUB_TOKEN, GITHUB_CLIENT_ID, GITHUB_SECRET, GITHUB_STATE
+from config import GITHUB_CLIENT_ID, GITHUB_SECRET
 
-from .githubauth import GitHubAuth
+from point.clients.githubauth import GitHubAuth
 from ldapauth import LdapAuth
 from config import LDAP_HOST, ADMIN_USER, ADMIN_PASS, LDAP_BASE_DN
+from point.models.user import GIT_TOKEN, PT_SESSION_TOKEN
+
 
 gitclient = GitHubAuth(client_id=GITHUB_CLIENT_ID,
                        secret=GITHUB_SECRET)
@@ -47,12 +49,12 @@ def auth():
     else:
         user = user[0]
 
-    user.attributes = {'givenName': token}
+    user.attributes = {GIT_TOKEN: token}
     ldapclient.update(user)
 
     response = make_response(redirect('/'))
     # TODO give them a pointillism account id
-    response.set_cookie(GITHUB_TOKEN, token)
+    response.set_cookie(PT_SESSION_TOKEN, token)
 
     return response
 
@@ -60,6 +62,6 @@ def auth():
 @github_routes.route('logout')
 def logout():
     response = make_response(redirect('/'))
-    response.set_cookie(GITHUB_TOKEN, '', expires=0)
+    response.set_cookie(PT_SESSION_TOKEN, '', expires=0)
 
     return response

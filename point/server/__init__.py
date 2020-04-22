@@ -35,6 +35,7 @@ app.url_map.converters['regex'] = RegexConverter
 
 ldap = LDAP()
 
+
 @app.before_request
 def before_request():
     g.user = None
@@ -50,14 +51,18 @@ IS_DEV = (ENV == "develop")
 
 def get_params(request):
     params = {
-        'theme': request.args.get('theme'),
-        'token': request.cookies.get('github_token')  # TODO
+        'theme': request.args.get('theme')
     }
+
+    # if authorized
+    # has resource token
+    # TODO include token from account
 
     if 'token' in request.args:
         params['token'] = request.args['token']
 
     return params
+
 
 @app.route("/")
 def welcome():
