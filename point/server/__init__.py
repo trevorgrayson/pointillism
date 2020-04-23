@@ -96,8 +96,8 @@ def render_github_url(path):
     repo = GitHubRepo.first_repo(org, project)
     if repo and repo.has_owner:
         if repo.requires_token and \
-            repo.token is not None and \
-            repo.token != request.args.get('token'):
+          repo.token is not None and \
+          repo.token != request.args.get('token'):
             return '{"message": "Unauthorized. Provide repo `token` param"}', 401
 
         owner = GitHubUser.first(repo.owner)
