@@ -108,7 +108,7 @@ def render_github_url(path):
         return render(body)
     except GithubException as err:
         LOG.error(err)
-        return str(err), 404
+        return "Not Found.", 404
 
 
 @app.route("/<path:path>")
@@ -133,7 +133,7 @@ def render_url(path, headers=None, **kwargs):
         return render(body)
     except GithubException as err:
         LOG.error(err)
-        return str(err), 404
+        return "Not found.", 404
     # format = path[len(path)-3:]
     # path = path[:len(path)-4]
     #
