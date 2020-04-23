@@ -109,21 +109,39 @@ def render_github_url(path):
 
 @app.route("/<path:path>")
 def render_url(path, headers=None, **kwargs):
-    format = path[len(path)-3:]
-    path = path[:len(path)-4]
+    org, project, branch, *tail = path.split('/')
+    path = '/'.join(tail)
+    path = path[:len(path) - 4]
+    token = None
 
-    if format in ["dot", "gv"]:
-        path = ".".join((path, format))
-        format = "png"
+    repo = GitHubRepo.first_repo(org, project)
+    if repo and repo.has_owner:
+        if repo.requires_token and \
+                repo.token is not None and \
+                repo.token != request.args.get('token'):
+            return '{"message": "Unauthorized. Provide repo `token` param"}', 401
 
-    params = get_params(request)
-    if headers:
-        params['headers'] = headers
-    try:
-        return response(path, format, **params)
+        owner = GitHubUser.first(repo.owner)
+        token = owner.git_token
 
-    except IOError as err:
-        return str(err), 400
+    body = GitContent(token).get(org, project, path)
+    return render(body)
+
+    # format = path[len(path)-3:]
+    # path = path[:len(path)-4]
+    #
+    # if format in ["dot", "gv"]:
+    #     path = ".".join((path, format))
+    #     format = "png"
+    #
+    # params = get_params(request)
+    # if headers:
+    #     params['headers'] = headers
+    # try:
+    #     return response(path, format, **params)
+    #
+    # except IOError as err:
+    #     return str(err), 400
 
 
 def run():
