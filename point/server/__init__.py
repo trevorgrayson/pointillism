@@ -111,8 +111,10 @@ def render_github_url(path):
         return "Not Found.", 404
 
 
-@app.route("/<string:org>/<string:project>/<string:branch>/<path:path>")
-def render_url(org, project, branch, path):
+@app.route("/<path:path>")
+def render_url(path):
+    org, project, branch, *tail = path.split('/')
+    path = '/'.join(tail)
     path = path[:len(path) - 4]
     token = None
 
