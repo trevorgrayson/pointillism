@@ -57,7 +57,7 @@ class Repos extends React.Component {
       <h2>Authorized Repos ({repos.length})</h2>
       <ul className="repos">
         {repos.map((value, index) => {
-          return <li key={index}>{value.name}</li>
+          return <li key={index}>{value.name} <input type="hidden" value="{value.token}" /></li>
         })}
       </ul>
     </div>

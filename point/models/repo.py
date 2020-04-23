@@ -77,5 +77,6 @@ class Repo:
     @property
     def as_json(self):
         return {
-            'name': self.label
+            'name': self.label,
+            'token': self.token
         }
