@@ -30,7 +30,14 @@
   display: inline;
 }
 
-.repos {
+.repos li {
+  list-style: none;
   font-size: 1.3em;
   line-height: 1.5em;
+}
+
+.repos li input {
+  padding-left: 10px;
+  border: none;
+  border-bottom: 1px solid #666;
 }

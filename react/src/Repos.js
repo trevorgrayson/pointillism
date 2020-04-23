@@ -25,6 +25,10 @@ class RepoForm extends React.Component {
     });
   }
 
+  toggleVisible(event) {
+    event.input.type = ''
+  }
+
   render() {
     return (
       <form className="repo">
@@ -57,7 +61,8 @@ class Repos extends React.Component {
       <h2>Authorized Repos ({repos.length})</h2>
       <ul className="repos">
         {repos.map((value, index) => {
-          return <li key={index}>{value.name} <input type="hidden" value="{value.token}" /></li>
+          return <li key={index}>{value.name} 
+            <input type="password" value={value.token} onClick={this.toggleVisible} /></li>
         })}
       </ul>
     </div>
