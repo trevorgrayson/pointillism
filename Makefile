@@ -59,7 +59,7 @@ versionBump:
 	git tag $(VERSION_NEW)
 	git push --tags
 test: compileAll
-	$(PYTHON) -m pytest
+	$(PYTHON) -m pytest --cov=point
 
 integ: compileAll
 	$(PYTHON) -s -m pytest -s test/models/*_integ.py
