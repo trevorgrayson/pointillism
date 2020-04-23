@@ -86,6 +86,7 @@ def welcome():
 
 
 @app.route("/github/<path:path>")
+@app.route("/<path:path>")
 def render_github_url(path):
     LOG.debug("REQUEST /github: {path}")
     # BUG: don't want to require owner to load first. or do you?
@@ -112,7 +113,7 @@ def render_github_url(path):
         return "Not Found.", 404
 
 
-@app.route("/<path:path>")
+
 def render_url(path):
     LOG.debug("REQUEST /root: {path}")
     org, project, branch, *tail = path.split('/')

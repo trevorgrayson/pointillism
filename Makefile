@@ -69,7 +69,7 @@ console:
 	$(PYTHON) 
 
 smoke:
-	$(PYTHON) -m pytest test/smoke
+	$(PYTHON) -m pytest test/smoke/mvp_smoke.py
 
 validate: test integ image
 
