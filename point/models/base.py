@@ -1,5 +1,5 @@
 import logging
-from ldap3 import Reader
+
 from ldap3 import Server, Connection, core, extend, MODIFY_REPLACE, MODIFY_ADD, HASHED_SALTED_SHA, SUBTREE
 from ldap3.utils.hashed import hashed
 
@@ -15,8 +15,10 @@ SERVER = Server(LDAP_HOST, use_ssl=False, port=389, connect_timeout=2)
 
 SUCCESS_RESPONSES = ['success', 'entryAlreadyExists']
 
+
 def repo_dn(base, vendor, username, org, repo):
     return f'ou={repo},ou={org},ou={username},dc={vendor},{base}'
+
 
 TYPE_MAP = {
     'ou': 'organizationalUnit',
