@@ -1,5 +1,6 @@
 import requests
 import logging
+from os.path import join
 
 LOG = logging.getLogger(__name__)
 API_BASE = 'https://api.github.com'
@@ -24,7 +25,7 @@ class GitContent:
         return heads
 
     def get(self, owner, repo, path):
-        uri = '/'.join((API_BASE, 'repos', owner, repo, 'contents', path))
+        uri = join(API_BASE, 'repos', owner, repo, 'contents', path)
         LOG.info(uri)
         LOG.info(self.headers())
         response = requests.get(uri, headers=self.headers())
