@@ -1,4 +1,5 @@
 import logging
+from os.path import join
 from flask import Flask, request, g, session
 from string import Template
 
@@ -91,7 +92,8 @@ def render_github_url(path):
     LOG.debug("REQUEST /github: {path}")
     # BUG: don't want to require owner to load first. or do you?
     org, project, branch, *tail = path.split('/')
-    path = '/'.join(tail)
+
+    path = join(*tail)
     path = path[:len(path)-4]
     token = None
 
@@ -106,12 +108,12 @@ def render_github_url(path):
         token = owner.git_token
 
     try:
+        LOG.debug(f"fetching {org}, {project}, {path}")
         body = GitContent(token).get(org, project, path)
         return render(body)
     except GithubException as err:
         LOG.error(err)
         return "Not Found.", 404
-
 
 
 def render_url(path):
