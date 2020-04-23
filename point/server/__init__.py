@@ -98,11 +98,11 @@ def render_github_url(path):
         if repo.requires_token and \
             repo.token is not None and \
             repo.token != request.args.get('token'):
-            raise PermissionError("This repository needs an appropriate token in the query to be accessed.")
+            return '{"message": "Unauthorized. Provide repo `token` param"}', 401
 
         owner = GitHubUser.first(repo.owner)
         token = owner.git_token
-
+ 
     body = GitContent(token).get(org, project, path)
     return render(body)
 
