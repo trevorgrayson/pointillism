@@ -8,6 +8,7 @@ API_BASE = 'https://api.github.com'
 class GithubException(Exception):
     pass
 
+
 class GitContent:
     def __init__(self, token=None):
         self.token = token
@@ -32,8 +33,3 @@ class GitContent:
             return response.text
         else:
             raise GithubException(response.text)
-
-
-if __name__ == '__main__':
-    content = GitContent('547aab467888465fd508cc065105a31e5aabc7fc').get('trevorgrayson', 'private', 'example.dot')
-    print(content)

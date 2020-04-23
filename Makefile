@@ -6,6 +6,7 @@ PYTHON := python3
 VENV = .venv
 VENV_BUILD = .venv.build
 HOST ?= https://raw.githubusercontent.com
+TEST_HOST ?= http://localhost:5001
 PROJECT=pointillism
 
 export HOST
@@ -66,6 +67,9 @@ integ: compileAll
 
 console:
 	$(PYTHON) 
+
+smoke:
+	$(PYTHON) -m pytest test/smoke
 
 validate: test integ image
 
