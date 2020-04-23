@@ -131,7 +131,7 @@ def render_url(org, project, branch, path):
         return render(body)
     except GithubException as err:
         LOG.error(err)
-        return "Not found.", 404
+        return "Not Found.", 404
     # format = path[len(path)-3:]
     # path = path[:len(path)-4]
     #
