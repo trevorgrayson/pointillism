@@ -5,6 +5,9 @@ LOG = logging.getLogger(__name__)
 API_BASE = 'https://api.github.com'
 
 
+class GithubException(Exception):
+    pass
+
 class GitContent:
     def __init__(self, token=None):
         self.token = token
@@ -25,7 +28,10 @@ class GitContent:
         LOG.info(self.headers())
         response = requests.get(uri, headers=self.headers())
         # TODO if 200
-        return response.text
+        if response.status_code == 200:
+            return response.text
+        else:
+            raise GithubException(response.text)
 
 
 if __name__ == '__main__':

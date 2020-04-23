@@ -14,7 +14,7 @@ from ldapauth.flask.routes import auth_routes, register_config
 from .utils import headers, RegexConverter, response
 from point.server.base import get_me
 from flask_simpleldap import LDAP
-from point.clients.gitcontent import GitContent
+from point.clients.gitcontent import GitContent, GithubException
 from point.renderer import render
 
 LOG = logging.getLogger(__name__)
@@ -102,9 +102,13 @@ def render_github_url(path):
 
         owner = GitHubUser.first(repo.owner)
         token = owner.git_token
- 
-    body = GitContent(token).get(org, project, path)
-    return render(body)
+
+    try:
+        body = GitContent(token).get(org, project, path)
+        return render(body)
+    except GithubException as err:
+        LOG.error(err)
+        return str(err), 404
 
 
 @app.route("/<path:path>")
@@ -124,9 +128,12 @@ def render_url(path, headers=None, **kwargs):
         owner = GitHubUser.first(repo.owner)
         token = owner.git_token
 
-    body = GitContent(token).get(org, project, path)
-    return render(body)
-
+    try:
+        body = GitContent(token).get(org, project, path)
+        return render(body)
+    except GithubException as err:
+        LOG.error(err)
+        return str(err), 404
     # format = path[len(path)-3:]
     # path = path[:len(path)-4]
     #
