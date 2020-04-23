@@ -95,8 +95,12 @@ def render_github_url(path):
 
     repo = GitHubRepo.first_repo(org, project)
     if repo and repo.has_owner:
+        if repo.requires_token and \
+            repo.token is not None and \
+            repo.token != request.args.get('token'):
+            raise PermissionError("This repository needs an appropriate token in the query to be accessed.")
+
         owner = GitHubUser.first(repo.owner)
-        # if owner: # TODO and is authorized
         token = owner.git_token
 
     body = GitContent(token).get(org, project, path)

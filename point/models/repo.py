@@ -1,9 +1,19 @@
+import uuid
 from point.models.base import LDIFRecord
+
+REPO_TOKEN = 'street'
 
 
 class GitHubRepo(LDIFRecord):
     type = 'ou'
-    attributes = ['ou', 'description']
+    attributes = ['ou', 'description', REPO_TOKEN]
+
+    @classmethod
+    def create(cls, *node, **attributes):
+        eid = attributes.get(REPO_TOKEN, str(uuid.uuid4()))
+        attributes[REPO_TOKEN] = eid
+
+        return super(GitHubRepo, cls).create(*node, **attributes)
 
     @classmethod
     def search_repo(cls, org, name, **attributes):
@@ -33,8 +43,12 @@ class GitHubRepo(LDIFRecord):
 
 class Repo:
     def __init__(self, **record):
+        print(record)
         attrs = record.get('attributes', {})
         self.name = next(iter(attrs.get('ou')), None)
+        self.token = attrs.get(REPO_TOKEN)
+        if self.token:
+            self.token = self.token[-1]
         self.dn = record.get('dn')
 
     @property
@@ -48,6 +62,10 @@ class Repo:
     def has_owner(self):
         return self.owner is not None
 
+    @property
+    def requires_token(self):
+        return self.token is not None
+    
     @property
     def label(self):
         repo, org, *tail = self.dn[2:].split(',')
