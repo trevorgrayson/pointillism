@@ -37,7 +37,7 @@ function Manifesto({host, domain, paypalId}) {
               just replace <code>{host}</code> with <code>{domain}</code>, and append your desired format (<code>.svg</code>, <code>.png</code>, <code>.jpg</code>).
             </p>
 
-            <div class="example">
+            <div className="example">
               <p>
                 <code>&lt;img src="{imageUrl}"/&gt;</code>
               </p>

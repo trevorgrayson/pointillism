@@ -25,10 +25,6 @@ class RepoForm extends React.Component {
     });
   }
 
-  toggleVisible(event) {
-    event.input.type = ''
-  }
-
   render() {
     return (
       <form className="repo">
@@ -44,12 +40,41 @@ class Repos extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        repos: []
+        repos: [
+          {"name": "trevorgrayson/privito", "token": "123token"}
+        ]
     };
     RepoClient.getRepos()
               .then( (result) => {
         this.setState({repos: result})
     });
+
+    this.onDelete = this.onDelete.bind(this)
+    this.toggleVisible = this.toggleVisible.bind(this)
+  }
+
+  toggleVisible(event) {
+    if(event.target.type === "text") {
+      event.target.type = "password"
+    } else {
+      event.target.type = "text"
+    }
+  }
+
+  onDelete(event) {
+    const repoName = event //hack
+    const response = confirm("Deleting '"+repoName+"'. Are you sure?")
+
+    if (response) {
+      alert("deleting...")
+      fetch('/v1/repos/' + repoName, {
+        method: "DELETE"
+      }).then((result) => {
+        alert("OK")
+      }).catch((result) => {
+        alert("failed")
+      })
+    }
   }
 
   render() {
@@ -61,8 +86,11 @@ class Repos extends React.Component {
       <h2>Authorized Repos ({repos.length})</h2>
       <ul className="repos">
         {repos.map((value, index) => {
-          return <li key={index}>{value.name} 
-            <input type="password" value={value.token} onClick={this.toggleVisible} /></li>
+          return <li key={index}>
+            <span>{value.name}</span>
+            <input type="password" value={value.token} onClick={this.toggleVisible} />
+            <Button color="secondary" onClick={() => this.onDelete(value.name)}>Delete</Button>
+          </li>
         })}
       </ul>
     </div>
