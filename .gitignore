@@ -23,6 +23,7 @@ var/
 # Serverless directories
 .serverless
 venv
+venv/*
 .venv
 .venv.build
 .idea/*
