@@ -28,7 +28,7 @@ venv/*
 .venv.build
 .idea/*
 .coverage
-point/server/static/static
+point/server/static/static/*
 point/server/static/asset-manifest.json
 point/server/static/*
 public/*
