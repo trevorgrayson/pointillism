@@ -31,6 +31,24 @@ class LDIFRecord:
         return TYPE_MAP[cls.type]
 
     @classmethod
+    def delete(cls, dn):
+        """
+        Arguments:
+        dn - can be a dn str, or LDIFRecord object.
+        Returns: True on success. Raises on failure
+        """
+        # TODO: duck typing?
+        if getattr(dn, 'dn'):
+            dn = dn.dn
+
+        CONN.bind()
+        if CONN.delete(dn):
+            return True
+        else:
+            desc = CONN.result['description']
+            raise Exception(f'Request Exception: {desc}')
+
+    @classmethod
     def create(cls, *node, **attributes):
         dn = cls.base_dn
         if 'base_dn' in attributes:

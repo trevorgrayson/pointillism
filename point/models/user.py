@@ -46,6 +46,7 @@ class GitHubUser(LDIFRecord):
             user.balance += amount
             self.update(user)
 
+
 class User:
     """
     github token: givenName

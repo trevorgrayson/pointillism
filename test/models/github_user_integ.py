@@ -2,6 +2,9 @@ from point.models import GitHubUser, User
 
 
 class TestGitHubUser:
+    """
+    NOTE: NOT ASYNC COMPAT
+    """
     def test_create(self):
         cn = 'testuser'
         create_result = GitHubUser.create('testuser', sn='testsn')
@@ -15,3 +18,7 @@ class TestGitHubUser:
     def test_first(self):
         results = GitHubUser.first('trevorgrayson')
         assert results.name == 'trevorgrayson'
+
+    def test_delete(self):
+        testuser = GitHubUser.first('testuser')
+        assert GitHubUser.delete(testuser)
