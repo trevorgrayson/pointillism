@@ -36,6 +36,7 @@ $(VENV_BUILD): requirements/build.txt
 clean:
 	find . -name "*.pyc" -delete
 	rm -rf $(VENV) $(VENV_BUILD)
+	rm -rf point/server/static/*
 	# docker rm pointillism
 	# docker rmi tgrayson/pointillism
 
