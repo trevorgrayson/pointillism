@@ -10,6 +10,9 @@ class GitHubUser(LDIFRecord):
     type = 'cn'
     attributes = ['sn', 'cn', 'description', GIT_TOKEN, PT_SESSION_TOKEN]
 
+    def __init__(self, *users):
+        self.users = users
+
     @classmethod
     def create(cls, *node, **attributes):
         eid = attributes.get(PT_SESSION_TOKEN, str(uuid.uuid4()))
@@ -37,6 +40,11 @@ class GitHubUser(LDIFRecord):
         response = cls._search(base_dn, search_filter, **attributes)
         return list([User(**args) for args in response])
 
+    def pays(self, amount):
+        for user in self.users:
+            raise NotImplementedError("Need to update user")
+            user.balance += amount
+            self.update(user)
 
 class User:
     """
