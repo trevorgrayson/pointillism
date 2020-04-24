@@ -52,8 +52,7 @@ imageTest: image
 	@docker run --name $(PROJECT) --env-file ENV -d -p 5001:5001 --restart=always tgrayson/$(PROJECT):latest
 
 deploy:
-	@# cat this into | ssh pointillism.io
-	@echo "~/bin/deploy pointillism; $(shell paste -sd ';' ENV); docker run --name $(PROJECT) -e ADMIN_USER -e ADMIN_PASS -e LDAP_HOST -e GITHUB_SECRET -e GITHUB_CLIENT_ID -e PAYPAL_CLIENT_ID -d -p 5001:5001 --restart=always tgrayson/$(PROJECT):latest"
+	./bin/deploy 
 
 versionBump:
 	git pull --tags
