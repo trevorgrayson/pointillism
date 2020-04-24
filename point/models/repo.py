@@ -43,7 +43,6 @@ class GitHubRepo(LDIFRecord):
 
 class Repo:
     def __init__(self, **record):
-        print(record)
         attrs = record.get('attributes', {})
         self.name = next(iter(attrs.get('ou', [])), None)
         self.token = attrs.get(REPO_TOKEN)
