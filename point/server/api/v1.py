@@ -29,3 +29,14 @@ def index():
         return fmt(list(map(lambda r: r.as_json, repos)))
     else:
         return fmt({'message': 'unavailable'}), 401
+
+@v1_routes.route('/repos/<string:owner>/<string:repo>', methods=['DELETE'])
+def repo_delete(owner, repo):
+    me = get_me()
+
+    repo = GitHubRepo.first_repo(owner, repo)
+    if repo.owner == me.name:
+        GitHubRepo.delete(repo.dn)  # raises
+        return '{"message": "OK"}'
+    else:
+        return '{"message": "unauthorized"}', 401

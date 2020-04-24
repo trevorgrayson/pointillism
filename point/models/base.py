@@ -38,7 +38,7 @@ class LDIFRecord:
         Returns: True on success. Raises on failure
         """
         # TODO: duck typing?
-        if getattr(dn, 'dn'):
+        if hasattr(dn, 'dn'):
             dn = dn.dn
 
         CONN.bind()

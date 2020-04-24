@@ -66,7 +66,6 @@ class Repos extends React.Component {
     const response = confirm("Deleting '"+repoName+"'. Are you sure?")
 
     if (response) {
-      alert("deleting...")
       fetch('/v1/repos/' + repoName, {
         method: "DELETE"
       }).then((result) => {
