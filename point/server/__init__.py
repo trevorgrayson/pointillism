@@ -2,20 +2,22 @@ import logging
 from os.path import join
 from flask import Flask, request, g, session
 from string import Template
+from flask_simpleldap import LDAP
 
-from config import DOMAIN, HOST, ENV, STATIC_DIR, PAYPAL_CLIENT_ID, LDAP_HOST
-from point.server.github import github_routes
-from point.server.repos import repo_routes
-from point.server.api.v1 import v1_routes
-from point.models import GitHubRepo, GitHubUser
+from .github import github_routes
+from .repos import repo_routes
+from .api.v1 import v1_routes
+from .paypal import paypal_routes
 
-from config import ADMIN_USER, ADMIN_PASS, LDAP_BASE_DN, SECRET_KEY
 from ldapauth.flask.routes import auth_routes, register_config
 from .utils import headers, RegexConverter, response
+from point.models import GitHubRepo, GitHubUser
 from point.server.base import get_me
-from flask_simpleldap import LDAP
 from point.clients.gitcontent import GitContent, GithubException
 from point.renderer import render
+
+from config import (ADMIN_USER, ADMIN_PASS, LDAP_BASE_DN, SECRET_KEY,
+    DOMAIN, HOST, ENV, STATIC_DIR, PAYPAL_CLIENT_ID, LDAP_HOST)
 
 LOG = logging.getLogger(__name__)
 
@@ -24,6 +26,7 @@ app.register_blueprint(github_routes, url_prefix='/github')
 app.register_blueprint(v1_routes, url_prefix='/v1')
 app.register_blueprint(auth_routes)
 app.register_blueprint(repo_routes)
+app.register_blueprint(paypal_routes)
 
 register_config(app,
                 ldap_host=LDAP_HOST,

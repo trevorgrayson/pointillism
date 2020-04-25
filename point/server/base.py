@@ -12,7 +12,7 @@ def get_me():
     token = request.cookies.get(PT_SESSION_TOKEN)
 
     if token is not None:
-        user = GitHubUser.search_token(token)
+        user = GitHubUser.find(token)
 
         if user:
             return user[0]
