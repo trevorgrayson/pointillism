@@ -97,7 +97,7 @@ def render_github_url(path):
     path = path[:len(path)-4]
     token = None
 
-    repo = GitHubRepo.first_repo(org, project)
+    repo = GitHubRepo.first(org, project)
     if repo and repo.has_owner:
         if repo.requires_token and \
           repo.token is not None and \
@@ -123,7 +123,7 @@ def render_url(path):
     path = path[:len(path) - 4]
     token = None
 
-    repo = GitHubRepo.first_repo(org, project)
+    repo = GitHubRepo.first(org, project)
     if repo and repo.has_owner:
         if repo.requires_token and \
                 repo.token is not None and \

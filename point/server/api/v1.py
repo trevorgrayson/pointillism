@@ -34,7 +34,7 @@ def index():
 def repo_delete(owner, repo):
     me = get_me()
 
-    repo = GitHubRepo.first_repo(owner, repo)
+    repo = GitHubRepo.first(owner, repo)
     if repo.owner == me.name:
         GitHubRepo.delete(repo.dn)  # raises
         return '{"message": "OK"}'

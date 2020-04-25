@@ -3,7 +3,7 @@ from point.models import GitHubRepo
 
 class TestGithubRepo:
     def test_repo_owner(self):
-        repo = GitHubRepo.first_repo('trevorgrayson', 'private')
+        repo = GitHubRepo.first('trevorgrayson', 'private')
         assert repo.owner == 'trevorgrayson'
 
     def test_repos_of(self):
