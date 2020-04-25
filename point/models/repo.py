@@ -1,5 +1,5 @@
 import uuid
-from point.models.base import LDIFRecord
+from ldapauth.base import LDIFRecord
 
 REPO_TOKEN = 'street'
 
@@ -17,7 +17,6 @@ class GitHubRepo(LDIFRecord):
 
     @classmethod
     def search(cls, org, name, **attributes):
-        # base_dn = f'ou={org},cn={user},dc=ipsumllc,dc=com' # cls.base_dn
         base_dn = f'dc=ipsumllc,dc=com'
         search_filter = f'(ou={name})'
 

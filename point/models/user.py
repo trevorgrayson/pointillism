@@ -1,5 +1,5 @@
 import uuid
-from point.models.base import LDIFRecord
+from ldapauth.base import LDIFRecord
 
 PT_SESSION_TOKEN = 'employeeNumber'
 SESSION = 'initials'
@@ -35,7 +35,8 @@ class GitHubUser(LDIFRecord):
         #     base_dn = ','.join((attributes['base_dn'], base_dn))
         #     del attributes['base_dn'] 
         search = f'{GIT_TOKEN}={token}'
-        search_filter = f'({GIT_TOKEN}={token})' # f'(&(objectClass={cls.type_name()})({search}))'
+        search_filter = f'({GIT_TOKEN}={token})'
+        # f'(&(objectClass={cls.type_name()})({search}))'
 
         response = cls._search(base_dn, search_filter, **attributes)
         return list([User(**args) for args in response])

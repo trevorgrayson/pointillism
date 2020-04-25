@@ -1,4 +1,4 @@
-from point.models.base import GitHubRepo, GitHubUser
+from ldapauth.base import GitHubRepo, GitHubUser
 
 
 class TestLDIFRecord:

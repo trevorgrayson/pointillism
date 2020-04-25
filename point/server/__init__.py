@@ -3,7 +3,6 @@ from os.path import join
 from flask import Flask, request, g, session
 from string import Template
 
-from urllib.parse import urlparse
 from config import DOMAIN, HOST, ENV, STATIC_DIR, PAYPAL_CLIENT_ID, LDAP_HOST
 from point.server.github import github_routes
 from point.server.repos import repo_routes
