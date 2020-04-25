@@ -1,6 +1,7 @@
 import logging
 from flask import Blueprint, redirect, request, make_response
 from point.models import GitHubUser
+<<<<<<< HEAD
 
 LOG = logging.getLogger(__name__)
 
@@ -15,7 +16,6 @@ class PayPalEvent:
         self.amount = attrs.get('resource', {}).get('amount', {}).get('total')
         self.email = None
         # self. = attrs.get('resource/amount/currency
-
 
 paypal_routes = Blueprint('paypal_routes', __name__)
 
