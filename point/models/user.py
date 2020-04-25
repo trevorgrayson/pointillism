@@ -29,7 +29,7 @@ class GitHubUser(LDIFRecord):
         return next(iter([User(**args) for args in response]))
 
     @classmethod
-    def search_token(cls, token, **attributes):
+    def find(cls, token=None, **attributes):
         base_dn = 'dc=ipsumllc,dc=com' # cls.base_dn
         # if 'base_dn' in attributes:
         #     base_dn = ','.join((attributes['base_dn'], base_dn))
