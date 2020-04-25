@@ -1,5 +1,5 @@
 import uuid
-from point.models.base import LDIFRecord
+from ldapauth.base import LDIFRecord
 
 REPO_TOKEN = 'street'
 
