@@ -1,7 +1,6 @@
 import logging
 from flask import Blueprint, redirect, request, make_response
 from point.models import GitHubUser
-<<<<<<< HEAD
 
 LOG = logging.getLogger(__name__)
 
@@ -15,7 +14,7 @@ class PayPalEvent:
         self.event_type = attrs.get('event_type')
         self.email = attrs.get('resource', {})\
                           .get('subscriber', {})\
-                          .get('email')
+                          .get('email_address')
         self.amount = attrs.get('resource',{}).get('amount', {}).get('total')
         # self. = attrs.get('resource/amount/currency
 
@@ -25,10 +24,14 @@ paypal_routes = Blueprint('paypal_routes', __name__)
 def paypal_event():
     LOG.info(f"Incoming PayPal Event: {request.get_json()}")
     event = PayPalEvent(**request.get_json(force=True))
+    LOG.debug(event)
     user = GitHubUser.find(email=event.email)
     if user:
-        user.balace += event.balace
-        if GitHubUser.update(user, balance=user.balance + event.amount):
+        user.balace += event.amount
+        if GitHubUser.update(user):
+            LOG.debug(f"Updated User: {user}")
+        # if GitHubUser.update(user, balance=user.balance + event.amount):
             return {"message": "OK"}, 200
 
+    LOG.debug(f"Failure User Update: {user}")
     return '{"message": "unknown error"}', 500
