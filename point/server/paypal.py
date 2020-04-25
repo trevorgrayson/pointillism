@@ -18,7 +18,6 @@ class PayPalEvent:
 
 paypal_routes = Blueprint('paypal_routes', __name__)
 
-
 @paypal_routes.route('/paypal/events', methods=["POST"])
 def paypal_event():
     LOG.info(f"Incoming PayPal Event: {request.get_json()}")
