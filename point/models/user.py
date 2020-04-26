@@ -4,11 +4,12 @@ from point.models.base import LDIFRecord
 PT_SESSION_TOKEN = 'employeeNumber'
 SESSION = 'initials'
 GIT_TOKEN = 'givenName'
+BALANCE = 'Fax'
 
 
 class GitHubUser(LDIFRecord):
     type = 'cn'
-    attributes = ['sn', 'cn', 'description', GIT_TOKEN, PT_SESSION_TOKEN]
+    attributes = ['sn', 'cn', 'description', GIT_TOKEN, PT_SESSION_TOKEN, BALANCE]
 
     def __init__(self, *users):
         self.users = users
@@ -76,6 +77,10 @@ class User:
             self.token = self.token[-1]
         else:
             self.token = None
+        self.balance = int(attrs.get(BALANCE, 0))
+
+    def is_active(self):
+        return True
 
     def is_authentic(self, session_token):
         return session_token == self.token
