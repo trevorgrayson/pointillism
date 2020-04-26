@@ -33,10 +33,19 @@ class GitHubUser(LDIFRecord):
         base_dn = 'dc=ipsumllc,dc=com' # cls.base_dn
         # if 'base_dn' in attributes:
         #     base_dn = ','.join((attributes['base_dn'], base_dn))
-        #     del attributes['base_dn'] 
-        search = f'{GIT_TOKEN}={token}'
-        search_filter = f'({GIT_TOKEN}={token})' # f'(&(objectClass={cls.type_name()})({search}))'
+        #     del attributes['base_dn']
+        # f'(&(objectClass={cls.type_name()})({search}))'
 
+        filters = []
+        if token:
+            filters.append(f'({GIT_TOKEN}={token})')
+
+        if attributes.get('email'):
+            email = attributes.get('email')
+            filters.append(f'(Email={email})')
+
+        search_filter = ''.join(filters)
+        search_filter = f'(&{search_filter})'
         response = cls._search(base_dn, search_filter, **attributes)
         return list([User(**args) for args in response])
 
