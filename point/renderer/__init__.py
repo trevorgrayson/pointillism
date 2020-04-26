@@ -5,7 +5,7 @@ from point.theme import theme_inject
 from werkzeug.wrappers import Response
 from point.server import utils
 
-logging.basicConfig(filename='pointillism.log', level=logging.DEBUG)
+logging.basicConfig(level=logging.DEBUG)  # filename='pointillism.log',
 LOG = logging.getLogger(__name__)
 
 
