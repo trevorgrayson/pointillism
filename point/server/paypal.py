@@ -1,5 +1,5 @@
 import logging
-from flask import Blueprint, redirect, request, make_response
+from flask import Blueprint, request
 from point.models import GitHubUser
 
 LOG = logging.getLogger(__name__)
