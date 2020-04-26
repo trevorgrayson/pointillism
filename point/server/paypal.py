@@ -1,5 +1,9 @@
+import logging
 from flask import Blueprint, redirect, request, make_response
 from point.models import GitHubUser
+
+LOG = logging.getLogger(__name__)
+
 
 class PayPalEvent:
     def __init__(self, **attrs):
@@ -14,13 +18,15 @@ class PayPalEvent:
 
 paypal_routes = Blueprint('paypal_routes', __name__)
 
+
 @paypal_routes.route('/paypal/events', methods=["POST"])
 def paypal_event():
+    LOG.info(f"Incoming PayPal Event: {request.get_json()}")
     event = PayPalEvent(**request.get_json())
-    user = GitHubUser.find()
+    user = GitHubUser.find('nope')
     if user:
         user.amount += event.amount
         if GitHubUser.update(user):
             return '{}', 200
 
-    return '{"message": "unknown"}', 500
+    return '{"message": "unknown error"}', 500
