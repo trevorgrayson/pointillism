@@ -5,13 +5,14 @@ PT_SESSION_TOKEN = 'employeeNumber'
 SESSION = 'initials'
 GIT_TOKEN = 'givenName'
 EMAIL = 'Email'
+BALANCE = 'Fax'
 
 FILTER_FIELDS = ['token', EMAIL]
 
 
 class GitHubUser(LDIFRecord):
     type = 'cn'
-    attributes = ['sn', 'cn', 'description', GIT_TOKEN, PT_SESSION_TOKEN]
+    attributes = ['sn', 'cn', 'description', GIT_TOKEN, PT_SESSION_TOKEN, BALANCE]
 
     def __init__(self, *users):
         self.users = users
@@ -51,8 +52,7 @@ class GitHubUser(LDIFRecord):
         search_filter = ''.join(filters)
         if len(filters) > 1:
             search_filter = f'(&{search_filter})'
-        # f'({GIT_TOKEN}={token})' # f'(&(objectClass={cls.type_name()})({search}))'
-
+        # f'(&(objectClass={cls.type_name()})({search}))'
         response = cls._search(base_dn, search_filter, **attributes)
         return list([User(**args) for args in response])
 
@@ -83,6 +83,15 @@ class User:
             self.token = self.token[-1]
         else:
             self.token = None
+        self.balance = attrs.get(BALANCE, 0)
+        if isinstance(self.balance, list):
+            if len(self.balance) > 0:
+                self.balance = self.balance[-1]
+            else:
+                self.balance = 0
+
+    def is_active(self):
+        return True
 
     def is_authentic(self, session_token):
         return session_token == self.token
