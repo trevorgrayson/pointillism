@@ -13,6 +13,7 @@ class PayPalEvent:
         self.resource_type = attrs.get('resource_type')
         self.event_type = attrs.get('event_type')
         self.amount = attrs.get('resource', {}).get('amount', {}).get('total')
+        self.email = None
         # self. = attrs.get('resource/amount/currency
 
 
@@ -23,7 +24,7 @@ paypal_routes = Blueprint('paypal_routes', __name__)
 def paypal_event():
     LOG.info(f"Incoming PayPal Event: {request.get_json()}")
     event = PayPalEvent(**request.get_json())
-    user = GitHubUser.find('nope')
+    user = GitHubUser.find(email=event.email)
     if user:
         user.amount += event.amount
         if GitHubUser.update(user):

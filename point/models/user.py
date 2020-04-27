@@ -4,6 +4,9 @@ from point.models.base import LDIFRecord
 PT_SESSION_TOKEN = 'employeeNumber'
 SESSION = 'initials'
 GIT_TOKEN = 'givenName'
+EMAIL = 'Email'
+
+FILTER_FIELDS = ['token', EMAIL]
 
 
 class GitHubUser(LDIFRecord):
@@ -29,13 +32,26 @@ class GitHubUser(LDIFRecord):
         return next(iter([User(**args) for args in response]))
 
     @classmethod
-    def find(cls, token=None, **attributes):
+    def find(cls, **attributes):
         base_dn = 'dc=ipsumllc,dc=com' # cls.base_dn
         # if 'base_dn' in attributes:
         #     base_dn = ','.join((attributes['base_dn'], base_dn))
-        #     del attributes['base_dn'] 
-        search = f'{GIT_TOKEN}={token}'
-        search_filter = f'({GIT_TOKEN}={token})' # f'(&(objectClass={cls.type_name()})({search}))'
+        #     del attributes['base_dn']
+        filters = []
+
+        for field in FILTER_FIELDS:
+            if field in attributes.keys():
+                if field == 'token':
+                    filters.append(f'({GIT_TOKEN}={attributes[field]})')
+                elif field == 'email':
+                    filters.append(f'(Email={attributes[field]})')
+                else:
+                    filters.append(f'({field}={attributes[field]})')
+
+        search_filter = ''.join(filters)
+        if len(filters) > 1:
+            search_filter = f'(&{search_filter})'
+        # f'({GIT_TOKEN}={token})' # f'(&(objectClass={cls.type_name()})({search}))'
 
         response = cls._search(base_dn, search_filter, **attributes)
         return list([User(**args) for args in response])
