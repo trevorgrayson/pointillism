@@ -12,7 +12,7 @@ class PayPalEvent:
         self.create_time = attrs.get('create_time')
         self.resource_type = attrs.get('resource_type')
         self.event_type = attrs.get('event_type')
-        self.amount = attrs.get('resource',{}).get('amount', {}).get('total')
+        self.amount = attrs.get('resource', {}).get('amount', {}).get('total')
         # self. = attrs.get('resource/amount/currency
 
 
