@@ -29,12 +29,15 @@ function Manifesto({host, domain, paypalId}) {
 
             <h2>Getting Started</h2>
             <p>
-              No app installation is necessary. Check in <a href="https://en.wikipedia.org/wiki/DOT_(graph_description_language)">dot graph files</a> and start using pointillism urls in your documentation.&nbsp;
-              <code>pointillism.io</code> image urls reflect github's <code>raw</code> content urls, so it's easy getting started.
+              Check in <a href="https://en.wikipedia.org/wiki/DOT_(graph_description_language)">dot graph files</a>&nbsp;
+              to github and start using pointillism urls in your documentation.&nbsp;
+              <code>pointillism.io</code> image urls reflect github's <code>raw</code> content urls, so it's easy&nbsp;
+              getting started.
             </p>
             <p>
-              If you have a github file such as <code>https://{host}/trevorgrayson/pointillism/master/example.dot</code>,
-              just replace <code>{host}</code> with <code>{domain}</code>, and append your desired format (<code>.svg</code>, <code>.png</code>, <code>.jpg</code>).
+              If you have a github file such as <code>https://{host}/trevorgrayson/pointillism/master/example.dot</code>,&nbsp;
+              just replace <code>{host}</code> with <code>{domain}</code>, and append your desired format&nbsp;
+              (<code>.svg</code>, <code>.png</code>, <code>.jpg</code>).
             </p>
 
             <div className="example">
