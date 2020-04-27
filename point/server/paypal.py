@@ -14,19 +14,25 @@ class PayPalEvent:
         self.event_type = attrs.get('event_type')
         self.email = attrs.get('resource', {})\
                           .get('subscriber', {})\
-                          .get('email')
+                          .get('email_address')
         self.amount = attrs.get('resource',{}).get('amount', {}).get('total')
 
+    def __str__(self):
+        return f"<PayPalEvent {self.email} {self.amount}, {self.summary} {self.id}"
+
 paypal_routes = Blueprint('paypal_routes', __name__)
+
 
 @paypal_routes.route('/paypal/events', methods=["POST"])
 def paypal_event():
     LOG.info(f"Incoming PayPal Event: {request.get_json()}")
     event = PayPalEvent(**request.get_json(force=True))
+    LOG.debug(event)
     user = GitHubUser.find(email=event.email)
     if user:
         user.amount += event.amount
         if GitHubUser.update(user):
+            LOG.debug("Paypal update succeeded")
             return {"message": "OK"}, 200
 
     return '{"message": "unknown error"}', 500

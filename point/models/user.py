@@ -89,6 +89,7 @@ class User:
                 self.balance = self.balance[-1]
             else:
                 self.balance = 0
+        self.email = attrs.get(EMAIL)
 
     def is_active(self):
         return True
