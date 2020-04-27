@@ -10,6 +10,10 @@ class GithubException(Exception):
     pass
 
 
+class NotAuthorized(GithubException):
+    pass
+
+
 class GitContent:
     def __init__(self, token=None):
         self.token = token
@@ -30,7 +34,9 @@ class GitContent:
         LOG.info(self.headers())
         response = requests.get(uri, headers=self.headers())
         # TODO if 200
-        if response.status_code == 200:
+        if response.status_code in [401, 403]:
+            raise NotAuthorized(response.text)
+        elif response.status_code == 200:
             return response.text
         else:
             raise GithubException(response.text)
