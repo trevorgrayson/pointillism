@@ -23,18 +23,21 @@ function GettingStarted({host, domain, paypalId}) {
                 <code>![pointillism.io](https://pointillism.io/trevorgrayson/pointillism/master/pointillism.dot.svg)</code>
             </p>
 
-            <h2>rendering using &lt;img\/&gt; tags</h2>
+            <h2>rendering using &lt;img/&gt; tags</h2>
 
             <p>
                 <code>&lt;img src="https://pointillism.io/trevorgrayson/pointillism/master/pointillism.dot.svg" /&gt;</code>
             </p>
 
             <h2>getting your pointillism url</h2>
+            <p>The pointillism url is defined as:</p>
             <p>
-            Hosting your diagrams on <code>pointillism.io</code> is as easy as linking to your github account!
-            By changing the domain on your "raw" github dot file URLs you'll be rendering in no time.
+                <code>https://pointillism.io/$GitHubOwner/$GitHubRepository/$Branch/$FilePath</code>
             </p>
             <p>
+            This is most easily found by changing the domain on the "raw" URL of the github file you'll be rendering.
+            <p>
+            </p>
                 <code>
                    https://raw.githubusercontent.com/trevorgrayson/pointillism/master/pointillism.dot
                 </code>
@@ -62,10 +65,32 @@ function GettingStarted({host, domain, paypalId}) {
                     <code>.svg</code>, <code>.png</code>, <code>.jpg</code>
                 </li>
             </ol>
+            
+            <p>If your Repository is public, you should be all set!</p>
+
             <h3>authorization</h3>
             <p>To render files from a private repo, you must give pointillism.io access to the file.  This
-            can be done using github's temporary <code>raw</code> tokens, or by creating a Repository Token to be shared.
+            can be done by generating a Repository Token, or by using github's temporary <code>raw</code> tokens.
             </p>
+
+            <h3>Generate Repository Token</h3>
+            <p>
+                This is the preferred method for rendering privileged diagrams.
+            </p>
+            <ol>
+                <li>Navigate to the "Your Repositories."</li>
+                <li>Fill in the <code>owner/repository</code> for the project from which you wish to render diagrams.<br/> 
+                    For this project it would be <code>trevorgrayson/pointillism</code>.
+                </li>
+                <li>Click Authorize.</li>
+                <li>Refresh the page and return to the "Your Repositories" tab.  (Sorry.)</li>
+                <li>Click on the password field next to your repository to get your access token.</li>
+                <li>This access token should be provided in the query parameters of your requests.<br/>
+                    <code>?token=YOUR_TOKEN</code>
+                </li>
+
+            </ol>
+
             <h3>Raw Token</h3>
             <p>This method may be less preferred because <strong>github's user content tokens are temporary</strong>
             (they seem to last 7 days.)
