@@ -68,6 +68,10 @@ class LDIFRecord:
         return desc in SUCCESS_RESPONSES
 
     @classmethod
+    def update(cls, user, **attributes):
+        return True
+
+    @classmethod
     def _search(cls, base_dn, search_filter, **attributes):
         LOG.debug(f'SEARCHING {base_dn} with: {search_filter}')
 

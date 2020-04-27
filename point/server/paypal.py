@@ -27,8 +27,8 @@ def paypal_event():
     event = PayPalEvent(**request.get_json(force=True))
     user = GitHubUser.find(email=event.email)
     if user:
-        user.amount += event.amount
-        if GitHubUser.update(user):
+        user.balace += event.balace
+        if GitHubUser.update(user, balance=user.balance + event.amount):
             return {"message": "OK"}, 200
 
     return '{"message": "unknown error"}', 500

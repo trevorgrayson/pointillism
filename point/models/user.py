@@ -5,6 +5,7 @@ PT_SESSION_TOKEN = 'employeeNumber'
 SESSION = 'initials'
 GIT_TOKEN = 'givenName'
 BALANCE = 'Fax'
+SUBSCRIBED = 'telexNumber'
 
 
 class GitHubUser(LDIFRecord):
@@ -77,7 +78,8 @@ class User:
             self.token = self.token[-1]
         else:
             self.token = None
-        self.balance = int(attrs.get(BALANCE, 0))
+        # self.balance = int(attrs.get(BALANCE, 0))
+        self.subscribed = attrs.get(SUBSCRIBED) == 'true'
 
     def is_active(self):
         return True
