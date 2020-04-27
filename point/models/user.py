@@ -6,6 +6,7 @@ SESSION = 'initials'
 GIT_TOKEN = 'givenName'
 EMAIL = 'Email'
 BALANCE = 'Fax'
+SUBSCRIBED = 'telexNumber'
 
 FILTER_FIELDS = ['token', EMAIL]
 
@@ -90,6 +91,7 @@ class User:
             else:
                 self.balance = 0
         self.email = attrs.get(EMAIL)
+        self.subscribed = attrs.get(SUBSCRIBED) == 'true'
 
     def is_active(self):
         return True

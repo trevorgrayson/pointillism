@@ -30,8 +30,9 @@ def paypal_event():
     LOG.debug(event)
     user = GitHubUser.find(email=event.email)
     if user:
-        user.amount += event.amount
+        user.balance += event.amount
         if GitHubUser.update(user):
+        # if GitHubUser.update(user, balance=user.balance + event.amount):
             LOG.debug("Paypal update succeeded")
             return {"message": "OK"}, 200
 
