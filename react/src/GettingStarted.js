@@ -53,9 +53,9 @@ function GettingStarted({host, domain, paypalId}) {
             </center>
             <h3>step by step</h3>
             <ol className="steps">
-                <li>Ensure you're logged into your <a href="https://github.com/login">github account</a>.</li>
+                <li>Click to <a href="/github/login">Login</a>.</li>
                 <li>
-                    Navigate to the repository, and to the <code>.dot</code> graph file you would like to render.<br/>
+                    In GitHub, navigate to the repository, and to the <code>.dot</code> graph file you would like to render.<br/>
                     For example: <a href="https://github.com/trevorgrayson/pointillism/blob/master/pointillism.dot">example.dot</a></li>
                 <li>Click on the "Raw" button located to the top right, close to the edit buttons.</li>
                 <li>You'll be forwarded to a new URL, which you will modify to render your image.</li>
@@ -80,10 +80,10 @@ function GettingStarted({host, domain, paypalId}) {
             <ol>
                 <li>Navigate to the "Your Repositories."</li>
                 <li>Fill in the <code>owner/repository</code> for the project from which you wish to render diagrams.<br/> 
-                    For this project it would be <code>trevorgrayson/pointillism</code>.
+                    For this project it would be <a href="https://github.com/trevorgrayson/pointillism">trevorgrayson/pointillism</a>.
                 </li>
                 <li>Click Authorize.</li>
-                <li>Refresh the page and return to the "Your Repositories" tab.  (Sorry.)</li>
+                <li>Refresh the page and return to the "Your Repositories" tab (Sorry.)</li>
                 <li>Click on the password field next to your repository to get your access token.</li>
                 <li>This access token should be provided in the query parameters of your requests.<br/>
                     <code>?token=YOUR_TOKEN</code>
@@ -99,7 +99,7 @@ function GettingStarted({host, domain, paypalId}) {
             <ol className="steps">
                 <li>Ensure you're logged into your <a href="https://github.com/login">github account</a>.</li>
                 <li>
-                    Navigate to the repository, and to the <code>.dot</code> graph file you would like to render.<br/>
+                    In GitHub, navigate to the repository, and to the <code>.dot</code> graph file you would like to render.<br/>
                     For example: <a href="https://github.com/trevorgrayson/pointillism/blob/master/pointillism.dot">example.dot</a></li>
                 <li>Click on the "Raw" button located to the top right, close to the edit buttons.</li>
                 <li>You'll be forwarded to a new URL, which you will modify to render your image.</li>
@@ -112,7 +112,6 @@ function GettingStarted({host, domain, paypalId}) {
                 <li>
                     Append an image file type to the full url.  Supported formats include:
                     <code>.svg</code>, <code>.png</code>, <code>.jpg</code>
-
                 </li>
             </ol>
         </Typography>
