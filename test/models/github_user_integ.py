@@ -22,3 +22,10 @@ class TestGitHubUser:
     def test_delete(self):
         testuser = GitHubUser.first('testuser')
         assert GitHubUser.delete(testuser)
+
+    def test_find_by_email(self):
+        results = GitHubUser.find(email="trevor@trevorgrayson.com")
+
+        assert len(results) > 0
+        user = results[0]
+        assert user.cn == 'trevorgrayson'

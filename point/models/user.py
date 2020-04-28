@@ -43,10 +43,10 @@ class GitHubUser(LDIFRecord):
 
         if attributes.get('email'):
             email = attributes.get('email')
-            filters.append(f'(Email={email})')
+            filters.append(f'(mail={email})')
 
         search_filter = ''.join(filters)
-        search_filter = f'(&{search_filter})'
+        # search_filter = f'(&{search_filter})'
         response = cls._search(base_dn, search_filter, **attributes)
         return list([User(**args) for args in response])
 

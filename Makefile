@@ -8,10 +8,12 @@ VENV_BUILD = .venv.build
 HOST ?= https://raw.githubusercontent.com
 TEST_HOST ?= http://localhost:5001
 PROJECT=pointillism
+PAYPAL_CLIENT_ID=paypal123
 
 export HOST
 export FLASK_RUN_PORT
 export GITHUB_CLIENT_ID
+export PAYPAL_CLIENT_ID
 export GITHUB_SECRET
 export PROJECT
 export ENV=develop
