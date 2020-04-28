@@ -87,7 +87,6 @@ def welcome():
             username=username
         )
 
-
 @app.route("/github/<path:path>")
 @app.route("/<path:path>")
 def render_github_url(path):

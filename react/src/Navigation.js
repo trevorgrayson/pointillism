@@ -11,7 +11,7 @@ import Manifesto from './Manifesto';
 import GettingStarted from './GettingStarted';
 import Repos from './Repos';
 import About from './About';
-
+import Profile from './Profile'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -80,12 +80,15 @@ export default function TabNav({host, domain, repos, username}) {
       </TabPanel>,
       <TabPanel value={value} index={3}>
         <Repos repos={repos} />
+      </TabPanel>,
+      <TabPanel value={value} index={4}>
+        <Profile />
       </TabPanel>
   ]
 
   if (loggedIn(username)) {
     tabs.push(<Tab label="Your Repositories" {...a11yProps(3)} />)
-    tabs.push(<Tab label="logout" href="/github/logout" />)
+    tabs.push(<Tab label="Profile" {...a11yProps(4)} />)
   } else {
     tabs.push(<Tab label="login" href="/github/login"/>)
   }

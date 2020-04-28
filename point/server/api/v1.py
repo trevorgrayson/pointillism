@@ -7,6 +7,12 @@ from point.models import GitHubRepo
 v1_routes = Blueprint('api_v1', __name__)
 
 
+@v1_routes.route("/profile")
+def profile():
+    me = get_me()
+
+    return fmt(me.as_json())
+
 @v1_routes.route('/repos', methods=['post'])
 def create():
     me = get_me()

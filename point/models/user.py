@@ -63,6 +63,7 @@ class User:
         self.name = next(iter(attrs.get('cn', [])), None)
         self.cn = next(iter(attrs.get('cn', [])), None)
         self.git_token = attrs.get(GIT_TOKEN, [])
+        self.email = attrs.get('mail')
         if len(self.git_token) > 0:
             self.git_token = self.git_token[-1]
         else:
@@ -86,6 +87,21 @@ class User:
 
     def is_authentic(self, session_token):
         return session_token == self.token
+
+    def as_json(self):
+        return dict(
+            github_name=self.name,
+            email=self.email,
+            balance=self.balance,
+            status=self.status
+        )
+
+    @property
+    def status(self):
+        if self.subscribed:
+            return 'subscribed'
+
+        return 'expired'
 
     def __str__(self):
         return f'User<{self.name}>'

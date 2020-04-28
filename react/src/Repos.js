@@ -40,9 +40,7 @@ class Repos extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        repos: [
-          {"name": "trevorgrayson/privito", "token": "123token"}
-        ]
+        repos: []
     };
     RepoClient.getRepos()
               .then( (result) => {
