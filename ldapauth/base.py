@@ -68,7 +68,22 @@ class LDIFRecord:
         return desc in SUCCESS_RESPONSES
 
     @classmethod
-    def update(cls, user, **attributes):
+    def update(cls, user, **dirty):
+        CONN.bind()
+        changes = dict(
+            [(k, [(MODIFY_REPLACE, v)]) for k, v in dirty.items()]
+        )
+
+        LOG.info(f'UPDATING {user.dn}({cls.type_name()}: {dirty}')
+        CONN.modify(user.dn, changes)
+
+        desc = CONN.result['description']
+        if desc not in SUCCESS_RESPONSES:
+            raise Exception(f'{dn}: {desc} {CONN.result}')
+
+        CONN.unbind()
+
+        return desc in SUCCESS_RESPONSES
         return True
 
     @classmethod

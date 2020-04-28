@@ -4,7 +4,7 @@ from ldapauth.base import LDIFRecord
 PT_SESSION_TOKEN = 'employeeNumber'
 SESSION = 'initials'
 GIT_TOKEN = 'givenName'
-BALANCE = 'Fax'
+BALANCE = 'facsimileTelephoneNumber' # Fax
 SUBSCRIBED = 'telexNumber'
 
 
@@ -50,12 +50,6 @@ class GitHubUser(LDIFRecord):
         response = cls._search(base_dn, search_filter, **attributes)
         return list([User(**args) for args in response])
 
-    def pays(self, amount):
-        for user in self.users:
-            raise NotImplementedError("Need to update user")
-            user.balance += amount
-            self.update(user)
-
 
 class User:
     """
@@ -63,6 +57,7 @@ class User:
     p.io token: employeeNumber
     """
     def __init__(self, **record):
+        self.record = record
         self.dn = record.get('dn')
         attrs = record.get('attributes', {})
         self.name = next(iter(attrs.get('cn', [])), None)
@@ -77,7 +72,13 @@ class User:
             self.token = self.token[-1]
         else:
             self.token = None
-        # self.balance = int(attrs.get(BALANCE, 0))
+        self.balance = attrs.get(BALANCE, 0)
+        if isinstance(self.balance, list):
+            if len(self.balance) > 0:
+                self.balance = self.balance[-1]
+            else:
+                self.balance = 0
+        self.balance = int(self.balance)
         self.subscribed = attrs.get(SUBSCRIBED) == 'true'
 
     def is_active(self):

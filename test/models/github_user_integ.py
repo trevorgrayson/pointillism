@@ -19,6 +19,13 @@ class TestGitHubUser:
         results = GitHubUser.first('trevorgrayson')
         assert results.name == 'trevorgrayson'
 
+    def test_update(self):
+        testuser = GitHubUser.first('testuser')
+        response = GitHubUser.update(testuser, Fax=5)
+        testuser = GitHubUser.first('testuser')
+        assert response is True
+        assert testuser.balance == 5
+
     def test_delete(self):
         testuser = GitHubUser.first('testuser')
         assert GitHubUser.delete(testuser)

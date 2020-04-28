@@ -57,9 +57,10 @@ function Manifesto({host, domain, paypalId}) {
             <p>
               <code>pointillism</code> is and always will be <a href="https://github.com/trevorgrayson/pointillism">open source</a>.
             </p>
-            <PayPalExpressButton host="www.sandbox.paypal.com" buttonId="RVDZHK4HPKPS8"/>
+            
         </Typography>
     )
 }
-
+// TODO config values
+//<PayPalExpressButton host="www.sandbox.paypal.com" buttonId="RVDZHK4HPKPS8"/>
 export default Manifesto;
