@@ -18,9 +18,18 @@ class TestSmoke:
         assert response.status_code == 200
 
     def test_private(self, host):
-        response = get(host + '/trevorgrayson/private/master/example.dot.svg')
+        response = get(host + '/trevorgrayson/private/master/example.dot.svg?token=7ac69c88-259e-4c24-858f-dda7fdcb9765')
+        assert response.status_code == 200
+
+    def test_private_no_fmt(self, host):
+        response = get(host + '/trevorgrayson/private/master/example.dot?token=7ac69c88-259e-4c24-858f-dda7fdcb9765')
         assert response.status_code == 200
 
     def test_404(self, host):
         response = get(host + '/trevorgrayson/pointillism/master/not-here-file.dot.svg')
         assert response.status_code == 404
+
+# http://localhost:5001/github/trevorgrayson/private/master/example.dot.svg?token=7ac69c88-259e-4c24-858f-dda7fdcb9765
+
+
+# https://raw.githubusercontent.com/trevorgrayson/private/master/example.dot?token=AAAHCI6RNBEWMRPUTQHFCBK6VHC42

@@ -90,10 +90,10 @@ class LDIFRecord:
 
             # TODO is over matching. confirm tree works
             if results['description'] == 'success':
-                LOG.debug(f'RESPONSE: {CONN.response}')
+                LOG.debug(f'SEARCHING FOUND: {len(CONN.response)}')
                 return CONN.response
             else:
-                raise Exception(f'Request Exception: {results}')
+                raise Exception(f'SEARCHING: Request Exception: {results}')
 
         except core.exceptions.LDAPSocketOpenError as err:
             LOG.error(err)

@@ -30,6 +30,7 @@ class GitContent:
 
     def get(self, owner, repo, path):
         uri = join(API_BASE, 'repos', owner, repo, 'contents', path)
+        print("IN HERE")
         LOG.info(uri)
         LOG.info(self.headers())
         response = requests.get(uri, headers=self.headers())

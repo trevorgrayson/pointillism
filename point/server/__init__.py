@@ -1,5 +1,4 @@
 import logging
-from os.path import join
 from flask import Flask, request, g, session
 from string import Template
 from flask_simpleldap import LDAP
@@ -54,22 +53,6 @@ def before_request():
 IS_DEV = (ENV == "develop")
 
 
-def get_params(request):
-    params = {
-        'theme': request.args.get('theme')
-    }
-
-    # if authorized
-    # has resource token
-    # TODO include token from account
-    # GitHubRepo.first_repo(org, name)
-
-    if 'token' in request.args:
-        params['token'] = request.args['token']
-
-    return params
-
-
 @app.route("/")
 def welcome():
     me = get_me()
@@ -88,74 +71,34 @@ def welcome():
         )
 
 
-@app.route("/github/<path:path>")
-@app.route("/<path:path>")
-def render_github_url(path):
+@app.route("/github/<string:org>/<string:project>/<string:branch>/<path:path>")
+@app.route("/<string:org>/<string:project>/<string:branch>/<path:path>")
+def render_github_url(org, project, branch, path):
     LOG.debug("REQUEST /github: {path}")
-    # BUG: don't want to require owner to load first. or do you?
-    org, project, branch, *tail = path.split('/')
-
-    path = join(*tail)
+    fmt = path[len(path) - 3:]
     path = path[:len(path)-4]
-    token = None
+    token = request.args.get('token')
+
+    if fmt in ["dot", "gv"]:
+        path = path + '.' + fmt
+        fmt = "svg"
 
     repo = GitHubRepo.first_repo(org, project)
     if repo and repo.has_owner:
         if repo.requires_token and \
           repo.token is not None and \
-          repo.token != request.args.get('token'):
-            return '{"message": "Unauthorized. Provide repo `token` param"}', 401
-
-        owner = GitHubUser.first(repo.owner)
-        token = owner.git_token
+          repo.token == request.args.get('token'):
+            # return '{"message": "Unauthorized. Provide repo `token` param"}', 401
+            owner = GitHubUser.first(repo.owner)
+            token = owner.git_token
 
     try:
         LOG.debug(f"fetching {org}, {project}, {path}")
         body = GitContent(token).get(org, project, path)
-        return render(body)
+        return render(body, format=fmt)
     except GithubException as err:
         LOG.error(err)
         return "Not Found.", 404
-
-
-def render_url(path):
-    LOG.debug("REQUEST /root: {path}")
-    org, project, branch, *tail = path.split('/')
-    path = '/'.join(tail)
-    path = path[:len(path) - 4]
-    token = None
-
-    repo = GitHubRepo.first_repo(org, project)
-    if repo and repo.has_owner:
-        if repo.requires_token and \
-                repo.token is not None and \
-                repo.token != request.args.get('token'):
-            return '{"message": "Unauthorized. Provide repo `token` param"}', 401
-
-        owner = GitHubUser.first(repo.owner)
-        token = owner.git_token
-
-    try:
-        body = GitContent(token).get(org, project, path)
-        return render(body)
-    except GithubException as err:
-        LOG.error(err)
-        return "Not Found.", 404
-    # format = path[len(path)-3:]
-    # path = path[:len(path)-4]
-    #
-    # if format in ["dot", "gv"]:
-    #     path = ".".join((path, format))
-    #     format = "png"
-    #
-    # params = get_params(request)
-    # if headers:
-    #     params['headers'] = headers
-    # try:
-    #     return response(path, format, **params)
-    #
-    # except IOError as err:
-    #     return str(err), 400
 
 
 def run():
