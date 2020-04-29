@@ -53,7 +53,6 @@ def auth():
     ldapclient.update(user)
 
     response = make_response(redirect('/'))
-    # TODO give them a pointillism account id
     response.set_cookie(PT_SESSION_TOKEN, token)
 
     return response

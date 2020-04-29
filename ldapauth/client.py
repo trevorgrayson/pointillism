@@ -64,7 +64,7 @@ class LdapAuth:
         if password is not None:
             modify_password(conn, new_cn, password)
 
-        conn.unbind()  # TODO needs to be cleaned up
+        # conn.unbind()  # TODO needs to be cleaned up
         return User(name=username, authentic=None)
 
     def search(self, **params):
