@@ -61,7 +61,7 @@ class Repos extends React.Component {
 
   onDelete(event) {
     const repoName = event //hack
-    const response = confirm("Deleting '"+repoName+"'. Are you sure?")
+    const response = window.confirm("Deleting '"+repoName+"'. Are you sure?")
 
     if (response) {
       fetch('/v1/repos/' + repoName, {

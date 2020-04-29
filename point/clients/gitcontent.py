@@ -6,6 +6,7 @@ LOG = logging.getLogger(__name__)
 API_BASE = 'https://api.github.com'
 RAW_BASE = 'https://raw.githubusercontent.com'
 
+
 class GithubException(Exception):
     pass
 

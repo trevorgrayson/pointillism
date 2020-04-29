@@ -5,3 +5,4 @@ ldap3==2.6.1
 flask-simpleldap==1.4.0
 # Pillow==7.1.1
 PyGithub==1.47
+pybrake==0.4.6
