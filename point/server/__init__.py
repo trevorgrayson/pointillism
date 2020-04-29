@@ -1,4 +1,5 @@
 import logging
+from json import dumps
 from flask import Flask, request, g, session
 from string import Template
 from flask_simpleldap import LDAP
@@ -10,13 +11,13 @@ from .paypal import paypal_routes
 
 from ldapauth.flask.routes import auth_routes, register_config
 from .utils import headers, RegexConverter, response
-from point.models import GitHubRepo, GitHubUser
+from point.models import GitHubRepo, GitHubUser, GitResource
 from point.server.base import get_me
 from point.clients.gitcontent import GitContent, GithubException
 from point.renderer import render
 
 from config import (ADMIN_USER, ADMIN_PASS, LDAP_BASE_DN, SECRET_KEY,
-    DOMAIN, HOST, ENV, STATIC_DIR, PAYPAL_CLIENT_ID, LDAP_HOST)
+                    DOMAIN, HOST, ENV, STATIC_DIR, PAYPAL_CLIENT_ID, LDAP_HOST)
 
 LOG = logging.getLogger(__name__)
 
@@ -74,6 +75,8 @@ def welcome():
 @app.route("/github/<string:org>/<string:project>/<string:branch>/<path:path>")
 @app.route("/<string:org>/<string:project>/<string:branch>/<path:path>")
 def render_github_url(org, project, branch, path):
+    resource = GitResource(org, project, branch, path)
+
     LOG.debug("REQUEST /github: {path}")
     fmt = path[len(path) - 3:]
     path = path[:len(path)-4]
@@ -88,9 +91,9 @@ def render_github_url(org, project, branch, path):
         if repo.requires_token and \
           repo.token is not None and \
           repo.token == request.args.get('token'):
-            # return '{"message": "Unauthorized. Provide repo `token` param"}', 401
             owner = GitHubUser.first(repo.owner)
             creds = owner
+    LOG.debug(repo)
 
     try:
         LOG.debug(f"fetching {org}, {project}, {path}")
@@ -98,7 +101,10 @@ def render_github_url(org, project, branch, path):
         return render(body, format=fmt)
     except GithubException as err:
         LOG.error(err)
-        return "Not Found.", 404
+        return dumps({
+            'message': f"Exception finding document: {resource}. " +\
+            'Is the repository private? Do you need a valid token?'
+        }), 404
 
 
 def run():

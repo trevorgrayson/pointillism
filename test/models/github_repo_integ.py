@@ -9,7 +9,7 @@ class TestGithubRepo:
     def test_repos_of(self):
         results = GitHubRepo.of('trevorgrayson')
         assert results != []
-        assert len(results) > 1
+        assert len(results) >= 1
         result = results[0]
         assert result.name == 'private'
         assert result.label == 'trevorgrayson/private'
