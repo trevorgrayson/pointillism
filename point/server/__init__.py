@@ -77,7 +77,7 @@ def render_github_url(org, project, branch, path):
     LOG.debug("REQUEST /github: {path}")
     fmt = path[len(path) - 3:]
     path = path[:len(path)-4]
-    token = request.args.get('token')
+    creds = request.args.get('token')
 
     if fmt in ["dot", "gv"]:
         path = path + '.' + fmt
@@ -90,11 +90,11 @@ def render_github_url(org, project, branch, path):
           repo.token == request.args.get('token'):
             # return '{"message": "Unauthorized. Provide repo `token` param"}', 401
             owner = GitHubUser.first(repo.owner)
-            token = owner.git_token
+            creds = owner
 
     try:
         LOG.debug(f"fetching {org}, {project}, {path}")
-        body = GitContent(token).get(org, project, path)
+        body = GitContent(creds).get(org, project, branch, path)
         return render(body, format=fmt)
     except GithubException as err:
         LOG.error(err)
