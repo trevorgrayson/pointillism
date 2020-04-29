@@ -33,7 +33,7 @@ class GitContent:
         uri = join(API_BASE, 'repos', owner, repo, 'contents', path)
         if isinstance(self.creds, str):
             uri = join(RAW_BASE, owner, repo, branch, path) + f'?token={self.creds}'
-        LOG.info(uri, self.headers())
+        LOG.info(f"GET {uri} {self.headers()}")
         response = requests.get(uri, headers=self.headers())
         if response.status_code in [401, 403]:
             raise NotAuthorized(response.text)

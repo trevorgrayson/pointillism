@@ -91,12 +91,13 @@ def render_github_url(org, project, branch, path):
         if repo.requires_token and \
           repo.token is not None and \
           repo.token == request.args.get('token'):
+            LOG.debug(f"Authenticated as {repo.owner}")
             owner = GitHubUser.first(repo.owner)
             creds = owner
     LOG.debug(repo)
 
     try:
-        LOG.debug(f"fetching {org}, {project}, {path}")
+        LOG.debug(f"fetching {resource}")
         body = GitContent(creds).get(org, project, branch, path)
         return render(body, format=fmt)
     except GithubException as err:

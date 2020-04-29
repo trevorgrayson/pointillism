@@ -64,7 +64,7 @@ class Repo:
     @property
     def requires_token(self):
         return self.token is not None
-    
+
     @property
     def label(self):
         repo, org, *tail = self.dn[2:].split(',')
@@ -79,3 +79,9 @@ class Repo:
             'name': self.label,
             'token': self.token
         }
+
+    def __str__(self):
+        return f'<Repo {self.owner}/{self.name} {self.token[:5]}>'
+
+    def __repr__(self):
+        return self.__str__()
