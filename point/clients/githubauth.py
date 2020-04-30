@@ -1,6 +1,8 @@
+import logging
 import requests
 from config import GITHUB_STATE
 
+LOG = logging.getLogger(__name__)
 GIT_WEBHOOK_AUTH = '/github/auth'
 API_HOST = 'https://api.github.com'
 
@@ -11,7 +13,7 @@ class GitHubAuth:
         self.host = host
         self.client_id = creds.get('client_id')
         self.secret = creds.get('secret')
-        self.scope = creds.get('scope', 'repo')
+        self.scope = creds.get('scope', 'repo,user:email')
 
     def login(self):
         params = dict(
@@ -35,6 +37,7 @@ class GitHubAuth:
 
         if response.status_code == 200:
             auth = response.json()
+            LOG.info(auth)
             return auth
         else:
             raise Exception(f'Upstream service exception: {response.status_code}')

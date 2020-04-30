@@ -88,13 +88,17 @@ def render_github_url(org, project, branch, path):
         fmt = "svg"
 
     repo = GitHubRepo.first_repo(org, project)
-    if repo and repo.has_owner:
-        if repo.requires_token and \
-          repo.token is not None and \
-          repo.token == request.args.get('token'):
-            LOG.debug(f"Authenticated as {repo.owner}")
-            owner = GitHubUser.first(repo.owner)
-            creds = owner
+
+    def is_allowed(repo, token):
+        return repo and repo.has_owner and \
+            repo.requires_token and \
+            repo.token == token
+
+    # print(repo.token, request.args.get('token'))
+    if is_allowed(repo, request.args.get('token')):
+        LOG.debug(f"Authenticated as {repo.owner}")
+        owner = GitHubUser.first(repo.owner)
+        creds = owner
     LOG.debug(repo)
 
     try:

@@ -74,7 +74,7 @@ class User:
         attrs = record.get('attributes', {})
         self.name = next(iter(attrs.get('cn', [])), None)
         self.cn = next(iter(attrs.get('cn', [])), None)
-        self.git_token = attrs.get(GIT_TOKEN, [])
+        self.git_token = record.get('git_token', attrs.get(GIT_TOKEN, []))
         if len(self.git_token) > 0:
             self.git_token = self.git_token[-1]
         else:
