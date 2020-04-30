@@ -10,6 +10,7 @@ class Profile extends Component {
             'github': 'loading...',
             'email': 'loading...'
         }
+        this.emailChange = this.emailChange.bind(this)
     }
 
     componentDidMount() {
@@ -24,6 +25,11 @@ class Profile extends Component {
             })
     }
 
+    emailChange(event) {
+        console.log(event.target.value)
+        this.setState({email: event.target.value})
+    }
+
     render() {
         return (<div>
             <h2>Profile</h2>
@@ -32,6 +38,7 @@ class Profile extends Component {
                       value={this.state.github_name} /><br/>
             <TextField name="email" 
                       label="PayPal Email" 
+                      onChange={this.emailChange}
                       value={this.state.email || ''} />
             
             <h2>Logout</h2>

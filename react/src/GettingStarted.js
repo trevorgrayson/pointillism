@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 // }
 
 function GettingStarted({host, domain, paypalId}) {
-    const ptImage = 'https://pointillism.io/trevorgrayson/pointillism/master/pointillism.dot.svg';
+    // const ptImage = 'https://pointillism.io/trevorgrayson/pointillism/master/pointillism.dot.svg';
 
     return (
         <Typography align="left" paragraph={true}>

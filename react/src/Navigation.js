@@ -37,7 +37,7 @@ TabPanel.propTypes = {
 };
 
 function loggedIn(username) {
-    return username != undefined && username.length > 0;
+    return username !== undefined && username.length > 0;
 }
 
 function a11yProps(index) {
