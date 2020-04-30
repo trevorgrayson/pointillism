@@ -1,43 +1,18 @@
-import requests
+from base64 import b64decode
 import logging
 from os.path import join
+from github import Github
 
 LOG = logging.getLogger(__name__)
-API_BASE = 'https://api.github.com'
-RAW_BASE = 'https://raw.githubusercontent.com'
-
-
-class GithubException(Exception):
-    pass
-
-
-class NotAuthorized(GithubException):
-    pass
 
 
 class GitContent:
     def __init__(self, creds=None):
-        self.creds = creds
-
-    def headers(self):
-        heads = {
-            'Accept': 'application/vnd.github.v3.raw'
-        }
-
-        if hasattr(self.creds, 'git_token'):
-            heads['Authorization'] = f'token {self.creds.git_token}'
-
-        return heads
+        if hasattr(creds, 'git_token'):
+            self.github = Github(creds.git_token)
+        else:
+            self.github = Github(creds)
 
     def get(self, owner, repo, branch, path):
-        uri = join(API_BASE, 'repos', owner, repo, 'contents', path)
-        if isinstance(self.creds, str):
-            uri = join(RAW_BASE, owner, repo, branch, path) + f'?token={self.creds}'
-        LOG.info(f"GET {uri} {self.headers()}")
-        response = requests.get(uri, headers=self.headers())
-        if response.status_code in [401, 403]:
-            raise NotAuthorized(response.text)
-        elif response.status_code == 200:
-            return response.text
-        else:
-            raise GithubException(response.text)
+        repo = self.github.get_repo(f'{owner}/{repo}')
+        return b64decode(repo.get_contents(path).content).decode('utf-8')

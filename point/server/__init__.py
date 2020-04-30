@@ -13,7 +13,8 @@ from ldapauth.flask.routes import auth_routes, register_config
 from .utils import headers, RegexConverter, response
 from point.models import GitHubRepo, GitHubUser, GitResource
 from point.server.base import get_me
-from point.clients.gitcontent import GitContent, GithubException
+from point.clients.gitcontent import GitContent
+from github import GithubException
 from point.renderer import render
 
 from config import (ADMIN_USER, ADMIN_PASS, LDAP_BASE_DN, SECRET_KEY,
