@@ -39,7 +39,7 @@ clean:
 	# docker rm pointillism
 	# docker rmi tgrayson/pointillism
 
-package: compile
+package: compile legal
 	cd react && make -f Makefile package
 
 image: 
