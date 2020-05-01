@@ -60,13 +60,13 @@ Usage Data will include information in order to provide our Services.  Best effo
 
 ### Graph Data and Derivative Data
 
-Graph Data is collected automatically when using the Service. Derivative Data includes but is not limited to image files (including: svg, jpeg, and pdf) that are generated using the contents of Graph Data.
+Graph Data is collected automatically when using the Service. 
 
 Graph Data may include information hosted by Third-Parties such as, but not limited to, the content files in your Third-Party repositories. This includes file names, directory structure, the contents of files, and file metadata. This may also include metadata surrounding API requests for these files.
 
-It's the policy of the Service to collect and record the minimum amount of data to service the requests of users of the Service. Third-Party Content files are retrieved, but not stored long term.  The Service will respect your rights for the removal of any Graph Data and/or Derivative Data. 
+Derivative Data includes but is not limited to image files (including: svg, jpeg, and pdf) that are generated using the contents of Graph Data.
 
-Graph Data and Derivative Data may be cached using usual industry methods and will be subject to reasonable, temporary, cache times.
+It is the policy of the Service to collect and record the minimum amount of data to service the requests of users of the Service. Third-Party Content files are retrieved, but not stored long term.  The Service will respect your rights for the removal of any Graph Data and/or Derivative Data. Graph Data and Derivative Data may be cached using usual industry methods and will be subject to reasonable, temporary, cache times.
 
 Graph Data and Derivative Data is considered private.  The Service will not intentionally share, promote, or otherwise access your data except for servicing usage or support issues.
 
