@@ -45,3 +45,14 @@
 noticeable-widget {
   float: right;
 }
+
+.footer .legal {
+  list-style: none;
+  margin: 0;
+  margin-bottom: 10px;
+
+}
+.footer .legal li {
+  display: inline;
+  padding: 0 10px 0;
+}
