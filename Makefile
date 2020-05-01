@@ -70,6 +70,12 @@ console:
 smoke:
 	$(PYTHON) -m pytest test/smoke/mvp_smoke.py
 
+legal: legal/privacy.md legal/terms.md
+	pandoc -f markdown -t html5 -o public/privacy.html legal/privacy.md 
+	pandoc -f markdown -t html5 -o public/terms.html legal/terms.md 
+	touch legal
+	# -c style.css
+
 validate: test integ image
 
 .PHONY: test
