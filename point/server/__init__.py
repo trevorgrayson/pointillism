@@ -41,6 +41,7 @@ app.url_map.converters['regex'] = RegexConverter
 
 ldap = LDAP()
 
+DOT_FORMATS = ["dot", "gv"]
 
 @app.before_request
 def before_request():
@@ -84,7 +85,7 @@ def render_github_url(org, project, branch, path):
     path = path[:len(path)-4]
     creds = request.args.get('token')
 
-    if fmt in ["dot", "gv"]:
+    if fmt in DOT_FORMATS:
         path = path + '.' + fmt
         fmt = "svg"
 
@@ -95,7 +96,6 @@ def render_github_url(org, project, branch, path):
             repo.requires_token and \
             repo.token == token
 
-    # print(repo.token, request.args.get('token'))
     if is_allowed(repo, request.args.get('token')):
         LOG.debug(f"Authenticated as {repo.owner}")
         owner = GitHubUser.first(repo.owner)
