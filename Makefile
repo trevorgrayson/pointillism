@@ -39,8 +39,10 @@ clean:
 	# docker rm pointillism
 	# docker rmi tgrayson/pointillism
 
+package: compile
+	cd react && make -f Makefile package
+
 image: 
-	# cd react && make -f Makefile package
 	docker build -t $(IMAGE) .
 
 imagePush: image

@@ -1,12 +1,17 @@
 language: python
 python:
   - "3.7"
+env:
+  - TRAVIS_NODE_VERSION="14"
 install:
+  - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
   - make compile
 jobs:
   include:
     - stage: test
       script: make test
+    - stage: package
+      script: make package
     - stage: image push
       if: branch = master
       script: make imagePush
