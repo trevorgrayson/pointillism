@@ -73,8 +73,10 @@ smoke:
 legal: legal/privacy.md legal/terms.md
 	pandoc -f markdown -t html5 -o point/server/static/privacy.html legal/privacy.md 
 	pandoc -f markdown -t html5 -o point/server/static/terms.html legal/terms.md 
+	pandoc -f markdown -t html5 -o point/server/static/do-not-sell.html legal/do-not-sell.md 
 	pandoc -f markdown -t html5 -o react/public/privacy.html legal/privacy.md 
 	pandoc -f markdown -t html5 -o react/public/terms.html legal/terms.md 
+	pandoc -f markdown -t html5 -o react/public/do-not-sell.html legal/do-not-sell.md 
 	
 	touch legal
 	# -c style.css
