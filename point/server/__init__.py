@@ -73,6 +73,7 @@ def welcome():
         )
 
 
+@app.route("/<string:org>/<string:project>/blob/<string:branch>/<path:path>")
 @app.route("/github/<string:org>/<string:project>/<string:branch>/<path:path>")
 @app.route("/<string:org>/<string:project>/<string:branch>/<path:path>")
 def render_github_url(org, project, branch, path):
