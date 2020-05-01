@@ -41,3 +41,7 @@
   border: none;
   border-bottom: 1px solid #666;
 }
+
+noticeable-widget {
+  float: right;
+}

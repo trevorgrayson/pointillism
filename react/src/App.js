@@ -17,6 +17,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
+          <noticeable-widget access-token="qX3J6cHosUQbZuvYHcQO" project-id="XAM1Z3O9kQY5jxf2vhPF"></noticeable-widget>
           <h2>pointillism.io</h2>
         </div>
         <TabNav host={host} domain={domain} repos={repos} username={username} />
