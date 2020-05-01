@@ -62,7 +62,7 @@ test: compileAll
 	$(PYTHON) -m pytest --cov=point
 
 integ: compileAll
-	$(PYTHON) -s -m pytest -s test/models/*_integ.py
+	$(PYTHON) -s -m pytest -s -c pytest.integ.ini
 
 console:
 	$(PYTHON) 

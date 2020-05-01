@@ -1,4 +1,4 @@
-from point.models.base import GitHubRepo, GitHubUser
+from point.models import GitHubRepo, GitHubUser
 
 
 class TestLDIFRecord:
@@ -15,6 +15,5 @@ class TestLDIFRecord:
 
     def test_search(self):
         results = GitHubRepo.search('private3')
-
         print(results)
 
