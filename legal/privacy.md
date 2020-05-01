@@ -23,7 +23,7 @@ For the purposes of this Privacy Policy:
 * **Website** refers to pointillism.io, accessible from https://pointillism.io
 * **Service** refers to the Website.
 * **Country** refers to: California, United States
-* **Service** Provider means any natural or legal person who processes the data on behalf of the Company. It refers to third-party companies or individuals employed by the Company to facilitate the Service, to provide the Service on behalf of the Company, to perform services related to the Service or to assist the Company in analyzing how the Service is used.
+* **Service Provider** means any natural or legal person who processes the data on behalf of the Company. It refers to third-party companies or individuals employed by the Company to facilitate the Service, to provide the Service on behalf of the Company, to perform services related to the Service or to assist the Company in analyzing how the Service is used.
 * **Third-party Social Media Service** refers to any website or any social network website through which a User can log in or create an account to use the Service.
 * **Personal Data** is any information that relates to an identified or identifiable individual.
 * **Cookies** are small files that are placed on Your computer, mobile device or any other device by a website, containing the details of Your browsing history on that website among its many uses.
@@ -122,8 +122,10 @@ The Company may use Personal Data for the following purposes:
 
 We may share your personal information in the following situations:
 
-* **With Service Providers**: We may share Your personal information with Service Providers to monitor and analyze the use of our Service, to contact You.
+* **With Service Providers**: We may share Your personal information with Service Providers to monitor and analyze the use of our Service, to contact You. Personal Data will be shared on a need to know basis.
 * **With other users**: when You share personal information or otherwise interact in the public areas with other users, such information may be viewed by all users and may be publicly distributed outside. If You interact with other users or register through a Third-Party Social Media Service, Your contacts on the Third-Party Social Media Service may see Your name, profile, pictures and description of Your activity. Similarly, other users will be able to view descriptions of Your activity, communicate with You and view Your profile.
+
+We will not sell your Personal Data.
 
 ## Retention of Your Personal Data
 
