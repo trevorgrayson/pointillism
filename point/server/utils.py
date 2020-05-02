@@ -2,6 +2,9 @@ from werkzeug.routing import BaseConverter
 from werkzeug.wrappers import Response
 from point.renderer import get_and_render, Forbidden
 from config import HOST, STATIC_DIR
+from os import path as p
+
+DOT_FORMATS = [".dot", ".gv", ""]
 
 MIME_MAP = {
     'svg': 'svg+xml'
@@ -41,3 +44,19 @@ def response(path, format, host=HOST, **params):
         with open(STATIC_DIR + '/images/pointillism-401.svg', 'r') as fp:
             return Response(fp.read(), status=401,
                             mimetype="image/svg+xml")
+
+def parse_request_fmt(path):
+    path, ext = p.splitext(path)
+
+    if ext in DOT_FORMATS:
+        return '.svg'
+
+    return ext
+
+def parse_request_path(path):
+    truncated, ext = p.splitext(path)
+
+    if ext in DOT_FORMATS:
+        return path
+    else:
+        return truncated

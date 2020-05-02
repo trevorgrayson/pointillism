@@ -89,9 +89,8 @@ def welcome():
 @app.route("/github/<string:org>/<string:project>/<string:branch>/<path:path>")
 @app.route("/<string:org>/<string:project>/<string:branch>/<path:path>")
 def render_github_url(org, project, branch, path):
-    resource = GitResource(org, project, branch, path)
-
     LOG.debug("REQUEST /github: {path}")
+    resource = GitResource(org, project, branch, path)
     fmt = parse_request_fmt(path)
     path = parse_request_path(path)
     creds = request.args.get('token')
