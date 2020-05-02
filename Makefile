@@ -42,7 +42,7 @@ clean:
 package: compile
 	cd react && make -f Makefile package
 
-image: 
+image: package
 	docker build -t $(IMAGE) .
 
 imagePush: image
