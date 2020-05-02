@@ -6,14 +6,6 @@ from os import path as p
 
 DOT_FORMATS = [".dot", ".gv", ""]
 
-MIME_MAP = {
-    'svg': 'svg+xml'
-}
-
-
-def get_mime(format):
-    return MIME_MAP.get(format, format)
-
 
 class RegexConverter(BaseConverter):
     def __init__(self, url_map, *items):

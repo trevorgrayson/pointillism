@@ -3,7 +3,6 @@ import requests
 from graphviz import Source
 from point.theme import theme_inject
 from werkzeug.wrappers import Response
-from point.server import utils
 
 logging.basicConfig(level=logging.DEBUG)  # filename='pointillism.log',
 LOG = logging.getLogger(__name__)
@@ -17,6 +16,14 @@ class Forbidden(Exception):
     pass
 
 
+MIME_MAP = {
+    'svg': 'svg+xml'
+}
+
+
+def get_mime(format):
+    return MIME_MAP.get(format, format)
+
 def url(host, path, **params):
     ps = "&".join([f"{k}={v}" for k, v in params.items()])
     return "{}/{}?{}".format(host, path, ps) 
@@ -27,7 +34,7 @@ def render(body, format='png', theme=None):
     src = Source(body)
 
     return Response(src.pipe(format=format),
-                    mimetype="image/{}".format(utils.get_mime(format)))
+                    mimetype="image/{}".format(get_mime(format)))
 
 
 # look up this dict method
