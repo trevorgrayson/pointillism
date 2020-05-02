@@ -3,11 +3,33 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import RepoClient from './clients/RepoClient';
 
-class RepoForm extends React.Component {
+
+class Repos extends React.Component {
   constructor(props) {
-   super(props);
-   this.setState(props)
-   this.handleSubmit = this.handleSubmit.bind(this)
+    super(props);
+    this.state = {
+        repos: []
+    };
+    this.update()
+
+    this.onDelete = this.onDelete.bind(this)
+    this.toggleVisible = this.toggleVisible.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  update() {
+    RepoClient.getRepos()
+              .then( (result) => {
+        this.setState({repos: result})
+    });
+  }
+
+  toggleVisible(event) {
+    if(event.target.type === "text") {
+      event.target.type = "password"
+    } else {
+      event.target.type = "text"
+    }
   }
 
   handleSubmit(event) {
@@ -19,44 +41,11 @@ class RepoForm extends React.Component {
         body: data
     }).then((result) => {
         // TODO 404
-        alert("OK")
+        this.update()
+        document.forms[0].repo.value = '';
     }).catch((result) => {
-        alert("FAILED! " + result)
+        // alert("FAILED! " + result)
     });
-  }
-
-  render() {
-    return (
-      <form className="repo">
-        <h2>Authorize New Repo</h2>
-        <TextField name="repo" label="Authorize Repository" />
-        <Button variant="contained" color="primary" onClick={this.handleSubmit}>Authorize</Button>
-      </form>
-    )
-  }
-}
-
-class Repos extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-        repos: []
-    };
-    RepoClient.getRepos()
-              .then( (result) => {
-        this.setState({repos: result})
-    });
-
-    this.onDelete = this.onDelete.bind(this)
-    this.toggleVisible = this.toggleVisible.bind(this)
-  }
-
-  toggleVisible(event) {
-    if(event.target.type === "text") {
-      event.target.type = "password"
-    } else {
-      event.target.type = "text"
-    }
   }
 
   onDelete(event) {
@@ -67,9 +56,9 @@ class Repos extends React.Component {
       fetch('/v1/repos/' + repoName, {
         method: "DELETE"
       }).then((result) => {
-        alert("OK")
+        this.update()
       }).catch((result) => {
-        alert("failed")
+        // alert("failed")
       })
     }
   }
@@ -79,7 +68,11 @@ class Repos extends React.Component {
 
     return (
     <div>
-      <RepoForm/>
+      <form className="repo">
+        <h2>Authorize New Repo</h2>
+        <TextField name="repo" label="Authorize Repository" />
+        <Button variant="contained" color="primary" onClick={this.handleSubmit}>Authorize</Button>
+      </form>
       <h2>Authorized Repos ({repos.length})</h2>
       <ul className="repos">
         {repos.map((value, index) => {

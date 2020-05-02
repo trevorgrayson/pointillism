@@ -29,3 +29,4 @@ venv/*
 .idea/*
 .coverage
 .idea/*
+point/server/static/*
