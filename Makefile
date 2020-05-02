@@ -61,7 +61,7 @@ versionBump:
 	git tag $(VERSION_NEW)
 	git push --tags
 test: compileAll
-	$(PYTHON) -m pytest --cov=point
+	$(PYTHON) -m pytest --cov=point $(TEST)
 
 integ: compileAll
 	$(PYTHON) -s -m pytest -s -c pytest.integ.ini

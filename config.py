@@ -33,3 +33,12 @@ GITHUB_SECRET = environ['GITHUB_SECRET']
 GITHUB_STATE = str(uuid.uuid4()) # unique for each user
 
 PAYPAL_CLIENT_ID = environ['PAYPAL_CLIENT_ID']
+
+AIRBRAKE_PROJECT_ID = environ['AIRBRAKE_PROJECT_ID']
+AIRBRAKE_API_KEY = environ['AIRBRAKE_API_KEY']
+
+
+def airbrake_env(env):
+    return {
+        "PROD": 'production'
+    }.get(env, 'development')

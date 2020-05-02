@@ -1,4 +1,5 @@
 import logging
+from pybrake import Notifier
 from json import dumps
 from flask import Flask, request, g, session
 from string import Template
@@ -10,7 +11,7 @@ from .api.v1 import v1_routes
 from .paypal import paypal_routes
 
 from ldapauth.flask.routes import auth_routes, register_config
-from .utils import headers, RegexConverter, response
+from .utils import headers, RegexConverter, response, parse_request_fmt, parse_request_path
 from point.models import GitHubRepo, GitHubUser, GitResource
 from point.server.base import get_me
 from point.clients.gitcontent import GitContent
@@ -19,6 +20,7 @@ from point.renderer import render
 
 from config import (ADMIN_USER, ADMIN_PASS, LDAP_BASE_DN, SECRET_KEY,
                     DOMAIN, HOST, ENV, STATIC_DIR, PAYPAL_CLIENT_ID, LDAP_HOST)
+from config import AIRBRAKE_PROJECT_ID, AIRBRAKE_API_KEY, airbrake_env
 
 LOG = logging.getLogger(__name__)
 
@@ -42,6 +44,15 @@ app.url_map.converters['regex'] = RegexConverter
 ldap = LDAP()
 
 DOT_FORMATS = ["dot", "gv"]
+
+notifier = Notifier(project_id=AIRBRAKE_PROJECT_ID,
+                    project_key=AIRBRAKE_API_KEY,
+                    environment=airbrake_env(ENV))
+
+@app.errorhandler(Exception)
+def exception_handler(error):
+    notifier.notify(error)
+    raise error
 
 @app.before_request
 def before_request():
@@ -81,13 +92,9 @@ def render_github_url(org, project, branch, path):
     resource = GitResource(org, project, branch, path)
 
     LOG.debug("REQUEST /github: {path}")
-    fmt = path[len(path) - 3:]
-    path = path[:len(path)-4]
+    fmt = parse_request_fmt(path)
+    path = parse_request_path(path)
     creds = request.args.get('token')
-
-    if fmt in DOT_FORMATS:
-        path = path + '.' + fmt
-        fmt = "svg"
 
     repo = GitHubRepo.first_repo(org, project)
 
@@ -105,7 +112,7 @@ def render_github_url(org, project, branch, path):
     try:
         LOG.debug(f"fetching {resource}")
         body = GitContent(creds).get(org, project, branch, path)
-        return render(body, format=fmt)
+        return render(body, format=fmt[1:])
     except GithubException as err:
         LOG.error(err)
         return dumps({
