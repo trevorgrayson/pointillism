@@ -24,6 +24,12 @@
   to { transform: rotate(360deg); }
 }
 
+.beta {
+  position: relative;
+  font-size: 0.5em;
+  top: -15px;
+}
+
 .navigation li {
   list-style: none;
 
