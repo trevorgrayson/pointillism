@@ -2,10 +2,9 @@
 Takes dot graph FILES and appends `themes`.
 Dependent upon the dot graph language definition: https://www.graphviz.org/doc/info/lang.html
 """
-import logging
+import logging as log
 from .reader import read_theme
 
-LOG = logging.getLogger(__name__)
 THEME = 'theme'
 
 
@@ -19,7 +18,7 @@ def theme_inject(dotfile, theme_name):
     try:
         theme = read_theme(theme_name) # TODO cache these
     except IOError as err:
-        LOG.error(f"Exception loading `{theme_name}` theme: {err}")
+        log.error(f"Exception loading `{theme_name}` theme: {err}")
         return dotfile
 
     brace_pos = 0

@@ -1,20 +1,14 @@
-import logging
+import logging as log
 import requests
 from graphviz import Source
 from point.theme import theme_inject
 from werkzeug.wrappers import Response
 
-logging.basicConfig(level=logging.DEBUG)  # filename='pointillism.log',
-LOG = logging.getLogger(__name__)
-
-
 class NotFound(Exception):
     pass
 
-
 class Forbidden(Exception):
     pass
-
 
 MIME_MAP = {
     'svg': 'svg+xml'
@@ -42,8 +36,8 @@ def get_and_render(host, path, format="png", theme=None, headers={}, **params):
     org, repo, *tail = path
     path = "/".join((org, repo, 'contents', *tail))
     dot_url = url(host, path, **params)
-    LOG.debug(f"GET: {dot_url}")
-    LOG.debug(f'headers: {headers}')
+    log.debug(f"GET: {dot_url}")
+    log.debug(f'headers: {headers}')
     response = requests.get(dot_url, headers=headers)
 
     if response.status_code == 200:

@@ -1,4 +1,5 @@
-import logging
+import logging as log
+from pybrake import Notifier
 from json import dumps
 from flask import Flask, request, g, session
 from string import Template
@@ -20,8 +21,6 @@ from github import GithubException
 
 from config import (ADMIN_USER, ADMIN_PASS, LDAP_BASE_DN, SECRET_KEY,
                     DOMAIN, HOST, ENV, STATIC_DIR, PAYPAL_CLIENT_ID, LDAP_HOST)
-
-LOG = logging.getLogger(__name__)
 
 app = Flask(__name__)
 add_exception_handling(app)
@@ -81,7 +80,7 @@ def welcome():
 @app.route("/github/<string:org>/<string:project>/<string:branch>/<path:path>")
 @app.route("/<string:org>/<string:project>/<string:branch>/<path:path>")
 def render_github_url(org, project, branch, path):
-    LOG.debug("REQUEST /github: {path}")
+    log.debug("REQUEST /github: {path}")
     resource = GitResource(org, project, branch, path)
     fmt = parse_request_fmt(path)
     path = parse_request_path(path)
@@ -95,17 +94,17 @@ def render_github_url(org, project, branch, path):
             repo.token == token
 
     if is_allowed(repo, request.args.get('token')):
-        LOG.debug(f"Authenticated as {repo.owner}")
+        log.debug(f"Authenticated as {repo.owner}")
         owner = GitHubUser.first(repo.owner)
         creds = owner
-    LOG.debug(repo)
+    log.debug(repo)
 
     try:
-        LOG.debug(f"fetching {resource}")
+        log.debug(f"fetching {resource}")
         body = GitContent(creds).get(org, project, branch, path)
         return render(body, format=fmt[1:])
     except GithubException as err:
-        LOG.error(err)
+        log.error(err)
         return dumps({
             'message': f"Exception finding document: {resource}. " +\
             'Is the repository private? Do you need a valid token?'

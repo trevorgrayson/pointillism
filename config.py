@@ -1,5 +1,11 @@
 from os import environ, path, getcwd, urandom
+import logging
 import uuid
+
+LOG_LEVEL = environ.get('LOGLEVEL', 'INFO').upper()
+print(f"Setting log level to {LOG_LEVEL}")
+LOG_LEVEL = getattr(logging, LOG_LEVEL)
+logging.basicConfig(level=LOG_LEVEL)
 
 DOMAIN = environ.get('domain', 'pointillism.io')
 HOST = environ['HOST']

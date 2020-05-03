@@ -1,10 +1,7 @@
-import logging
 from functools import wraps
 from flask import redirect, request, make_response
 from point.models import GitHubUser
 from point.models.user import PT_SESSION_TOKEN
-
-LOG = logging.getLogger(__name__)
 
 
 def get_me():

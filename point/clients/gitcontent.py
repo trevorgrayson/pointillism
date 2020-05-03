@@ -1,10 +1,7 @@
 from base64 import b64decode
-import logging
 from os.path import join
 from github import Github
 from config import GITHUB_CLIENT_ID, GITHUB_SECRET
-
-LOG = logging.getLogger(__name__)
 
 
 class GitContent:

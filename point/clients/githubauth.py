@@ -1,8 +1,7 @@
-import logging
+import logging as log
 import requests
 from config import GITHUB_STATE
 
-LOG = logging.getLogger(__name__)
 GIT_WEBHOOK_AUTH = '/github/auth'
 API_HOST = 'https://api.github.com'
 
@@ -37,7 +36,7 @@ class GitHubAuth:
 
         if response.status_code == 200:
             auth = response.json()
-            LOG.info(auth)
+            log.info(auth)
             return auth
         else:
             raise Exception(f'Upstream service exception: {response.status_code}')
