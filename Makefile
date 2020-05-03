@@ -55,6 +55,7 @@ imageTest: image
 
 deploy:
 	./bin/deploy 
+	make smoke
 
 versionBump:
 	git pull --tags
