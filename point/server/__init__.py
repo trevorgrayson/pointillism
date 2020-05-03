@@ -18,6 +18,8 @@ from point.clients.gitcontent import GitContent
 from github import GithubException
 from point.renderer import render
 
+from werkzeug.exceptions import Forbidden, InternalServerError
+
 from config import (ADMIN_USER, ADMIN_PASS, LDAP_BASE_DN, SECRET_KEY,
                     DOMAIN, HOST, ENV, STATIC_DIR, PAYPAL_CLIENT_ID, LDAP_HOST)
 from config import AIRBRAKE_PROJECT_ID, AIRBRAKE_API_KEY, airbrake_env
@@ -49,10 +51,18 @@ notifier = Notifier(project_id=AIRBRAKE_PROJECT_ID,
                     project_key=AIRBRAKE_API_KEY,
                     environment=airbrake_env(ENV))
 
-@app.errorhandler(Exception)
-def exception_handler(error):
+
+@app.errorhandler(Forbidden)
+def error403(error):
+    notifier.notify(error)
+    return '{"message": "Rate limiting error. Please wait, and try again."}', 502
+
+
+@app.errorhandler(InternalServerError)
+def server_error(error):
     notifier.notify(error)
     raise error
+
 
 @app.before_request
 def before_request():
