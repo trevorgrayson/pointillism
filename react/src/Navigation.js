@@ -12,6 +12,13 @@ import GettingStarted from './GettingStarted';
 import Repos from './Repos';
 import About from './About';
 
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -62,29 +69,10 @@ export default function TabNav({host, domain, repos, username}) {
     setValue(newValue);
   };
 
-  var tabs = [
-    <Tab label="Mission" {...a11yProps(0)} />,
-    <Tab label="Getting Started" {...a11yProps(1)} />,
-    <Tab label="About" {...a11yProps(2)} />
-  ]
-
-  var tabPanels = [
-      <TabPanel value={value} index={0}>
-        <Manifesto host={host} domain={domain}/>
-      </TabPanel>,
-      <TabPanel value={value} index={1}>
-        <GettingStarted host={host} domain={domain}/>
-      </TabPanel>,
-      <TabPanel value={value} index={2}>
-        <About/>
-      </TabPanel>,
-      <TabPanel value={value} index={3}>
-        <Repos repos={repos} />
-      </TabPanel>
-  ]
+  var tabs = []
 
   if (loggedIn(username)) {
-    tabs.push(<Tab label="Your Repositories" {...a11yProps(3)} />)
+    tabs.push(<Tab label="Your Repositories" component={Link} to="/repos" />)
     tabs.push(<Tab label="logout" href="/github/logout" />)
   } else {
     tabs.push(<Tab label="login" href="/github/login"/>)
@@ -92,12 +80,23 @@ export default function TabNav({host, domain, repos, username}) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
-        <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-          {tabs}
-        </Tabs>
-      </AppBar>
-      {tabPanels}
+      <Router>
+        <AppBar position="static">
+          <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
+            <Tab label="Mission" component={Link} to="/" />
+            <Tab label="Getting Started" component={Link} to="/getting-started" />
+            <Tab label="About" component={Link} to="/about" />
+            {tabs}
+          </Tabs>
+        </AppBar>
+        <Switch>
+          <Route path="/getting-started"><GettingStarted host={host} domain={domain}/></Route>
+          <Route path="/about"><About/></Route>
+          <Route path="/repos"><Repos repos={repos} /></Route>
+          <Route path="/"><Manifesto host={host} domain={domain}/></Route>
+        </Switch>
+      </Router>
+      
     </div>
   );
 }
