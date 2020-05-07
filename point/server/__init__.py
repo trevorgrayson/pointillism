@@ -57,6 +57,10 @@ def before_request():
 IS_DEV = (ENV == "develop")
 
 
+@app.route("/getting-started")
+@app.route("/profile")
+@app.route("/about")
+@app.route("/repos")
 @app.route("/")
 def welcome():
     me = get_me()
