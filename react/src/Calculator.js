@@ -39,7 +39,7 @@ class Calculator extends Component {
     render() {
         return (
             <form className="ptCalculator">
-                <p>Or you can paste your DOT Graph Source URL here and it will convert:</p>
+                <h3>Paste your DOT Graph Source URL here and the URL will convert:</h3>
                 <TextField 
                     name="url" 
                     value={this.state.url} 

@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
 import Manifesto from './Manifesto';
+import Account from './Account';
 import GettingStarted from './GettingStarted';
 import Repos from './Repos';
 import About from './About';
@@ -66,7 +67,7 @@ export default function TabNav({host, domain, repos, username}) {
 
   if (loggedIn(username)) {
     tabs.push(<Tab label="Your Repositories" component={Link} to="/repos" />)
-    tabs.push(<Tab label="logout" href="/github/logout" />)
+    tabs.push(<Tab label="Account" href="/account" />)
   } else {
     tabs.push(<Tab label="login" href="/github/login"/>)
   }
@@ -83,6 +84,7 @@ export default function TabNav({host, domain, repos, username}) {
           </Tabs>
         </AppBar>
         <Switch>
+          <Route path="/account"><Account /></Route>
           <Route path="/getting-started"><GettingStarted host={host} domain={domain}/></Route>
           <Route path="/about"><About/></Route>
           <Route path="/repos"><Repos repos={repos} /></Route>
