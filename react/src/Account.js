@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Button from '@material-ui/core/Button';
+
 
 class Account extends Component {
     constructor(props) {
@@ -14,8 +16,11 @@ class Account extends Component {
             <div className="profile">
                 <h2>{profile.name}</h2>
 
-                <h3>Log Out</h3>
-                <a href="/github/logout">logout</a>
+                <h3>status: basic</h3>
+                
+                <div>
+                    <Button href="/github/logout" color="secondary">Log Out</Button>
+                </div>
             </div>
         )
     }
