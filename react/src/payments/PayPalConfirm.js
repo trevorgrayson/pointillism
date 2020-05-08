@@ -16,8 +16,10 @@ function PayPalConfirm() {
                 </tr>
             </table>
             <p>
-            We hope you enjoy getting started with pointillism.io.
-            Please <a href="mailto:trevor@ipsumllc.com?subject=Pointillism%20Payment">contact us</a> if 
+            We hope you enjoy getting started with pointillism.io.  
+            Visit <a href="/getting-started">Getting Started</a> with help setting up.
+            </p>
+            <p>Please <a href="mailto:trevor@ipsumllc.com?subject=Pointillism%20Payment">contact us</a> if 
             you have any questions.</p>
         </div>
     )

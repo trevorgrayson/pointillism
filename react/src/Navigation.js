@@ -12,6 +12,7 @@ import Account from './Account';
 import GettingStarted from './GettingStarted';
 import Repos from './Repos';
 import About from './About';
+import PayPalConfirm from './payments/PayPalConfirm'
 
 import {
   BrowserRouter as Router,
@@ -88,6 +89,7 @@ export default function TabNav({host, domain, repos, username}) {
           <Route path="/getting-started"><GettingStarted host={host} domain={domain}/></Route>
           <Route path="/about"><About/></Route>
           <Route path="/repos"><Repos repos={repos} /></Route>
+          <Route path="/paypal/confirm"><PayPalConfirm /></Route>
           <Route path="/"><Manifesto host={host} domain={domain}/></Route>
         </Switch>
       </Router>
