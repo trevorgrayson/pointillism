@@ -49,7 +49,7 @@ imagePush: image
 	echo "$(DOCKER_PASS)" | docker login -u "$(DOCKER_USER)" --password-stdin
 	docker push $(IMAGE)
 
-imageTest: image
+imageTest:
 	@docker stop pointillism && docker rm pointillism || echo "pointillism not running."
 	@docker run --name $(PROJECT) --env-file ENV -d -p 5001:5001 --restart=always tgrayson/$(PROJECT):latest
 

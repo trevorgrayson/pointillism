@@ -81,6 +81,9 @@ noticeable-widget {
   margin: 0 auto 50px;
   width: 600px;
 }
+.paid table tr {
+  line-height: 2em;
+}
 .paid table tr.dark {
   background-color: #ddd;
 }
