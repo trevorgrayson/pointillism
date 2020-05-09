@@ -5,7 +5,7 @@ class PaypalButton extends React.Component {
    componentWillReceiveProps ({ isScriptLoaded, isScriptLoadSucceed }) {
     if (isScriptLoaded && !this.props.isScriptLoaded) {
       if (isScriptLoadSucceed) {
-        window.paypal.Buttons({
+        window.paypal && window.paypal.Buttons && window.paypal.Buttons({
           style: {
               shape: 'rect',
               color: 'blue',
