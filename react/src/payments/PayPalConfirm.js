@@ -5,7 +5,7 @@ function PayPalConfirm({name}) {
     if(name) {
         thankYou += `, ${name}` 
     }
-    thankYou += "!";
+    thankYou += "! You should be expecting an email from PayPal confirming your purchase.";
     
 
     return (
