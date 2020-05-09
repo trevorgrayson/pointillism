@@ -3,7 +3,8 @@ import scriptLoader from 'react-async-script-loader';
 
 class PaypalButton extends React.Component {
    componentWillReceiveProps ({ isScriptLoaded, isScriptLoadSucceed }) {
-    if (isScriptLoaded && !this.props.isScriptLoaded) {
+    const self = this;
+    if (isScriptLoaded && !self.props.isScriptLoaded) {
       if (isScriptLoadSucceed) {
         window.paypal && window.paypal.Buttons && window.paypal.Buttons({
           style: {
@@ -27,7 +28,7 @@ class PaypalButton extends React.Component {
           },
           onApprove: function(data, actions) {
               return actions.order.capture().then(function(details) {
-                this.context.router.transitionTo('/paypal/confirm', {
+                self.context.router.transitionTo('/paypal/confirm', {
                   name: details.payer.name.given_name
                 });
               });
