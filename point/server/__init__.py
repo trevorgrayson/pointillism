@@ -57,6 +57,7 @@ def before_request():
 IS_DEV = (ENV == "develop")
 
 
+@app.route("/paypal/confirm")
 @app.route("/getting-started")
 @app.route("/profile")
 @app.route("/about")

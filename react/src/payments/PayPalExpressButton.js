@@ -17,6 +17,7 @@ class PaypalButton extends React.Component {
           createOrder: function(data, actions) {
               return actions.order.create({
                   purchase_units: [{
+                      description: "https://pointillism.io",
                       amount: {
                           value: '5'
                       }
@@ -28,9 +29,7 @@ class PaypalButton extends React.Component {
           },
           onApprove: function(data, actions) {
               return actions.order.capture().then(function(details) {
-                self.context.router.transitionTo('/paypal/confirm', {
-                  name: details.payer.name.given_name
-                });
+                window.document.location = '/paypal/confirm';
               });
           }
         }).render('#paypal-button-container');
