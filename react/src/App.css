@@ -78,8 +78,10 @@ noticeable-widget {
 }
 
 .paid table {
-  margin: 0 auto 10px;
+  margin: 0 auto 50px;
   width: 600px;
+}
+.paid table tr.dark {
   background-color: #ddd;
 }
 .paid table td {

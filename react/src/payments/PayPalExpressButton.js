@@ -27,7 +27,9 @@ class PaypalButton extends React.Component {
           },
           onApprove: function(data, actions) {
               return actions.order.capture().then(function(details) {
-                  alert('Thank you for your support, ' + details.payer.name.given_name + '!');
+                this.context.router.transitionTo('/paypal/confirm', {
+                  name: details.payer.name.given_name
+                });
               });
           }
         }).render('#paypal-button-container');
