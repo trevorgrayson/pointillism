@@ -54,8 +54,8 @@ imageTest:
 	@docker run --name $(PROJECT) --env-file ENV -d -p 5001:5001 --restart=always tgrayson/$(PROJECT):latest
 
 deploy:
-	./bin/deploy 
-	make smoke
+	echo "./bin/deploy" | ssh pointillism.io
+	TEST_HOST=https://pointillism.io GIT_TOKEN=123 make smoke
 
 versionBump:
 	git pull --tags
