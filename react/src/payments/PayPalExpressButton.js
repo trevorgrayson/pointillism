@@ -1,5 +1,7 @@
 import React from 'react';
+import {withRouter} from 'react-router';
 import scriptLoader from 'react-async-script-loader';
+
 
 class PaypalButton extends React.Component {
    componentWillReceiveProps ({ isScriptLoaded, isScriptLoadSucceed }) {
@@ -29,7 +31,11 @@ class PaypalButton extends React.Component {
           },
           onApprove: function(data, actions) {
               return actions.order.capture().then(function(details) {
-                window.document.location = '/paypal/confirm';
+                // const email = details.payer.email_address;
+                self.props.history.push('/paypal/confirm', {
+                    name: details.payer.name.given_name
+                })
+                //details.purchase_units.payments.captures.[status,amount.[value, currency_code]]
               });
           }
         }).render('#paypal-button-container');
@@ -43,4 +49,4 @@ class PaypalButton extends React.Component {
   }
 }
 
-export default scriptLoader('https://www.paypalobjects.com/api/checkout.js')(PaypalButton);
+export default scriptLoader('https://www.paypalobjects.com/api/checkout.js')(withRouter(PaypalButton));

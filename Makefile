@@ -2,23 +2,27 @@ IMAGE := tgrayson/pointillism
 VERSION_NEW := $(shell ./bin/version_next)
 
 FLASK_RUN_PORT?=5000
-PYTHON := python3
-VENV = .venv
-VENV_BUILD = .venv.build
-HOST ?= https://raw.githubusercontent.com
-TEST_HOST ?= http://localhost:5001
+PYTHON:=python3
+VENV=.venv
+VENV_BUILD=.venv.build
+HOST?=https://raw.githubusercontent.com
+TEST_HOST?=http://localhost:5001
 PROJECT=pointillism
 
+export ENV=develop
 export HOST
 export FLASK_RUN_PORT
 export GITHUB_CLIENT_ID
 export GITHUB_SECRET
 export PROJECT
-export ENV=develop
 export ADMIN_USER, ADMIN_PASS
 export LDAP_HOST=ipsumllc.com
 export PYTHONPATH=.:$(VENV):$(VENV_BUILD)
+export PAYPAL_CLIENT_ID
+export AIRBRAKE_PROJECT_ID
+export AIRBRAKE_API_KEY
 
+.EXPORT_ALL_VARIABLES:
 server: compile
 	@test -n "$(HOST)" # set $$HOST variable
 	$(PYTHON) -m point.server
@@ -73,6 +77,9 @@ console:
 smoke:
 	$(PYTHON) -m pytest test/smoke/mvp_smoke.py
 
+status:
+	$(PYTHON) -m status
+
 legal: legal/privacy.md legal/terms.md
 	pandoc -f markdown -t html5 -o point/server/static/privacy.html legal/privacy.md 
 	pandoc -f markdown -t html5 -o point/server/static/terms.html legal/terms.md 
@@ -86,4 +93,4 @@ legal: legal/privacy.md legal/terms.md
 
 validate: test integ image
 
-.PHONY: test legal
+.PHONY: test legal status
