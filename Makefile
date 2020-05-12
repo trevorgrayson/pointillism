@@ -8,6 +8,7 @@ VENV_BUILD=.venv.build
 HOST?=https://raw.githubusercontent.com
 TEST_HOST?=http://localhost:5001
 PROJECT=pointillism
+VERSION_NEW := ${shell git tag -l v[0-9]* | sort -V -r | head -n1 |  awk '/v/{split($$NF,v,/[.]/); $$NF=v[1]"."v[2]"."++v[3]}1'}
 
 export ENV=develop
 export HOST
@@ -50,6 +51,7 @@ image: package
 	docker build -t $(IMAGE) .
 
 imagePush: image
+	@make versionBump
 	echo "$(DOCKER_PASS)" | docker login -u "$(DOCKER_USER)" --password-stdin
 	docker push $(IMAGE)
 
@@ -62,9 +64,11 @@ deploy:
 	TEST_HOST=https://pointillism.io GIT_TOKEN=123 make smoke
 
 versionBump:
-	git pull --tags
-	git tag $(VERSION_NEW)
-	git push --tags
+	@git pull --tags
+	@git tag $(VERSION_NEW)
+	@git push --tags
+	@echo "tagged $(VERSION_NEW)"
+
 test: compileAll
 	$(PYTHON) -m pytest --cov=point $(TEST)
 
