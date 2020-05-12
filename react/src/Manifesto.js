@@ -35,7 +35,7 @@ function Manifesto({host, domain, paypalId}) {
               getting started.
             </p>
             <p>
-              If you have a github file such as <code>https://{host}/trevorgrayson/pointillism/master/example.dot</code>,&nbsp;
+              If you have a github file such as <code>{host}/trevorgrayson/pointillism/master/example.dot</code>,&nbsp;
               just replace <code>{host}</code> with <code>{domain}</code>, and append your desired format&nbsp;
               (<code>.svg</code>, <code>.png</code>, <code>.jpg</code>).
             </p>
