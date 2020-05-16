@@ -14,7 +14,7 @@ from .utils import headers, RegexConverter, response, parse_request_fmt, parse_r
 from point.models import GitHubRepo, GitHubUser, GitResource
 from point.server.base import get_me
 from point.clients.gitcontent import GitContent
-from point.renderer import render
+from point.renderer import render, cache_control
 from ldapauth.flask.routes import auth_routes, register_config
 from github import GithubException
 
@@ -89,6 +89,7 @@ def render_github_url(org, project, branch, path):
     resource = GitResource(org, project, branch, path)
     fmt = parse_request_fmt(path)
     path = parse_request_path(path)
+    public = True
     creds = request.args.get('token')
 
     repo = GitHubRepo.first_repo(org, project)
@@ -102,12 +103,14 @@ def render_github_url(org, project, branch, path):
         log.debug(f"Authenticated as {repo.owner}")
         owner = GitHubUser.first(repo.owner)
         creds = owner
+        public = False
     log.debug(repo)
 
     try:
         log.debug(f"fetching {resource}")
         body = GitContent(creds).get(org, project, branch, path)
-        return render(body, format=fmt[1:])
+        return render(body, format=fmt[1:],
+                      headers=cache_control(public))
     except GithubException as err:
         log.error(err)
         return dumps({

@@ -18,17 +18,33 @@ MIME_MAP = {
 def get_mime(format):
     return MIME_MAP.get(format, format)
 
+
 def url(host, path, **params):
     ps = "&".join([f"{k}={v}" for k, v in params.items()])
     return "{}/{}?{}".format(host, path, ps) 
 
 
-def render(body, format='png', theme=None):
+def cache_control(public=False, headers=None):
+    max_age = 0
+    audience = 'private'
+    if headers is None:
+        headers = {}
+
+    if public:
+        audience = 'public'
+        max_age = 60
+
+    headers['cache-control'] = f'max-age={max_age} {audience}'
+    return headers
+
+def render(body, format='png', theme=None, headers=None):
     body = theme_inject(body, theme)
     src = Source(body)
 
-    return Response(src.pipe(format=format),
+    resp = Response(src.pipe(format=format),
                     mimetype="image/{}".format(get_mime(format)))
+    resp.headers = headers
+    return resp
 
 
 # look up this dict method
