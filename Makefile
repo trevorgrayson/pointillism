@@ -51,7 +51,7 @@ image: package
 	docker build -t $(IMAGE) .
 
 imagePush: image
-	@make versionBump
+	# @make versionBump
 	echo "$(DOCKER_PASS)" | docker login -u "$(DOCKER_USER)" --password-stdin
 	docker push $(IMAGE)
 
