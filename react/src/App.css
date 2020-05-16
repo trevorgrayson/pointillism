@@ -44,6 +44,10 @@
   margin-bottom: 0;
 }
 
+.repos {
+  text-align: left;
+}
+
 .repo .MuiButtonBase-root {
   margin-top: 16px;
   margin-left: 10px;
@@ -59,6 +63,16 @@
   margin-left: 10px;
   border: none;
   border-bottom: 1px solid #666;
+}
+.repos ul.graphs {
+  padding: 10px;
+}
+.repos ul.graphs li {
+  display: inline;
+  padding: 10px;
+}
+.repos li img {
+  width: 100px;
 }
 
 noticeable-widget {
