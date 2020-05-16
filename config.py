@@ -43,6 +43,9 @@ PAYPAL_CLIENT_ID = environ['PAYPAL_CLIENT_ID']
 AIRBRAKE_PROJECT_ID = environ['AIRBRAKE_PROJECT_ID']
 AIRBRAKE_API_KEY = environ['AIRBRAKE_API_KEY']
 
+# authenticated users get 100x more requests
+# TODO: if bath auth, does it fail?
+DEFAULT_USER = 'pointillismio'
 
 def airbrake_env(env):
     return {
