@@ -75,11 +75,15 @@ class Repos extends React.Component {
       </form>
       <h2>Authorized Repos ({repos.length})</h2>
       <ul className="repos">
-        {repos.map((value, index) => {
+        {repos.map((repo, index) => {
           return <li key={index}>
-            <span>{value.name}</span>
-            <input type="password" value={value.token} onClick={this.toggleVisible} />
-            <Button color="secondary" onClick={() => this.onDelete(value.name)}>Delete</Button>
+            <span>{repo.name}</span>
+            <input type="password" value={repo.token} onClick={this.toggleVisible} />
+            <Button color="secondary" onClick={() => this.onDelete(repo.name)}>Delete</Button>
+            <ul className="graphs">
+              {repo.graphs.map((url) => 
+                <li><a href={url}><img src={url} /></a></li>)}
+            </ul>
           </li>
         })}
       </ul>
