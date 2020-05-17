@@ -91,5 +91,9 @@ if __name__ == '__main__':
             stdscr.move(0, 0)
             stdscr.refresh()
 
+            if builds[0].state == 'finished':
+                print(builds[0])
+                exit(0)
+
             time.sleep(POLL_TIME)
 
