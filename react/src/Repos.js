@@ -50,10 +50,10 @@ class Repos extends React.Component {
 
   keyPressed(event) {
     if(event.key === "Enter") {
-        this.handleSubmit();
-        event.preventDefault()
+      this.handleSubmit(event);
     }
   }
+
   onDelete(event) {
     const repoName = event //hack
     const response = window.confirm("Deleting '"+repoName+"'. Are you sure?")
@@ -78,7 +78,7 @@ class Repos extends React.Component {
       <form className="repo">
         <h2>Authorize New Repo</h2>
         <TextField name="repo" label="Authorize Repository"
-            onKeyPress={this.keyPressed} />
+            onKeyPress={(event) => this.keyPressed(event)} />
         <Button variant="contained" color="primary"
             className="repo-submit"
             onClick={this.handleSubmit}>Authorize</Button>
