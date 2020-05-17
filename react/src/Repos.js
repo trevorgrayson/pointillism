@@ -91,7 +91,7 @@ class Repos extends React.Component {
             <Button color="secondary" onClick={() => this.onDelete(repo.name)}>Delete</Button>
             <ul className="graphs">
               {repo.graphs.map((url) => 
-                <li><a href={url}><img src={url} /></a></li>)}
+                <li><a href={url}><img src={url} alt="DOT graph" /></a></li>)}
             </ul>
           </li>
         })}
