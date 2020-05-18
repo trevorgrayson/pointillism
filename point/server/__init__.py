@@ -109,8 +109,9 @@ def render_github_url(org, project, branch, path):
     try:
         log.debug(f"fetching {resource}")
         body = GitContent(creds).get(org, project, branch, path)
-        return render(body, format=fmt[1:],
-                      headers=cache_control(public))
+        resp = render(body, format=fmt[1:])
+        resp.headers = cache_control(public, resp.headers)
+        return resp
     except GithubException as err:
         log.error(err)
         return dumps({

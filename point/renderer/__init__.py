@@ -4,11 +4,14 @@ from graphviz import Source
 from point.theme import theme_inject
 from werkzeug.wrappers import Response
 
+
 class NotFound(Exception):
     pass
 
+
 class Forbidden(Exception):
     pass
+
 
 MIME_MAP = {
     'svg': 'svg+xml'
@@ -37,13 +40,15 @@ def cache_control(public=False, headers=None):
     headers['cache-control'] = f'max-age={max_age} {audience}'
     return headers
 
+
 def render(body, format='png', theme=None, headers=None):
     body = theme_inject(body, theme)
     src = Source(body)
 
+    mime_type = "image/{}".format(get_mime(format))
     resp = Response(src.pipe(format=format),
-                    mimetype="image/{}".format(get_mime(format)))
-    resp.headers = headers
+                    mimetype=mime_type)
+    resp.headers['Content-Type'] = mime_type
     return resp
 
 
