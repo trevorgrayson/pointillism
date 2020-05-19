@@ -22,6 +22,7 @@ export PYTHONPATH=.:$(VENV):$(VENV_BUILD)
 export PAYPAL_CLIENT_ID
 export AIRBRAKE_PROJECT_ID
 export AIRBRAKE_API_KEY
+export LOG
 
 .EXPORT_ALL_VARIABLES:
 server: compile
