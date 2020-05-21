@@ -91,6 +91,10 @@ def render_github_url(org, project, branch, path):
     path = parse_request_path(path)
     public = True
     creds = request.args.get('token')
+    render_params = {
+        "theme": request.args.get('theme'),
+        "format": fmt[1:]
+    }
 
     repo = GitHubRepo.first_repo(org, project)
 
@@ -109,7 +113,7 @@ def render_github_url(org, project, branch, path):
     try:
         log.debug(f"fetching {resource}")
         body = GitContent(creds).get(org, project, branch, path)
-        resp = render(body, format=fmt[1:])
+        resp = render(body, **render_params)
         resp.headers = cache_control(public, resp.headers)
         return resp
     except GithubException as err:

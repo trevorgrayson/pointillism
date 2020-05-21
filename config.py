@@ -3,6 +3,8 @@ import logging
 import uuid
 
 LOG_LEVEL = environ.get('LOG', environ.get('LOGLEVEL', 'INFO')).upper()
+if not LOG_LEVEL:
+    LOG_LEVEL = 'INFO'
 print(f"Setting log level to {LOG_LEVEL}")
 LOG_LEVEL = getattr(logging, LOG_LEVEL)
 logging.basicConfig(level=LOG_LEVEL)
