@@ -8,8 +8,7 @@ jobs:
     executor: python/default
     steps:
       - checkout
-      - run: sudo apt install graphviz build-essential libldap2-dev libsasl2-dev
-python3-dev fonts-freefont-ttf
+      - run: sudo apt install graphviz build-essential libldap2-dev libsasl2-dev python3-dev fonts-freefont-ttf
       - run:
           command: make test
           name: Test
