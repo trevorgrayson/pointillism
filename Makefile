@@ -17,7 +17,7 @@ export GITHUB_CLIENT_ID
 export GITHUB_SECRET
 export PROJECT
 export ADMIN_USER, ADMIN_PASS
-export LDAP_HOST=ipsumllc.com
+export LDAP_HOST=ldap.pointillism.io
 export PYTHONPATH=.:$(VENV):$(VENV_BUILD)
 export PAYPAL_CLIENT_ID
 export AIRBRAKE_PROJECT_ID

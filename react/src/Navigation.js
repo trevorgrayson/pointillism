@@ -65,13 +65,26 @@ export default function TabNav({host, domain, repos, username}) {
   };
 
   var tabs = []
+  let routes = [];
 
   if (loggedIn(username)) {
     tabs.push(<Tab label="Your Repositories" component={Link} to="/repos" />)
     tabs.push(<Tab label="Account" href="/account" />)
+
+    routes = [
+      <Route path="/account"><Account /></Route>,
+      <Route path="/repos"><Repos repos={repos} /></Route>,
+    ];
   } else {
     tabs.push(<Tab label="login" href="/github/login"/>)
   }
+
+  routes = [...routes, ...[
+    <Route path="/paypal/confirm" component={PayPalConfirm} />,
+    <Route path="/getting-started"><GettingStarted host={host} domain={domain}/></Route>,
+    <Route path="/about"><About/></Route>,
+    <Route path="/"><Manifesto host={host} domain={domain}/></Route>,
+  ]];
 
   return (
     <div className={classes.root}>
@@ -84,14 +97,7 @@ export default function TabNav({host, domain, repos, username}) {
             {tabs}
           </Tabs>
         </AppBar>
-        <Switch>
-          <Route path="/account"><Account /></Route>
-          <Route path="/getting-started"><GettingStarted host={host} domain={domain}/></Route>
-          <Route path="/about"><About/></Route>
-          <Route path="/repos"><Repos repos={repos} /></Route>
-          <Route path="/paypal/confirm" component={PayPalConfirm} />
-          <Route path="/"><Manifesto host={host} domain={domain}/></Route>
-        </Switch>
+        <Switch>{routes}</Switch>
       </Router>
       
     </div>

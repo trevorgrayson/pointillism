@@ -58,11 +58,11 @@ IS_DEV = (ENV == "develop")
 
 
 @app.route("/paypal/confirm")
-@app.route("/getting-started")
 @app.route("/profile")
 @app.route("/account")
-@app.route("/about")
 @app.route("/repos")
+@app.route("/getting-started")
+@app.route("/about")
 @app.route("/")
 def welcome():
     me = get_me()
