@@ -4,7 +4,7 @@ from flask import Flask, request, g, session
 from string import Template
 from flask_simpleldap import LDAP
 
-from .errors import add_exception_handling
+from .errors import add_exception_handling, notifier
 from .github import github_routes
 # from .repos import repo_routes
 from .api.v1 import v1_routes
@@ -118,6 +118,7 @@ def render_github_url(org, project, branch, path):
         return resp
     except GithubException as err:
         log.error(err)
+        notifier.notify(err)
         return dumps({
             'message': f"Exception finding document: {resource}. " +\
             'Is the repository private? Do you need a valid token?'
