@@ -5,7 +5,7 @@ ENV PYTHONPATH .:/:$PYTHONPATH
 ENV THEME_DIR /themes
 EXPOSE 5001
 
-RUN apk add --update graphviz ttf-freefont build-base openldap-dev python2-dev python3-dev
+RUN apk add --update graphviz imagemagick ttf-freefont build-base openldap-dev python2-dev python3-dev
 
 
 COPY *.py /

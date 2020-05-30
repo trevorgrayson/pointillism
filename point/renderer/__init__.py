@@ -2,6 +2,7 @@ import logging as log
 import requests
 from graphviz import Source
 from point.theme import theme_inject
+from point.renderer.watermark import watermark, load_stream
 from werkzeug.wrappers import Response
 
 
@@ -46,8 +47,11 @@ def render(body, format='png', theme=None, headers=None):
     src = Source(body)
 
     mime_type = "image/{}".format(get_mime(format))
-    resp = Response(src.pipe(format=format),
-                    mimetype=mime_type)
+    pipe = src.pipe(format=format)
+    # TODO need dementions
+    if format in ('png', 'jpg', 'jpeg'):
+        pipe = watermark(load_stream(pipe)).tobytes()
+    resp = Response(pipe, mimetype=mime_type)
     resp.headers['Content-Type'] = mime_type
     return resp
 
