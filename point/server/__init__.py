@@ -4,7 +4,6 @@ from flask_simpleldap import LDAP
 
 from .errors import add_exception_handling, notifier
 from .github import github_routes
-# from .repos import repo_routes
 from .api.v1 import v1_routes
 from .paypal import paypal_routes
 from .render import render_routes
@@ -22,7 +21,6 @@ app.register_blueprint(github_routes, url_prefix='/github')
 app.register_blueprint(v1_routes, url_prefix='/v1')
 app.register_blueprint(auth_routes)
 app.register_blueprint(render_routes)
-# app.register_blueprint(repo_routes)
 app.register_blueprint(paypal_routes)
 
 register_config(app,

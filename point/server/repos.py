@@ -1,3 +1,6 @@
+#
+# Legacy /repo python app without react
+#
 from flask import Blueprint, redirect, request, make_response
 from config import HOST, STATIC_DIR
 from string import Template

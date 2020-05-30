@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, request, make_response
+from flask import Blueprint, request
 
 import logging as log
 from json import dumps
