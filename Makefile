@@ -5,6 +5,7 @@ FLASK_RUN_PORT?=5000
 PYTHON:=python3
 VENV=.venv
 VENV_BUILD=.venv.build
+DEPLOY_HOST?=pointillism.io
 HOST?=https://raw.githubusercontent.com
 TEST_HOST?=http://localhost:5001
 PROJECT=pointillism
@@ -12,6 +13,7 @@ VERSION_NEW := ${shell git tag -l v[0-9]* | sort -V -r | head -n1 |  awk '/v/{sp
 
 export ENV=develop
 export HOST
+export DEPLOY_HOST
 export FLASK_RUN_PORT
 export GITHUB_CLIENT_ID
 export GITHUB_SECRET
@@ -61,7 +63,7 @@ imageTest:
 	@docker run --name $(PROJECT) --env-file ENV -d -p 5001:5001 --restart=always tgrayson/$(PROJECT):latest
 
 deploy:
-	echo "./bin/deploy" | ssh pointillism.io
+	cat ./bin/deploy.remote.sh | ssh $(DEPLOY_HOST)
 	TEST_HOST=https://pointillism.io GIT_TOKEN=123 make smoke
 
 versionBump:
