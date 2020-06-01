@@ -1,23 +1,6 @@
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
 
-function convert(href) {
-    try {
-        const uri = new URL(href);
-
-        if (uri.hostname === 'pointillism.io') {
-            return uri
-        }
-
-        uri.hostname = 'pointillism.io'
-        uri.pathname = uri.pathname + ".svg"
-        return uri
-    }
-    catch (err) {
-        return href;
-    }
-}
-
 class Calculator extends Component {
     constructor(props) {
         super(props);
@@ -28,12 +11,35 @@ class Calculator extends Component {
     }
 
     paste(event) {
-        const url = convert(event.clipboardData.getData('Text'));
-        this.setState({url: url});
+        this.convert(event.clipboardData.getData('Text'), this);
     }
 
     onChange(event) {
-        this.setState({url: convert(this.state.url)});
+        this.convert(this.state.url, this);
+        // this.setState({url: convert()});
+    }
+
+    convert(href, self) {
+        try {
+            const uri = new URL(href);
+
+            fetch("/convert", {
+                method: "post",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(
+                {"url": href}
+                ),
+            }).then(function(response) {
+                return response.json();
+            }).then(function(data) {
+                self.setState({url: data.url});
+            });
+        }
+        catch (err) {
+            return href;
+        }
     }
 
     render() {
