@@ -9,6 +9,8 @@ DEPLOY_HOST?=pointillism.io
 HOST?=https://raw.githubusercontent.com
 TEST_HOST?=http://localhost:5001
 PROJECT=pointillism
+ADMIN_USER?=admin@ipsumllc.com
+ADMIN_PASS?=tugboat
 VERSION_NEW := ${shell git tag -l v[0-9]* | sort -V -r | head -n1 |  awk '/v/{split($$NF,v,/[.]/); $$NF=v[1]"."v[2]"."++v[3]}1'}
 
 export ENV=develop

@@ -21,8 +21,6 @@ class Calculator extends Component {
 
     convert(href, self) {
         try {
-            const uri = new URL(href);
-
             fetch("/convert", {
                 method: "post",
                 headers: {
