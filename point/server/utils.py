@@ -37,6 +37,7 @@ def response(path, format, host=HOST, **params):
             return Response(fp.read(), status=401,
                             mimetype="image/svg+xml")
 
+
 def parse_request_fmt(path):
     path, ext = p.splitext(path)
 
@@ -45,6 +46,7 @@ def parse_request_fmt(path):
 
     return ext
 
+
 def parse_request_path(path):
     truncated, ext = p.splitext(path)
 
@@ -52,3 +54,15 @@ def parse_request_path(path):
         return path
     else:
         return truncated
+
+
+def convert(org, project, path, creds=None,
+            protocol="https", domain="pointillism.io"):
+    """convert url parts into pointillism link"""
+    url = "/".join((
+        f"{protocol}://{domain}", org, project, path
+    ))
+    if creds:
+        url += f"?token={creds}"
+
+    return url

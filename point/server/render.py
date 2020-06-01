@@ -5,11 +5,38 @@ from json import dumps
 from point.models import GitHubRepo, GitHubUser, GitResource
 from point.clients.gitcontent import GitContent
 from point.renderer import render, cache_control
-from .utils import parse_request_fmt, parse_request_path
+from .utils import parse_request_fmt, parse_request_path, convert
 from .errors import notifier
 from github import GithubException
 
 render_routes = Blueprint('render_routes', __name__)
+
+
+def is_allowed(repo, token):
+    return repo and repo.has_owner and \
+           repo.requires_token and \
+           repo.token == token
+
+
+@render_routes.route('/convert', methods=['post'])
+def convert_endpt():
+    url = request.json.get('url')
+    if not url:
+        return 401, '{"message": "include url param"}'
+
+    protocol, _domain, org, project, *rest = url.split('/')
+    rest = "/".join(rest)
+
+    repo = GitHubRepo.first_repo(org, project)
+    creds = None
+    if is_allowed(repo, request.args.get('token')):
+        log.debug(f"Authenticated as {repo.owner}")
+        owner = GitHubUser.first(repo.owner)
+        creds = owner
+
+    return dumps({
+       'url': convert(org, project, rest, creds, protocol=protocol)
+    })
 
 @render_routes.route("/<string:org>/<string:project>/blob/<string:branch>/<path:path>")
 @render_routes.route("/github/<string:org>/<string:project>/<string:branch>/<path:path>")
@@ -27,11 +54,6 @@ def render_github_url(org, project, branch, path):
     }
 
     repo = GitHubRepo.first_repo(org, project)
-
-    def is_allowed(repo, token):
-        return repo and repo.has_owner and \
-               repo.requires_token and \
-               repo.token == token
 
     if is_allowed(repo, request.args.get('token')):
         log.debug(f"Authenticated as {repo.owner}")
