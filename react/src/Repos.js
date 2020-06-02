@@ -41,8 +41,12 @@ class Repos extends React.Component {
         body: data
     }).then((result) => {
         // TODO 404
-        this.update()
-        document.forms[0].repo.value = '';
+        if (result.ok) {
+          this.update()
+          document.forms[0].repo.value = '';
+        } else {
+          alert("could not add repo");
+        }
     }).catch((result) => {
         // alert("FAILED! " + result)
     });
@@ -62,7 +66,11 @@ class Repos extends React.Component {
       fetch('/v1/repos/' + repoName, {
         method: "DELETE"
       }).then((result) => {
-        this.update()
+        if (result.ok) {
+          this.update()
+        } else {
+          window.alert("could not add repo")
+        }
       }).catch((result) => {
         // alert("failed")
       })

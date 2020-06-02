@@ -29,11 +29,12 @@ def convert_endpt():
     protocol, _, _domain, org, project, *rest = url.split('/')
     rest = "/".join(rest)
 
-    repo = GitHubRepo.first(org, project)
-    owner = GitHubUser.first(repo.owner)
     creds = None
-    if owner.cn == repo.owner: # TODO repo.can(user)
-        creds = repo.token
+    repo = GitHubRepo.first(org, project)
+    if repo:
+        owner = GitHubUser.first(repo.owner)
+        if owner.cn == repo.owner: # TODO repo.can(user)
+            creds = repo.token
 
     return dumps({
        'url': convert(org, project, rest, creds, protocol=protocol)

@@ -8,6 +8,7 @@ VENV_BUILD=.venv.build
 DEPLOY_HOST?=pointillism.io
 HOST?=https://raw.githubusercontent.com
 TEST_HOST?=http://localhost:5001
+TEST?=test
 PROJECT=pointillism
 ADMIN_USER?=admin@ipsumllc.com
 ADMIN_PASS?=tugboat
@@ -78,7 +79,7 @@ test: compileAll
 	$(PYTHON) -m pytest --cov=point $(TEST)
 
 integ: compileAll
-	$(PYTHON) -s -m pytest -s -c pytest.integ.ini
+	$(PYTHON) -s -m pytest -s -c pytest.integ.ini $(TEST)
 
 console:
 	$(PYTHON) 
