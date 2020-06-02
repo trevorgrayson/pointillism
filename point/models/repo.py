@@ -16,7 +16,7 @@ class GitHubRepo(LDIFRecord):
         return super(GitHubRepo, cls).create(*node, **attributes)
 
     @classmethod
-    def search_repo(cls, org, name, **attributes):
+    def search(cls, org, name, **attributes):
         # base_dn = f'ou={org},cn={user},dc=ipsumllc,dc=com' # cls.base_dn
         base_dn = f'dc=ipsumllc,dc=com'
         search_filter = f'(ou={name})'
@@ -25,8 +25,8 @@ class GitHubRepo(LDIFRecord):
         return list([Repo(**args) for args in response])
 
     @classmethod
-    def first_repo(cls, org, name, **attributes):
-        repo = cls.search_repo(org, name, **attributes)
+    def first(cls, org, name, **attributes):
+        repo = cls.search(org, name, **attributes)
         if repo:
             return repo[0]
 

@@ -29,7 +29,7 @@ def convert_endpt():
     protocol, _, _domain, org, project, *rest = url.split('/')
     rest = "/".join(rest)
 
-    repo = GitHubRepo.first_repo(org, project)
+    repo = GitHubRepo.first(org, project)
     owner = GitHubUser.first(repo.owner)
     creds = None
     if owner.cn == repo.owner: # TODO repo.can(user)
@@ -54,7 +54,7 @@ def render_github_url(org, project, branch, path):
         "format": fmt[1:]
     }
 
-    repo = GitHubRepo.first_repo(org, project)
+    repo = GitHubRepo.first(org, project)
 
     if is_allowed(repo, request.args.get('token')):
         log.debug(f"Authenticated as {repo.owner}")
