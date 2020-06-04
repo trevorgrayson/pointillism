@@ -21,7 +21,7 @@ class GitContent:
 
     def get(self, owner, repo, branch, path):
         repo = self.github.get_repo(f'{owner}/{repo}', lazy=False)
-        return b64decode(repo.get_contents(path).content).decode('utf-8')
+        return b64decode(repo.get_contents(path, ref=branch).content).decode('utf-8')
 
     def owner(self, owner, repo):
         try:
