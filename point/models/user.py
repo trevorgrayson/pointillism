@@ -31,7 +31,10 @@ class GitHubUser(LDIFRecord):
         search_filter = f'(cn={cn})'
 
         response = cls._search(base_dn, search_filter, **attributes)
-        return next(iter([User(**args) for args in response]))
+        if response:
+            return next(iter([User(**args) for args in response]))
+        else:
+            return []
 
     @classmethod
     def find(cls, **attributes):
