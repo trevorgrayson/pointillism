@@ -32,7 +32,7 @@ class GitHubUser(LDIFRecord):
 
         response = cls._search(base_dn, search_filter, **attributes)
         if response:
-            return next(iter([User(**args) for args in response]))
+            return next(iter([User(**args) for args in response]), [])
         else:
             return []
 

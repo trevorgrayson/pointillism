@@ -1,87 +1,40 @@
-import uuid
 from point.models.base import LDIFRecord
 
-REPO_TOKEN = 'street'
+
+class Graph:
+    def __init__(self, params):
+        self.dn = params['dn']
+        pass
+
+    # TODO sub ou only
+    @property
+    def is_file(self):
+        return self.dn.count('ou=') > 2
+
+    @property
+    def url(self):
+        tokens = self.dn.split(",")[:-3]
+        tokens = map(lambda t: t[3:], tokens)
+        tokens = reversed(list(tokens))
+        return "/".join(tokens)
 
 
-class GitHubRepo(LDIFRecord):
+class GraphDAO(LDIFRecord):
     type = 'ou'
-    attributes = ['ou', 'description', REPO_TOKEN]
+    attributes = ['ou', 'description']
 
     @classmethod
-    def create(cls, *node, **attributes):
-        eid = attributes.get(REPO_TOKEN, str(uuid.uuid4()))
-        attributes[REPO_TOKEN] = eid
-
-        return super(GitHubRepo, cls).create(*node, **attributes)
+    def create(cls, repo, user, *node, **attributes):
+        org = repo.owner # wrong?
+        node = (org, repo.name, *node)
+        return super(GraphDAO, cls).create(*node, base_dn=f'cn={user}')
 
     @classmethod
-    def search_repo(cls, org, name, **attributes):
+    def find(cls, owner, org, name, **attributes):
         # base_dn = f'ou={org},cn={user},dc=ipsumllc,dc=com' # cls.base_dn
-        base_dn = f'dc=ipsumllc,dc=com'
-        search_filter = f'(ou={name})'
-
-        response = cls._search(base_dn, search_filter, **attributes)
-        return list([Repo(**args) for args in response])
-
-    @classmethod
-    def first_repo(cls, org, name, **attributes):
-        repo = cls.search_repo(org, name, **attributes)
-        if repo:
-            return repo[0]
-
-    @classmethod
-    def of(cls, username, **attributes):
-        """ return repos owned by username """
-        base_dn = f'cn={username},dc=ipsumllc,dc=com'
+        base_dn = f'ou={name},ou={org},cn={owner},dc=ipsumllc,dc=com'
         search_filter = f'(ou=*)'
 
         response = cls._search(base_dn, search_filter, **attributes)
-        response = filter(lambda r: r['dn'].count('ou') == 2, response)
-        return list([Repo(**args) for args in response])
-
-
-class Repo:
-    def __init__(self, **record):
-        attrs = record.get('attributes', {})
-        self.name = next(iter(attrs.get('ou', [])), None)
-        self.token = attrs.get(REPO_TOKEN)
-        if self.token:
-            self.token = self.token[-1]
-        self.dn = record.get('dn')
-
-    @property
-    def owner(self):
-        if self.dn:
-            _, owner, *tail = self.dn.split('cn=')
-            owner = owner.split(',')[0]
-            return owner
-
-    @property
-    def has_owner(self):
-        return self.owner is not None
-
-    @property
-    def requires_token(self):
-        return self.token is not None
-
-    @property
-    def label(self):
-        repo, org, *tail = self.dn[2:].split(',')
-        repo = repo.split('=')[1]
-        org = org.split('=')[1]
-
-        return f"{org}/{repo}"
-
-    @property
-    def as_json(self):
-        return {
-            'name': self.label,
-            'token': self.token
-        }
-
-    def __str__(self):
-        return f'<Repo {self.owner}/{self.name} {self.token[:5]}>'
-
-    def __repr__(self):
-        return self.__str__()
+        graphs = filter(lambda g: g.is_file, map(Graph, response))
+        return list(graphs)
