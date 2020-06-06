@@ -79,7 +79,6 @@ class Repos extends React.Component {
 
   render() {
     const {repos} = this.state;
-    const graphs = [];
 
     return (
     <div>
@@ -99,8 +98,8 @@ class Repos extends React.Component {
             <input type="password" value={repo.token} onClick={this.toggleVisible} />
             <Button color="secondary" onClick={() => this.onDelete(repo.name)}>Delete</Button>
             <ul className="graphs">
-              {graphs.map((url) =>
-                <li><a href={url}><img src={url} alt="DOT graph" /></a></li>)}
+              {repo.graphs.map((graph) =>
+                <li><a href={graph.url}><img src={`${graph.url}?token=${repo.token}`} alt="DOT graph" /></a></li>)}
             </ul>
           </li>
         })}

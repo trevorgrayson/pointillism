@@ -1,5 +1,6 @@
 import uuid
 from point.models.base import LDIFRecord
+from point.models.graph import GraphDAO
 
 REPO_TOKEN = 'street'
 
@@ -38,7 +39,14 @@ class GitHubRepo(LDIFRecord):
 
         response = cls._search(base_dn, search_filter, **attributes)
         response = filter(lambda r: r['dn'].count('ou') == 2, response)
-        return list([Repo(**args) for args in response])
+        repos = list([Repo(**args) for args in response])
+        for repo in repos:
+            try:
+                repo.graphs = GraphDAO.find(username, repo.owner, repo.name)
+            except Exception:
+                pass
+
+        return repos
 
 
 class Repo:
@@ -49,6 +57,7 @@ class Repo:
         if self.token:
             self.token = self.token[-1]
         self.dn = record.get('dn')
+        self.graphs = []
 
     @property
     def owner(self):
@@ -77,7 +86,8 @@ class Repo:
     def as_json(self):
         return {
             'name': self.label,
-            'token': self.token
+            'token': self.token,
+            'graphs': [graph.as_json for graph in self.graphs]
         }
 
     def __str__(self):

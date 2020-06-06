@@ -4,7 +4,6 @@ from point.models.base import LDIFRecord
 class Graph:
     def __init__(self, params):
         self.dn = params['dn']
-        pass
 
     # TODO sub ou only
     @property
@@ -16,8 +15,14 @@ class Graph:
         tokens = self.dn.split(",")[:-3]
         tokens = map(lambda t: t[3:], tokens)
         tokens = reversed(list(tokens))
-        return "/".join(tokens)
+        path = "/".join(tokens)
+        return f"/{path}"
 
+    @property
+    def as_json(self):
+        return {
+            'url': self.url
+        }
 
 class GraphDAO(LDIFRecord):
     type = 'ou'

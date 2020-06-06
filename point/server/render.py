@@ -9,6 +9,7 @@ from point.renderer import render, cache_control
 from .utils import parse_request_fmt, parse_request_path, convert
 from .errors import notifier
 from github import GithubException
+from point.models.graph import GraphDAO
 
 render_routes = Blueprint('render_routes', __name__)
 
@@ -68,6 +69,7 @@ def render_github_url(org, project, branch, path):
         log.debug(f"fetching {resource}")
         body = GitContent(creds).get(org, project, branch, path)
         resp = render(body, **render_params)
+        # GraphDAO.create(repo, repo.owner, resource.split())
         resp.headers = cache_control(public, resp.headers)
         return resp
     except GithubException as err:
