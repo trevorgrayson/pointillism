@@ -13,11 +13,8 @@ class RegexConverter(BaseConverter):
         self.regex = items[0]
 
 
-def headers(user=None, **config):
-    heads = {
-
-    }
-
+def headers(user=None, **_config):
+    heads = {}
     if user and user.git_token:
         heads['Authorization'] = f'token {user.git_token}'
 

@@ -22,3 +22,6 @@ class TestRenderer:
     def test_cache_control(self):
         headers = cache_control()
         assert headers['cache-control'] == 'max-age=0 private'
+
+    def test_render(self):
+        pass

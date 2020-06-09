@@ -1,5 +1,8 @@
 from pytest import mark
-from point.server.utils import parse_request_fmt, parse_request_path, convert
+from point.server.utils import (
+    parse_request_fmt, parse_request_path, convert,
+    headers
+)
 
 
 class TestUtils:
@@ -33,3 +36,7 @@ class TestUtils:
     })
     def test_convert(self, org, project, path, creds, expected):
         assert convert(org, project, path.lstrip('/'), creds) == expected
+
+    def test_headers_no_user(self):
+        h = headers()
+        assert h == {}

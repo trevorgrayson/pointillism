@@ -1,4 +1,6 @@
-from werkzeug.exceptions import Forbidden, InternalServerError
+import logging
+from flask import request
+from werkzeug.exceptions import Forbidden, InternalServerError, NotFound
 from pybrake import Notifier
 
 from config import AIRBRAKE_PROJECT_ID, AIRBRAKE_API_KEY, airbrake_env, ENV
@@ -8,7 +10,19 @@ notifier = Notifier(project_id=AIRBRAKE_PROJECT_ID,
                     environment=airbrake_env(ENV))
 
 
+class PtNotFoundException(Exception):
+    pass
+
+
 def add_exception_handling(app):
+
+    @app.errorhandler(NotFound)
+    def error404(error):
+        logging.exception(error)
+        notifier.notify(PtNotFoundException(
+            f"Not Found: {request.path}"
+        ))
+        raise error
 
     @app.errorhandler(Forbidden)
     def error403(error):

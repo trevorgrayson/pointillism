@@ -72,8 +72,10 @@ def render_github_url(org, project, branch, path):
         return resp
     except GithubException as err:
         log.error(err)
-        notifier.notify(err)
+        notifier.notify(Exception(
+            f"Graph Not Found: {request.path}"
+        ))
         return dumps({
-            'message': f"Exception finding document: {resource}. " + \
+            'message': f"Exception finding document: {resource}. " +
                        'Is the repository private? Do you need a valid token?'
         }), 404
