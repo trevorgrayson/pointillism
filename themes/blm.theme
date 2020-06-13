@@ -1,0 +1,9 @@
+bgcolor=black
+fillcolor=black
+color=white
+fontcolor=white
+
+node[fontcolor=white color=white shape=rectangle]
+edge[color=white]
+cluster[color=white fontcolor=white]
+graph[]
