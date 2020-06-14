@@ -1,5 +1,5 @@
 class GitResource:
-    def __init__(self, owner, project, branch, path):
+    def __init__(self, owner=None, project=None, branch=None, path=None):
         self.owner = owner
         self.project = project
         self.branch = branch

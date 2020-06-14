@@ -1,6 +1,6 @@
 import uuid
 from point.models.base import LDIFRecord
-from .domain.user import (
+from point.domain.user import (
     User, GIT_TOKEN, PT_SESSION_TOKEN, FILTER_FIELDS, BALANCE
 )
 

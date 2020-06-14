@@ -1,6 +1,6 @@
 import uuid
 from point.models.base import LDIFRecord
-from .domain.repo import REPO_TOKEN, Repo
+from point.domain.repo import REPO_TOKEN, Repo
 
 
 class GitHubRepo(LDIFRecord):

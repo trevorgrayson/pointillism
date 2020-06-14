@@ -1,4 +1,5 @@
 [run]
 branch = True
-omit = 
+omit =
     point/clients/*
+    point/models/*

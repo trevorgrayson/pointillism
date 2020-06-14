@@ -1,6 +1,6 @@
 import uuid
 from point.models.base import LDIFRecord
-from point.models.domain import Repo
+from point.domain import Repo
 
 REPO_TOKEN = 'street'
 
