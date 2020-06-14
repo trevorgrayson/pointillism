@@ -1,8 +1,9 @@
 import logging
 
-from ldap3 import Server, Connection, core, MODIFY_REPLACE, MODIFY_ADD, HASHED_SALTED_SHA, SUBTREE
+from ldap3 import Server, Connection, core, SUBTREE, \
+    MODIFY_REPLACE, MODIFY_ADD, HASHED_SALTED_SHA
 
-from ldapauth.utils import cn_for, nsplit
+from ldapauth.utils import nsplit
 from config import ADMIN_PASS, LDAP_HOST, LDAP_BASE_DN, ADMIN_USER
 
 LOG = logging.getLogger(__name__)

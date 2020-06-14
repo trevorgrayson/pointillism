@@ -40,6 +40,7 @@ def convert_endpt():
        'url': convert(org, project, rest, creds, protocol=protocol)
     })
 
+
 @render_routes.route("/<string:org>/<string:project>/blob/<string:branch>/<path:path>")
 @render_routes.route("/github/<string:org>/<string:project>/<string:branch>/<path:path>")
 @render_routes.route("/<string:org>/<string:project>/<string:branch>/<path:path>")
