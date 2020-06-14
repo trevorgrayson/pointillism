@@ -7,7 +7,7 @@ from point.models import GitHubRepo, GitHubUser, GitResource
 from point.clients.gitcontent import GitContent
 from point.renderer import render, cache_control
 from .utils import parse_request_fmt, parse_request_path, convert
-from .errors import notifier
+from .exception_handling import notifier
 from github import GithubException
 
 render_routes = Blueprint('render_routes', __name__)

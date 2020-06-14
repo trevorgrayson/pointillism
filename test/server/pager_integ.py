@@ -1,5 +1,5 @@
 from pytest import raises, mark
-from point.server.errors import add_exception_handling
+from point.server.exception_handling import add_exception_handling
 
 
 class TestPager:

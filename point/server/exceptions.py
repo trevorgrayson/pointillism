@@ -1,0 +1,3 @@
+class PtNotFoundException(Exception):
+    pass
+

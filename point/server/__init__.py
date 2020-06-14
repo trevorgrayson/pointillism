@@ -2,7 +2,7 @@ from flask import Flask, request, g, session
 from string import Template
 from flask_simpleldap import LDAP
 
-from .errors import add_exception_handling, notifier
+from .exception_handling import add_exception_handling, notifier
 from .github import github_routes
 from .api.v1 import v1_routes
 from .paypal import paypal_routes

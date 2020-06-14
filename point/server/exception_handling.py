@@ -4,14 +4,11 @@ from werkzeug.exceptions import Forbidden, InternalServerError, NotFound
 from pybrake import Notifier
 
 from config import AIRBRAKE_PROJECT_ID, AIRBRAKE_API_KEY, airbrake_env, ENV
+from .exceptions import PtNotFoundException
 
 notifier = Notifier(project_id=AIRBRAKE_PROJECT_ID,
                     project_key=AIRBRAKE_API_KEY,
                     environment=airbrake_env(ENV))
-
-
-class PtNotFoundException(Exception):
-    pass
 
 
 def add_exception_handling(app):
