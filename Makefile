@@ -85,6 +85,9 @@ lint:
 	$(PYTHON) -m pyflakes point
 	$(PYTHON) -m pycodestyle point
 
+lintAuto:
+	$(PYTHON) -m yapf --recursive -i `find point`
+
 console:
 	$(PYTHON) 
 
