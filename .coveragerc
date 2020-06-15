@@ -3,3 +3,4 @@ branch = True
 omit =
     point/clients/*
     point/models/*
+    **/__main__.py
