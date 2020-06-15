@@ -1,6 +1,7 @@
+import logging
 from werkzeug.routing import BaseConverter
 from werkzeug.wrappers import Response
-from point.renderer import get_and_render, Forbidden
+from point.renderer import get_and_render, Forbidden, get_mime
 from config import HOST, STATIC_DIR
 from os import path as p
 
@@ -26,10 +27,12 @@ def response(path, format, host=HOST, **params):
         return Response(get_and_render(host, path, format, **params),
                         mimetype="image/{}".format(get_mime(format)))
     except IOError as err:
+        logging.exception(err)
         with open(STATIC_DIR + '/images/pointillism-404.svg', 'r') as fp:
             return Response(fp.read(), status=404,
                             mimetype="image/svg+xml")
     except Forbidden as err:
+        logging.exception(err)
         with open(STATIC_DIR + '/images/pointillism-401.svg', 'r') as fp:
             return Response(fp.read(), status=401,
                             mimetype="image/svg+xml")

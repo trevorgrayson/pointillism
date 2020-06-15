@@ -19,6 +19,10 @@ def is_allowed(repo, token):
            repo.token == token
 
 
+def can(me, repo):
+    return me.cn == repo.owner.cn
+
+
 @render_routes.route('/convert', methods=['post'])
 def convert_endpt():
     me = get_me()
@@ -33,7 +37,8 @@ def convert_endpt():
     repo = GitHubRepo.first(org, project)
     if repo:
         owner = GitHubUser.first(repo.owner)
-        if owner.cn == repo.owner: # TODO repo.can(user)
+        # TODO tests
+        if owner.cn == repo.owner and can(me, repo):
             creds = repo.token
 
     return dumps({

@@ -53,7 +53,9 @@ def render(body, format='png', theme=None, headers=None):
 
 
 # look up this dict method
-def get_and_render(host, path, format="png", theme=None, headers={}, **params):
+def get_and_render(host, path, format="png", theme=None, headers=None, **params):
+    if headers is None:
+        headers = {}
     org, repo, *tail = path
     path = "/".join((org, repo, 'contents', *tail))
     dot_url = url(host, path, **params)

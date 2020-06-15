@@ -81,6 +81,10 @@ test: compileAll
 integ: compileAll
 	$(PYTHON) -s -m pytest -s -c pytest.integ.ini $(TEST)
 
+lint:
+	$(PYTHON) -m pyflakes point
+	$(PYTHON) -m pycodestyle point
+
 console:
 	$(PYTHON) 
 

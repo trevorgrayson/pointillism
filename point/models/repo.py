@@ -19,7 +19,7 @@ class GitHubRepo(LDIFRecord):
     @classmethod
     def search(cls, org, name, **attributes):
         # base_dn = f'ou={org},cn={user},dc=ipsumllc,dc=com' # cls.base_dn
-        base_dn = f'dc=ipsumllc,dc=com'
+        base_dn = 'dc=ipsumllc,dc=com'
         search_filter = f'(ou={name})'
 
         response = cls._search(base_dn, search_filter, **attributes)
@@ -35,7 +35,7 @@ class GitHubRepo(LDIFRecord):
     def of(cls, username, **attributes):
         """ return repos owned by username """
         base_dn = f'cn={username},dc=ipsumllc,dc=com'
-        search_filter = f'(ou=*)'
+        search_filter = '(ou=*)'
 
         response = cls._search(base_dn, search_filter, **attributes)
         response = filter(lambda r: r['dn'].count('ou') == 2, response)

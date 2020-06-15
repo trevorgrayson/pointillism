@@ -1,7 +1,7 @@
 import logging
 
-from ldap3 import Server, Connection, core, SUBTREE, \
-    MODIFY_REPLACE, MODIFY_ADD, HASHED_SALTED_SHA
+from ldap3 import Server, Connection, core, SUBTREE
+# MODIFY_REPLACE, MODIFY_ADD, HASHED_SALTED_SHA
 
 from ldapauth.utils import nsplit
 from config import ADMIN_PASS, LDAP_HOST, LDAP_BASE_DN, ADMIN_USER
