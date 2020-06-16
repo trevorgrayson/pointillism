@@ -19,3 +19,7 @@ class TestRepo:
 
         assert resource.owner == 'trevorgrayson'
         assert resource.project == 'pointillism'
+
+    def test_str(self):
+        resource = GitResource.parse('http://pointillism.io/trevorgrayson/pointillism/master/example.dot')
+        assert str(resource) == 'https://github.com/trevorgrayson/pointillism/blob/None/master/example.dot'
