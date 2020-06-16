@@ -5,7 +5,7 @@ EMAIL = 'Email'
 BALANCE = 'Fax'
 SUBSCRIBED = 'telexNumber'
 
-FILTER_FIELDS = ['token', EMAIL]
+FILTER_FIELDS = ['token', EMAIL, 'cn']
 
 
 class User:
