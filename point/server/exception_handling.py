@@ -11,22 +11,32 @@ notifier = Notifier(project_id=AIRBRAKE_PROJECT_ID,
                     environment=airbrake_env(ENV))
 
 
+def airbrake_enabled():
+    return AIRBRAKE_API_KEY is not None
+
+
 def add_exception_handling(app):
+    if not airbrake_enabled():
+        logging.info("Airbrake is not configured. Will not handle exceptions.")
 
     @app.errorhandler(NotFound)
     def error404(error):
         logging.exception(error)
-        notifier.notify(PtNotFoundException(
-            f"Not Found: {request.path}"
-        ))
+        if airbrake_enabled():
+            notifier.notify(PtNotFoundException(
+                f"Not Found: {request.path}"
+            ))
         raise error
 
     @app.errorhandler(Forbidden)
     def error403(error):
-        notifier.notify(error)
-        return '{"message": "Rate limiting error. Please wait, and try again."}', 502
+        if airbrake_enabled():
+            notifier.notify(error)
+        return '{"message": "Upstream service rate limiting error. Please wait, and try again."}', 502
 
     @app.errorhandler(InternalServerError)
     def server_error(error):
-        notifier.notify(error)
+        logging.exception(error)
+        if airbrake_enabled():
+            notifier.notify(error)
         raise error

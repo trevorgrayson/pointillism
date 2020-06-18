@@ -42,8 +42,8 @@ GITHUB_STATE = str(uuid.uuid4()) # unique for each user
 
 PAYPAL_CLIENT_ID = environ['PAYPAL_CLIENT_ID']
 
-AIRBRAKE_PROJECT_ID = environ['AIRBRAKE_PROJECT_ID']
-AIRBRAKE_API_KEY = environ['AIRBRAKE_API_KEY']
+AIRBRAKE_PROJECT_ID = environ.get('AIRBRAKE_PROJECT_ID')
+AIRBRAKE_API_KEY = environ.get('AIRBRAKE_API_KEY')
 
 # authenticated users get 100x more requests
 # TODO: if bath auth, does it fail?
