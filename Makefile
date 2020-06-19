@@ -53,11 +53,10 @@ clean:
 package: compile
 	cd react && make -f Makefile package
 
-image: package versionBump
+image: package 
 	docker build -t $(IMAGE) .
 
-imagePush: image
-	# @make versionBump
+imagePush: image # versionBump
 	echo "$(DOCKER_PASS)" | docker login -u "$(DOCKER_USER)" --password-stdin
 	docker push $(IMAGE)
 
