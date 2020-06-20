@@ -41,9 +41,14 @@ class Calculator extends Component {
     }
 
     render() {
+        let rendering = '';
+        if (this.state.url) {
+            rendering = <img src={this.state.url} alt="pointillism.io rendered"/>;
+        }
+
         return (
             <form className="ptCalculator">
-                <h3>Paste your DOT Graph Source URL here and the URL will convert:</h3>
+                <h3>TL;DR Paste your DOT Graph Source URL here and will become an image:</h3>
                 <TextField 
                     name="url" 
                     value={this.state.url} 
@@ -51,6 +56,9 @@ class Calculator extends Component {
                     fullWidth="true"
                     onChange={this.onChange}
                     onPaste={this.paste} />
+                <div class="center">
+                    {rendering}
+                </div>
             </form>
         )
     }

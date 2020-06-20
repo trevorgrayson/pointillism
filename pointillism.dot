@@ -6,8 +6,7 @@ digraph Example {
   subgraph cluster_Github {
     label = Github
 
-    README
-    DotFile
+    DotFile[shape=note]
     README -> Camu
   }
   Camu -> Pointillism
@@ -15,5 +14,4 @@ digraph Example {
   Pointillism -> DotFile
 
   Users -> {README}
-  Users -> Pointillism
 }

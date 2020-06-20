@@ -110,3 +110,19 @@ noticeable-widget {
   padding-left: 20px;
   padding-right: 20px;
 }
+
+code.dot {
+  display: block;
+  white-space: pre-wrap;
+}
+code.dot * {
+  line-height: 1em;
+}
+
+.center {
+  text-align: center;
+}
+
+.pointillism-example {
+  margin: 30px 100px 30px;
+}

@@ -4,7 +4,22 @@ import PayPalExpressButton from './payments/PayPalExpressButton'
 import Calculator from './Calculator';
 
 function Manifesto({host, domain, paypalId}) {
-    const imageUrl = `https://${domain}/trevorgrayson/pointillism/master/example.dot.svg`
+    const imageUrl = `https://${domain}/trevorgrayson/pointillism/master/pointillism.dot.svg`
+    const dotContent = `digraph Pointillism {
+  subgraph cluster_Github {
+    label = Github
+
+    DotFile
+    README -> Camu
+  }
+  
+  Camu -> Pointillism
+    
+  Pointillism -> DotFile
+    
+  Users -> {README}
+}`;
+
     return (
         <Typography align="left" paragraph={true}>
             <p>
@@ -13,7 +28,7 @@ function Manifesto({host, domain, paypalId}) {
             </p>
 
             <p>
-            <code>`pointillism.io`</code> is not just an <a href="https://github.com/trevorgrayson/pointillism">open source project</a>,
+            <code>pointillism.io</code> is not just an <a href="https://github.com/trevorgrayson/pointillism">open source project</a>,
              or a service.  It's a different way to express yourself.
             </p>
 
@@ -27,26 +42,29 @@ function Manifesto({host, domain, paypalId}) {
             from getting out of date during Pull Reviews.
             </p>
 
-            <h2>Getting Started</h2>
+            <h2>How it Works</h2>
             <p>
               Check in <a href="https://en.wikipedia.org/wiki/DOT_(graph_description_language)">dot graph files</a>&nbsp;
-              to github and start using pointillism urls in your documentation.&nbsp;
-              <code>pointillism.io</code> image urls reflect github's <code>raw</code> content urls, so it's easy&nbsp;
-              getting started.
+              to github, like this one describing <code>pointillism</code>'s workflow:
+            </p>
+            <p class="pointillism-example">
+              <h5><a href={imageUrl}>{imageUrl}</a></h5>
+              <code class="dot">{dotContent}</code>
             </p>
             <p>
-              If you have a github file such as <code>{host}/trevorgrayson/pointillism/master/example.dot</code>,&nbsp;
-              just replace <code>{host}</code> with <code>{domain}</code>, and append your desired format&nbsp;
-              (<code>.svg</code>, <code>.png</code>, <code>.jpg</code>).
+              <code>pointillism.io</code> image urls reflect github's <code>raw</code> content urls, so just replace the domain.
             </p>
-
-            <div className="example">
+            <div className="example center">
               <p>
                 <code>&lt;img src="{imageUrl}"/&gt;</code>
               </p>
               <img src={imageUrl} alt="example graph" />
               <Calculator />
             </div>
+            <p>  
+              Start using pointillism urls in your documentation,&nbsp;
+              <a href="https://github.com/trevorgrayson/pointillism">just like we do</a>.&nbsp;
+            </p>
 
             <h2>As a Service</h2>
             <p>

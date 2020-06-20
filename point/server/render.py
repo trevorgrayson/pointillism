@@ -31,6 +31,7 @@ def convert_endpt():
         return 401, '{"message": "include url param"}'
 
     protocol, _, _domain, org, project, *rest = url.split('/')
+    protocol = protocol.replace(':', '')
     rest = "/".join(rest)
 
     creds = None
