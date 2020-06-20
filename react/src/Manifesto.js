@@ -4,6 +4,7 @@ import PayPalExpressButton from './payments/PayPalExpressButton'
 import Calculator from './Calculator';
 
 function Manifesto({host, domain, paypalId}) {
+    const sourceUrl = `https://github.com/trevorgrayson/pointillism/blob/master/pointillism.dot`
     const imageUrl = `https://${domain}/trevorgrayson/pointillism/master/pointillism.dot.svg`
     const dotContent = `digraph Pointillism {
   subgraph cluster_Github {
@@ -48,11 +49,11 @@ function Manifesto({host, domain, paypalId}) {
               to github, like this one describing <code>pointillism</code>'s workflow:
             </p>
             <p class="pointillism-example">
-              <h5><a href={imageUrl}>{imageUrl}</a></h5>
               <code class="dot">{dotContent}</code>
+              <h5>Source: <a href={sourceUrl}>{sourceUrl}</a></h5>
             </p>
             <p>
-              <code>pointillism.io</code> image urls reflect github's <code>raw</code> content urls, so just replace the domain.
+              <code>pointillism.io</code> image urls reflect github's content urls, so just replace the domain for a rendered image.
             </p>
             <div className="example">
               <p class="center">
