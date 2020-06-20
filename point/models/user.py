@@ -7,7 +7,7 @@ from point.domain.user import (
 
 class GitHubUser(LDIFRecord):
     type = 'cn'
-    attributes = ['sn', 'cn', 'description', GIT_TOKEN, PT_SESSION_TOKEN, BALANCE]
+    attributes = ['sn', 'cn', 'Email', 'description', GIT_TOKEN, PT_SESSION_TOKEN, BALANCE]
 
     def __init__(self, *users):
         self.users = users
@@ -21,7 +21,7 @@ class GitHubUser(LDIFRecord):
 
     @classmethod
     def first(cls, cn, **attributes):
-        base_dn = 'dc=ipsumllc,dc=com' # cls.base_dn
+        base_dn = 'dc=ipsumllc,dc=com'  # cls.base_dn
         search_filter = f'(cn={cn})'
 
         response = cls._search(base_dn, search_filter, **attributes)

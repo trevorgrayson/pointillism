@@ -72,7 +72,7 @@ export default function TabNav({host, domain, repos, username}) {
     tabs.push(<Tab label="Account" href="/account" />)
 
     routes = [
-      <Route path="/account"><Account /></Route>,
+      <Route path="/account"><Account name={username} /></Route>,
       <Route path="/repos"><Repos repos={repos} /></Route>,
     ];
   } else {

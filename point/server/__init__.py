@@ -71,7 +71,8 @@ def welcome():
             host=HOST,
             domain=DOMAIN,
             paypalId=PAYPAL_CLIENT_ID,
-            username=username
+            username=username,
+            email=me.email or ''
         )
 
 

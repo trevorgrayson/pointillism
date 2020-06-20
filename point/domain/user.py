@@ -34,7 +34,7 @@ class User:
                 self.balance = self.balance[-1]
             else:
                 self.balance = 0
-        self.email = attrs.get(EMAIL)
+        self.email = next(iter(attrs.get(EMAIL, [])), None)
         self.subscribed = attrs.get(SUBSCRIBED) == 'true'
 
     def is_active(self):

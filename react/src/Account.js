@@ -9,13 +9,9 @@ class Account extends Component {
     }
 
     render() {
-        const profile = {
-            "name": "Trevor"
-        }
         return (
             <div className="profile">
-                <h2>{profile.name}</h2>
-
+                <h2>{this.state.name}</h2>
                 <h3>status: basic</h3>
                 
                 <div>
