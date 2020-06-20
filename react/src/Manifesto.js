@@ -17,7 +17,7 @@ function Manifesto({host, domain, paypalId}) {
     
   Pointillism -> DotFile
     
-  Users -> {README}
+  Users -> README
 }`;
 
     return (
@@ -54,11 +54,13 @@ function Manifesto({host, domain, paypalId}) {
             <p>
               <code>pointillism.io</code> image urls reflect github's <code>raw</code> content urls, so just replace the domain.
             </p>
-            <div className="example center">
-              <p>
+            <div className="example">
+              <p class="center">
                 <code>&lt;img src="{imageUrl}"/&gt;</code>
+                <br/>
+                <img src={imageUrl} alt="example graph" />
               </p>
-              <img src={imageUrl} alt="example graph" />
+              
               <Calculator />
             </div>
             <p>  

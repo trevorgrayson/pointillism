@@ -48,7 +48,7 @@ class Calculator extends Component {
 
         return (
             <form className="ptCalculator">
-                <h3>TL;DR Paste your DOT Graph Source URL here and will become an image:</h3>
+                <h3>TL;DR: Paste your DOT Graph Source URL here and will become an image.</h3>
                 <TextField 
                     name="url" 
                     value={this.state.url} 

@@ -126,3 +126,7 @@ code.dot * {
 .pointillism-example {
   margin: 30px 100px 30px;
 }
+.pointillism-example code {
+  padding: 10px;
+  background-color: #ddd;
+}

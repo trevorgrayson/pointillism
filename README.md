@@ -15,13 +15,6 @@ github's `token` parameter will also pass through if you put it in the query str
 http://pointillism.io/{username}/{project}/{filepath}.{format}?token=XYZ
 ```
 
-## serverless
-
-A serverless configuration is included, and presently points to `https://raw.githubusercontent.com`. Configured this way,
-you can render any dotfile that's being hosted publically on github.com. 
-
-e.g. `http://your-host.com/{username}/{project}/{filepath}` will render that dotfile as a PNG.
-
 ## Running Locally
 
 ```
@@ -33,6 +26,13 @@ HOST=https://raw.githubusercontent.com make server
 ```
   docker run tgrayson/pointillism
 ```
+
+## serverless
+
+A serverless configuration is included, and presently points to `https://raw.githubusercontent.com`. Configured this way,
+you can render any dotfile that's being hosted publically on github.com. 
+
+e.g. `http://your-host.com/{username}/{project}/{filepath}` will render that dotfile as a PNG.
 
 ## cli
 
@@ -62,5 +62,5 @@ Then,
 
 TODO: set up test service that points to `pointillism.local`
 
-![example.dot](http://pointillism.io/trevorgrayson/pointillism/master/example.dot.svg)
+![pointillism.dot](http://pointillism.io/trevorgrayson/pointillism/master/pointillism.dot.svg)
 Embedding [DOT](https://en.wikipedia.org/wiki/DOT_(graph_description_language)) files as a Service.
