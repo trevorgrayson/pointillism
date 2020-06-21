@@ -61,8 +61,10 @@ IS_DEV = (ENV == "develop")
 def welcome():
     me = get_me()
     username = ''
+    email = ''
     if me:
         username = me.cn
+        email = me.email or ''
 
     with open(STATIC_DIR + '/index.html', 'r') as fp:
         template = Template(fp.read())
@@ -72,7 +74,7 @@ def welcome():
             domain=DOMAIN,
             paypalId=PAYPAL_CLIENT_ID,
             username=username,
-            email=me.email or ''
+            email=email
         )
 
 
