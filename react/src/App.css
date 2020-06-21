@@ -130,3 +130,9 @@ code.dot * {
   padding: 10px;
   background-color: #ddd;
 }
+
+.ReactModal__Content {
+  width: 500px;
+  margin: 0 auto;
+  height: 150px;
+}

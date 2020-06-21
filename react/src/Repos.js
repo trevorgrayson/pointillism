@@ -2,25 +2,30 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import RepoClient from './clients/RepoClient';
+import Modal from 'react-modal';
 
+
+Modal.setAppElement('#root')
 
 class Repos extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        repos: []
+        repos: [],
+        errorMessage: null
     };
     this.update()
 
     this.onDelete = this.onDelete.bind(this)
     this.toggleVisible = this.toggleVisible.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.closeModal = this.closeModal.bind(this)
   }
 
   update() {
     RepoClient.getRepos()
               .then( (result) => {
-        this.setState({repos: result})
+        this.setState({...this.state, repos: result})
     });
   }
 
@@ -32,10 +37,18 @@ class Repos extends React.Component {
     }
   }
 
+  closeModal() {
+    this.setState({...this.state, errorMessage: null})
+  }
+
   handleSubmit(event) {
     event.preventDefault();
     const data = new FormData(document.forms[0]);
 
+    this.setState({
+            ...this.state, 
+            errorMessage: `could not add repo "${document.forms[0].repo.value}"`
+          });
     fetch('/v1/repos', {
         method: "POST",
         body: data
@@ -45,7 +58,10 @@ class Repos extends React.Component {
           this.update()
           document.forms[0].repo.value = '';
         } else {
-          alert("could not add repo");
+          this.setState({
+            ...this.state, 
+            errorMessage: `could not add repo "${document.forms[0].repo.value}"`
+          });
         }
     }).catch((result) => {
         // alert("FAILED! " + result)
@@ -60,7 +76,7 @@ class Repos extends React.Component {
 
   onDelete(event) {
     const repoName = event //hack
-    const response = window.confirm("Deleting '"+repoName+"'. Are you sure?")
+    const response = window.confirm(`Deleting '${repoName}'. Are you sure?`)
 
     if (response) {
       fetch('/v1/repos/' + repoName, {
@@ -69,7 +85,7 @@ class Repos extends React.Component {
         if (result.ok) {
           this.update()
         } else {
-          window.alert("could not add repo")
+          this.setState({...this.state, errorMessage: "could not add repo"})
         }
       }).catch((result) => {
         // alert("failed")
@@ -78,11 +94,20 @@ class Repos extends React.Component {
   }
 
   render() {
-    const {repos} = this.state;
+    const {repos, errorMessage} = this.state;
+    const showDialog = errorMessage !== null;
     const graphs = [];
 
+    console.log(showDialog)
     return (
     <div>
+      <Modal isOpen={showDialog}>
+        <h2>Error.</h2>
+        <p>{errorMessage}</p>
+        <div>
+          <button onClick={this.closeModal}>ok</button>
+        </div>
+      </Modal>
       <form className="repo">
         <h2>Authorize New Repo</h2>
         <TextField name="repo" label="Authorize Repository"
