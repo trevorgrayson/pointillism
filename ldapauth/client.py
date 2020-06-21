@@ -1,9 +1,9 @@
 import logging
-from ldap3 import Server, Connection, core, extend, MODIFY_REPLACE, MODIFY_ADD, HASHED_SALTED_SHA, SUBTREE
+from ldap3 import Server, Connection, core, \
+    MODIFY_REPLACE, HASHED_SALTED_SHA
 from ldap3.utils.hashed import hashed
 from ldap3.core.exceptions import LDAPChangeError
 
-from config import ADMIN_PASS, LDAP_HOST, LDAP_BASE_DN, ADMIN_USER
 from .models import User
 from .utils import cn_for, nsplit
 
@@ -101,7 +101,7 @@ class LdapAuth:
         
     def update(self, user):
         conn = self.connect()
-        changes = {k: [(MODIFY_ADD, [v])] for k, v in user.attributes.items()}
+        changes = {k: [(MODIFY_REPLACE, [v])] for k, v in user.attributes.items()}
 
         try:
             conn.modify(cn_for(user.name, self.base_dn), changes) 
