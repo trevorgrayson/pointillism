@@ -13,12 +13,15 @@ class TestUser:
             'raw_attributes': {
                 'sn': [b'cn=trevorgrayson,dc=ipsumllc,dc=com'],
                 'cn': [b'trevorgrayson'],
-                'givenName': [b'36b61538e7409e3cb11cdd12fa0b5341e1effc70'], 'description': [], 'employeeNumber': []
+                'givenName': [b'36b61538e7409e3cb11cdd12fa0b5341e1effc70'],
+                'description': [],
+                'employeeNumber': []
             },
             'attributes': {
                 'sn': ['cn=trevorgrayson,dc=ipsumllc,dc=com'],
                 'cn': ['trevorgrayson'],
                 'givenName': ['36b61538e7409e3cb11cdd12fa0b5341e1effc70'],
+                'Email': ['test@example.info'],
                 'description': [], 'employeeNumber': [TOKEN]
             }, 'type': 'searchResEntry'
         }
@@ -35,6 +38,7 @@ class TestUser:
         assert isinstance(user, User)
         assert user.cn == 'trevorgrayson'
         assert user.name == 'trevorgrayson'
+        assert user.email == 'test@example.info'
         assert user.git_token == '36b61538e7409e3cb11cdd12fa0b5341e1effc70'
         assert user.token == TOKEN
 

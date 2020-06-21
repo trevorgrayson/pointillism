@@ -7,12 +7,15 @@ class TestGitHubUser:
     """
     def test_create(self):
         cn = 'testuser'
-        create_result = GitHubUser.create('testuser', sn='testsn')
+        email = 'test@example.org'
+        create_result = GitHubUser.create('testuser',
+                                          sn='testsn')
 
         user = GitHubUser.first(cn)
 
-        assert create_result == True
+        assert create_result is True
         assert isinstance(user, User)
+        assert isinstance(user.token, str)
         assert isinstance(user.token, str)
 
     def test_first(self):
