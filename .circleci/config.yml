@@ -4,6 +4,7 @@ jobs:
     docker:
       - image: tgrayson/build
     steps:
+      - setup_remote_docker
       - add_ssh_keys:
           fingerprints:
             - "0c:aa:9c:05:11:c3:80:28:b0:67:f9:f2:f8:80:16:96"

@@ -1,3 +1,4 @@
+FROM tgrayson/build
 FROM python:3.7-alpine
 
 ENV HOST https://raw.githubusercontent.com 
