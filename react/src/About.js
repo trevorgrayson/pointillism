@@ -19,8 +19,8 @@ class About extends Component {
         <p>This is built with hopes to be part of a larger effort of software projects adopting "real-time" documentation.
         To enable teams to ship well documented, better code, faster.</p>
         <p>We would love to hear your thoughts about <code>pointillism.io</code>.  
-        Feel free to <a href={featureUrl}>propose a feature</a>, 
-         <a href={bugUrl}>report a bug</a>, or <Link to="https://pointillism.slack.com/get-started#/create">slack us</Link>.</p>
+        Feel free to <a href={featureUrl}>propose a feature</a>, <a href={bugUrl}>report a bug</a>
+        , or <Link to="https://pointillism.slack.com/get-started#/create">slack us</Link>.</p>
 
         <fieldset>
           <legend>Contact Us</legend>
