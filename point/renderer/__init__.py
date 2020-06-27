@@ -1,17 +1,9 @@
 import logging as log
 import requests
-from graphviz import Source
+from point.renderer.render import get_pipe
 from point.theme import theme_inject
 from werkzeug.wrappers import Response
-
-
-class NotFound(Exception):
-    pass
-
-
-class Forbidden(Exception):
-    pass
-
+from .exceptions import Forbidden
 
 MIME_MAP = {
     'svg': 'svg+xml'
@@ -43,10 +35,9 @@ def cache_control(public=False, headers=None):
 
 def render(body, format='png', theme=None, headers=None):
     body = theme_inject(body, theme)
-    src = Source(body)
 
     mime_type = "image/{}".format(get_mime(format))
-    resp = Response(src.pipe(format=format),
+    resp = Response(get_pipe(body, format),
                     mimetype=mime_type)
     resp.headers['Content-Type'] = mime_type
     return resp
@@ -66,8 +57,7 @@ def get_and_render(host, path, format="png", theme=None, headers=None, **params)
     if response.status_code == 200:
         body = response.text
         body = theme_inject(body, theme)
-        src = Source(body)
-        return src.pipe(format=format)
+        return get_pipe(body, format)
     elif response.status_code == 401:
         raise Forbidden('Forbidden! http://pointillism.io/github/login')
     else:

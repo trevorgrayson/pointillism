@@ -1,17 +1,10 @@
+from os import path as p
 import logging
-from werkzeug.routing import BaseConverter
 from werkzeug.wrappers import Response
 from point.renderer import get_and_render, Forbidden, get_mime
 from config import HOST, STATIC_DIR
-from os import path as p
 
 DOT_FORMATS = [".dot", ".gv", ""]
-
-
-class RegexConverter(BaseConverter):
-    def __init__(self, url_map, *items):
-        super(RegexConverter, self).__init__(url_map)
-        self.regex = items[0]
 
 
 def headers(user=None, **_config):

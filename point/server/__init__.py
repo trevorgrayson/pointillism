@@ -8,7 +8,6 @@ from .api.v1 import v1_routes
 from .paypal import paypal_routes
 from .render import render_routes
 
-from .utils import RegexConverter
 from point.server.base import get_me
 from ldapauth.flask.routes import auth_routes, register_config
 
@@ -31,7 +30,6 @@ register_config(app,
                 ldap_login_view='auth.login'
                 )
 app.config['SECRET_KEY'] = SECRET_KEY
-app.url_map.converters['regex'] = RegexConverter
 
 ldap = LDAP()
 
