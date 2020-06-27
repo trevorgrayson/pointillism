@@ -12,7 +12,6 @@ import Account from './Account';
 import GettingStarted from './GettingStarted';
 import Repos from './Repos';
 import About from './About';
-import Contact from './Contact';
 import PayPalConfirm from './payments/PayPalConfirm'
 
 import {
@@ -84,7 +83,6 @@ export default function TabNav({host, domain, repos, username}) {
     <Route path="/paypal/confirm" component={PayPalConfirm} />,
     <Route path="/getting-started"><GettingStarted host={host} domain={domain}/></Route>,
     <Route path="/about"><About/></Route>,
-    <Route path="/contact"><Contact/></Route>,
     <Route path="/"><Manifesto host={host} domain={domain}/></Route>,
   ]];
 

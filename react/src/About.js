@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import { Link } from "react-router-dom";
+import Mailchimp from 'react-mailchimp-form';
 
 class About extends Component {
   // COVID-19
@@ -33,7 +34,24 @@ class About extends Component {
             <button type="submit">Send</button>
           </form>
         </fieldset>
-        
+
+        <fieldset>
+          <legend>Subscribe!!!</legend>
+
+          We'll tell you about new features and relevant content.<br/>
+          <span className="subtext">(It's mailchimp, you can unsubscribe.)</span>
+          <Mailchimp
+          action="https://pointillism.us10.list-manage.com/subscribe/post?u=f62d199b0350ecb5e414106cb&amp;id=e0755fc3ea"
+          fields={[
+            {
+              name: 'EMAIL',
+              placeholder: 'Email',
+              type: 'email',
+              required: true
+            }
+          ]}
+        />
+        </fieldset>
       </Typography>
       // message next to be TextArea
     );

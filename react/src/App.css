@@ -139,6 +139,11 @@ code.dot * {
 
 fieldset {
   width: 500px;
-  margin: 0 auto;
+  margin: 0 auto 20px;
   padding: 10px 20px;
+}
+
+.subtext {
+  color: #555;
+  font-size: 0.9em;
 }
