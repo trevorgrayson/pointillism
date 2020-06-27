@@ -136,3 +136,9 @@ code.dot * {
   margin: 0 auto;
   height: 150px;
 }
+
+fieldset {
+  width: 500px;
+  margin: 0 auto;
+  padding: 10px 20px;
+}

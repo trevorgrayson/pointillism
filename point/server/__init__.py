@@ -14,6 +14,14 @@ from ldapauth.flask.routes import auth_routes, register_config
 from config import (ADMIN_USER, ADMIN_PASS, LDAP_BASE_DN, SECRET_KEY,
                     DOMAIN, HOST, ENV, STATIC_DIR, PAYPAL_CLIENT_ID, LDAP_HOST)
 
+DOT_FORMATS = ["dot", "gv"]
+IS_DEV = (ENV == "develop")
+
+LANDING_ROUTES = [
+    "/profile", "/account", "/repos", "/getting-started",
+    "/about", "/contact", "/paypal/confirm"
+]
+
 app = Flask(__name__)
 add_exception_handling(app)
 app.register_blueprint(github_routes, url_prefix='/github')
@@ -33,8 +41,6 @@ app.config['SECRET_KEY'] = SECRET_KEY
 
 ldap = LDAP()
 
-DOT_FORMATS = ["dot", "gv"]
-
 
 @app.before_request
 def before_request():
@@ -46,15 +52,6 @@ def before_request():
         # g.ldap_groups = ldap.get_user_groups(user=session['username'])
 
 
-IS_DEV = (ENV == "develop")
-
-
-@app.route("/paypal/confirm")
-@app.route("/profile")
-@app.route("/account")
-@app.route("/repos")
-@app.route("/getting-started")
-@app.route("/about")
 @app.route("/")
 def welcome():
     me = get_me()
@@ -74,6 +71,10 @@ def welcome():
             username=username,
             email=email
         )
+
+
+for route in LANDING_ROUTES:
+    app.route(route)(welcome)
 
 
 def run():
