@@ -62,7 +62,7 @@ Then,
 
 TODO: set up test service that points to `pointillism.local`
 
-![pointillism.dot](//pointillism.io/trevorgrayson/pointillism/master/pointillism.dot.svg)
+![pointillism.dot](https://pointillism.io/trevorgrayson/pointillism/master/pointillism.dot.svg)
 Embedding [DOT](https://en.wikipedia.org/wiki/DOT_(graph_description_language)) files as a Service.
 
-![beta PlantUML](//pointillism.io/trevorgrayson/pointillism/blob/master/resources/plant/pointillism.pu.svg)
+![beta PlantUML](https://pointillism.io/trevorgrayson/pointillism/blob/master/resources/plant/pointillism.pu.svg)
