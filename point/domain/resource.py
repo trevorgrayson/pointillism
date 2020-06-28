@@ -1,3 +1,7 @@
+def is_sha(string):
+    return len(string) < 40
+
+
 class GitResource:
     def __init__(self, owner=None, project=None, branch=None, path=None):
         self.owner = owner
@@ -13,4 +17,8 @@ class GitResource:
         )
     
     def __str__(self):
-        return f'https://github.com/{self.owner}/{self.project}/blob/{self.branch}/{self.path}'
+        # TODO just fetch url, don't decompose?
+        if is_sha(self.branch):
+            return f'https://github.com/{self.owner}/{self.project}/{self.branch}/{self.path}'
+        else:
+            return f'https://github.com/{self.owner}/{self.project}/blob/{self.branch}/{self.path}'

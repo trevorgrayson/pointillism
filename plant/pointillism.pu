@@ -1,0 +1,7 @@
+@startuml
+User -> GitHub: README.md
+User -> GitHub: "http:pointillism.io/your/link.pu"
+GitHub -> pointillism.io: "fetch pointillism.io image"
+GitHub <-- pointillism.io: "cache image"
+User <-- GitHub: "Deliver image"
+@enduml

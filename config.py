@@ -34,7 +34,9 @@ LDAP_BASE_DN = environ.get('BASE_DN', "dc=ipsumllc,dc=com")
 ADMIN_USER = environ.get('ADMIN_USER')
 ADMIN_PASS = environ.get('ADMIN_PASS')
 
+# TODO fail if missing
 PLANT_JAR = environ.get("PLANT_JAR", "plantuml.jar")
+logging.info(f"Using {PLANT_JAR}")
 
 #
 # 3rd party

@@ -1,3 +1,4 @@
+import logging
 from .dot import get_pipe as dot_pipe
 from .plantuml import get_pipe as plant_pipe
 
@@ -10,6 +11,8 @@ def get_pipe(body, format):
     """abstracts getting pipe from multiple rendering libraries"""
     renderer = dot_pipe
     if is_plantuml(body):
+        logging.debug("Electing to render PlantUML")
         renderer = plant_pipe
 
-    return renderer(body, format)
+    resp = renderer(body, format)
+    return resp

@@ -1,3 +1,4 @@
+import logging
 import subprocess
 from io import StringIO
 from point.renderer.exceptions import RenderFailure
@@ -8,22 +9,22 @@ FORMATS = ['svg', 'png', 'pdf', 'vdx', 'eps']
 
 def plant_args(format):
     return [
-        '/usr/bin/java', '-jar', "/home/tgrayson/projects/pointillism/plantuml.jar", "-p",
-        "-tsvg"
-        # f"-t{format.lower()}",
+        '/usr/bin/java', '-jar', PLANT_JAR, "-p",
+        f"-t{format.lower()}"
     ]
 
 
 def get_pipe(body, format):
     if format not in FORMATS:
-        raise RenderFailure(f"PlantUML cannot render {formart}")
+        raise RenderFailure(f"PlantUML cannot render {format}")
 
     proc = subprocess.Popen(plant_args(format), bufsize=-1,
                             stdin=subprocess.PIPE,
                             stdout=subprocess.PIPE)  # stderr
-    result, err = proc.communicate(input=f"{body}\n".encode())
-
+    result, err = proc.communicate(input=f"{body}".encode())
+    logging.debug(f"PlantUML response: {result}")
+    logging.debug(f"PlantUML err: {err}")
     if err is None:
         return result.decode('utf8')
-
-    raise Exception(err)
+    else:
+        raise RenderFailure(f"PlantUML Process: {err}")
