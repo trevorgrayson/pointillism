@@ -34,7 +34,7 @@ def cache_control(public=False, headers=None):
 
 
 def render(body, format='png', theme=None, headers=None):
-    body = theme_inject(body, theme)
+    body = theme_inject(body, theme)  # TODO only on dotfiles
 
     mime_type = "image/{}".format(get_mime(format))
     resp = Response(get_pipe(body, format),
