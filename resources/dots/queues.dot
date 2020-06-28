@@ -1,0 +1,4 @@
+digraph Queues {
+   App1 -> Queue [href="http://trevorgrayson.com", label=SomeMsg]
+   Queue
+}

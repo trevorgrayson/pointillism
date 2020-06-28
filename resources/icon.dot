@@ -1,0 +1,5 @@
+digraph Pointillism {
+    isms -> pointillism
+    DOT -> pointillism
+    pointillism -> io
+}

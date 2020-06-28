@@ -16,6 +16,7 @@ COPY requirements.txt /
 COPY requirements /requirements
 COPY public /srv/vhosts/pointillism/
 COPY themes /themes
+COPY plantuml.jar /
 
 RUN pip install -r requirements.txt
 

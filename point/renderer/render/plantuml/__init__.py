@@ -1,6 +1,5 @@
 import logging
 import subprocess
-from io import StringIO
 from point.renderer.exceptions import RenderFailure
 from config import PLANT_JAR
 
