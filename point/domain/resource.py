@@ -1,5 +1,3 @@
-def is_sha(string):
-    return len(string) < 40
 
 
 class GitResource:
@@ -15,10 +13,17 @@ class GitResource:
         return GitResource(
             owner, project, None, "/".join(rest)
         )
-    
+
+    def should_raw(self):
+        return self.branch is None or len(self.branch) < 40
+
     def __str__(self):
         # TODO just fetch url, don't decompose?
-        if is_sha(self.branch):
-            return f'https://github.com/{self.owner}/{self.project}/{self.branch}/{self.path}'
+        if self.should_raw():
+            url = ['https://github.com', self.owner, self.project]
+            if self.branch:
+                url.append(self.branch)
+            url.append(self.path)
+            return "/".join(url)
         else:
             return f'https://github.com/{self.owner}/{self.project}/blob/{self.branch}/{self.path}'

@@ -22,4 +22,4 @@ class TestRepo:
 
     def test_str(self):
         resource = GitResource.parse('http://pointillism.io/trevorgrayson/pointillism/master/example.dot')
-        assert str(resource) == 'https://github.com/trevorgrayson/pointillism/blob/None/master/example.dot'
+        assert str(resource) == 'https://github.com/trevorgrayson/pointillism/master/example.dot'
