@@ -26,7 +26,7 @@ def add_exception_handling(app):
             notifier.notify(PtNotFoundException(
                 f"Not Found: {request.path}"
             ))
-        raise error
+        return "Not Found", 404
 
     @app.errorhandler(Forbidden)
     def error403(error):
