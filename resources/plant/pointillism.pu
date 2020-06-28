@@ -1,7 +1,8 @@
 @startuml
 User -> GitHub: README.md
 User -> GitHub: http://pointillism.io/your/link.pu
-GitHub -> pointillism.io: fetch pointillism.io image
+GitHub --> pointillism.io: GET pointillism.io image
+GitHub <-- pointillism.io: GET GitHub resource
 GitHub <-- pointillism.io: cache image
-User <-- GitHub: deliver image
+User <- GitHub: deliver image
 @enduml
