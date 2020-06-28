@@ -6,3 +6,5 @@ class Forbidden(Exception):
     pass
 
 
+class RenderFailure(Exception):
+    pass
