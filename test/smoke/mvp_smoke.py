@@ -29,7 +29,7 @@ class TestSmoke:
     def test_404(self, host):
         response = get(host + '/trevorgrayson/pointillism/master/not-here-file.dot.svg')
         assert response.status_code == 404
-        assert 'https://github.com/trevorgrayson/pointillism/blob/master/not-here-file.dot' in response.text
+        assert 'https://github.com/trevorgrayson/pointillism/master/not-here-file.dot' in response.text
 
 
 # http://localhost:5001/github/trevorgrayson/private/master/example.dot.svg?token=7ac69c88-259e-4c24-858f-dda7fdcb9765
