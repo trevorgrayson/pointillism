@@ -14,6 +14,7 @@ def plant_args(format):
 
 
 def get_pipe(body, format):
+    """ returns a byte stream from jar """
     if format not in FORMATS:
         raise RenderFailure(f"PlantUML cannot render {format}")
 
@@ -24,6 +25,6 @@ def get_pipe(body, format):
     logging.debug(f"PlantUML response: {result}")
     logging.debug(f"PlantUML err: {err}")
     if err is None:
-        return result.decode('utf8')
+        return result
     else:
         raise RenderFailure(f"PlantUML Process: {err}")

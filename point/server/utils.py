@@ -4,7 +4,8 @@ from werkzeug.wrappers import Response
 from point.renderer import get_and_render, Forbidden, get_mime
 from config import HOST, STATIC_DIR
 
-DOT_FORMATS = [".dot", ".gv", ""]
+# don't remove these formats from filenames
+DOT_FORMATS = [".dot", ".gv", ".pu", ""]
 
 
 def headers(user=None, **_config):

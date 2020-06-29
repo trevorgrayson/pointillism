@@ -14,7 +14,7 @@ from ldapauth.flask.routes import auth_routes, register_config
 from config import (ADMIN_USER, ADMIN_PASS, LDAP_BASE_DN, SECRET_KEY,
                     DOMAIN, HOST, ENV, STATIC_DIR, PAYPAL_CLIENT_ID, LDAP_HOST)
 
-DOT_FORMATS = ["dot", "gv"]
+DOT_FORMATS = ["dot", "gv", "pu"]
 IS_DEV = (ENV == "develop")
 
 LANDING_ROUTES = [

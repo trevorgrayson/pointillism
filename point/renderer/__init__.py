@@ -6,7 +6,8 @@ from werkzeug.wrappers import Response
 from .exceptions import Forbidden
 
 MIME_MAP = {
-    'svg': 'svg+xml'
+    'svg': 'svg+xml',
+    None: 'svg+xml'
 }
 
 
