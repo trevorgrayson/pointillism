@@ -3,9 +3,6 @@
 [DOT](https://en.wikipedia.org/wiki/DOT_(graph_description_language)) file rendering/embedding as a Service.
 Be expressive in your documentation with diagrams.
 
-![https://travis-ci.com/trevorgrayson/pointillism/](https://travis-ci.com/trevorgrayson/pointillism.svg?branch=master)
-
-
 ### Embedding [DOT](https://en.wikipedia.org/wiki/DOT_(graph_description_language)) Graphs in Github
 
 ```
