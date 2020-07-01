@@ -1,4 +1,4 @@
-# pointillism
+# pointillism ![build status](https://circleci.com/gh/trevorgrayson/pointillism.svg?style=svg)
 
 [DOT](https://en.wikipedia.org/wiki/DOT_(graph_description_language)) file rendering/embedding as a Service.
 Be expressive in your documentation with diagrams.
