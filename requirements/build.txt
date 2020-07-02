@@ -2,3 +2,5 @@ pytest==5.4.1
 pytest-cov==2.8.1
 pycodestyle
 pyflakes
+recommonmark==0.6.0
+sphinx
