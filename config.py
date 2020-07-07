@@ -41,6 +41,7 @@ logging.info(f"Using {PLANT_JAR}")
 #
 # 3rd party
 #
+GA_ID = environ.get("GA_ID")
 GITHUB_TOKEN = 'github_token'
 GITHUB_CLIENT_ID = environ['GITHUB_CLIENT_ID']
 GITHUB_SECRET = environ['GITHUB_SECRET']

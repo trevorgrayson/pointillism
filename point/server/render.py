@@ -9,6 +9,7 @@ from point.renderer import render, cache_control
 from .utils import parse_request_fmt, parse_request_path, convert
 from .exception_handling import notifier
 from github import GithubException
+from point.clients.analytics import GAnalytics
 
 render_routes = Blueprint('render_routes', __name__)
 
@@ -52,6 +53,7 @@ def convert_endpt():
 @render_routes.route("/<string:org>/<string:project>/<string:branch>/<path:path>")
 def render_github_url(org, project, branch, path):
     log.debug("REQUEST /github: {path}")
+    user_id = 'anonymous'
     resource = GitResource(org, project, branch, path)
     fmt = parse_request_fmt(path)
     path = parse_request_path(path)
@@ -76,6 +78,7 @@ def render_github_url(org, project, branch, path):
         body = GitContent(creds).get(org, project, branch, path)
         resp = render(body, **render_params)
         resp.headers = cache_control(public, resp.headers)
+        GAnalytics().pageview(resource.analytics_path, user_id)
         return resp
     except GithubException as err:
         log.error(err)

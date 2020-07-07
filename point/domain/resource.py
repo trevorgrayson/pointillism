@@ -17,6 +17,13 @@ class GitResource:
     def should_raw(self):
         return self.branch is None or len(self.branch) < 40
 
+    @property
+    def analytics_path(self):
+        """ value to be reported to ga """
+        return "/" + "/".join((
+           self.owner, self.project, self.branch, self.path
+        ))
+
     def __str__(self):
         # TODO just fetch url, don't decompose?
         if self.should_raw():
