@@ -77,7 +77,7 @@ versionBump:
 	@echo "tagged $(VERSION_NEW)"
 
 test: compileAll
-	$(PYTHON) -m pytest --cov=point $(TEST)
+	$(PYTHON) -m pytest -s --cov=point $(TEST)
 
 integ: compileAll
 	$(PYTHON) -s -m pytest -s -c pytest.integ.ini $(TEST)

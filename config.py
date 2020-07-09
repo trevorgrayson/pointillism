@@ -38,6 +38,8 @@ ADMIN_PASS = environ.get('ADMIN_PASS')
 PLANT_JAR = environ.get("PLANT_JAR", "/opt/plantuml.jar")
 logging.info(f"Using {PLANT_JAR}")
 
+WILL_BRAND = True
+
 #
 # 3rd party
 #
