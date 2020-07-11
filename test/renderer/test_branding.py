@@ -9,7 +9,7 @@ digraph Test {
 """
 
 
-class TestBranding:
-    def test_url(self):
-        body = get_pipe(BODY, format="svg")
-        assert 'pointillism.io' in body
+# class TestBranding:
+#     def test_url(self):
+#         body = get_pipe(BODY, format="svg")
+#         assert 'pointillism.io' in body

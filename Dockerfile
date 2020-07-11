@@ -7,8 +7,8 @@ ENV THEME_DIR /themes
 EXPOSE 5001
 
 RUN apk add --update graphviz ttf-freefont build-base openldap-dev python2-dev python3-dev \
+    libxml2 libxslt libxslt-dev libxml2-dev \
     openjdk8-jre
-
 
 COPY *.py /
 COPY point /point
