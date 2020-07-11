@@ -12,5 +12,4 @@ digraph Test {
 class TestBranding:
     def test_url(self):
         body = get_pipe(BODY, format="svg")
-        print(brand(body))
-        assert 'pointillism.io' in brand(body)
+        assert 'pointillism.io' in body
