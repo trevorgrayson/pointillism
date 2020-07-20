@@ -1,0 +1,4 @@
+graph [fontname = "DIN alternate", labelloc="t", fontcolor="#788896"];
+node [shape=box, fillcolor="#2B88D9", style="filled,rounded", fontcolor="#FFFFFF", color="#2B88D9", fontname = "DIN alternate"];
+edge [minlen=1, fontname = "DIN alternate", color="#788896", fontcolor="#788896"];
+
