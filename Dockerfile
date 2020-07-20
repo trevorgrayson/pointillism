@@ -15,6 +15,7 @@ COPY point /point
 COPY ldapauth /ldapauth
 COPY requirements.txt /
 COPY requirements /requirements
+COPY public/* /srv/vhosts/pointillism/static/
 COPY public /srv/vhosts/pointillism/
 COPY themes /themes
 COPY plantuml.jar /opt/

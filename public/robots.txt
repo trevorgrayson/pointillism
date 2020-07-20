@@ -1,0 +1,15 @@
+User-agent: *
+
+Disallow: /repos
+Disallow: /account
+Allow: /
+Allow: /getting-started
+Allow: /about
+
+Disallow: /*.gif$
+Disallow: /*.png$
+Disallow: /*.jpg$
+Disallow: /*.svg$
+Disallow: /*.php$
+Disallow: /latest/dynamic/instance-identity/document
+
