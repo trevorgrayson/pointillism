@@ -2,6 +2,8 @@ from os import environ, path, getcwd, urandom
 import logging
 import uuid
 
+from .auth import *
+
 LOG_LEVEL = environ.get('LOG', environ.get('LOGLEVEL', 'INFO')).upper()
 if not LOG_LEVEL:
     LOG_LEVEL = 'INFO'
@@ -22,17 +24,6 @@ else:
     STATIC_DIR += '/public'
 
 SECRET_KEY = urandom(12)
-# LDAP
-LDAP_HOST = environ.get('LDAP_HOST')  
-
-if LDAP_HOST is None:
-    raise Exception("LDAP_HOST env var missing.")
-
-# TODO 'ldap://openldap') ldap://users-service
-LDAP_BASE_DN = environ.get('BASE_DN', "dc=ipsumllc,dc=com")
-
-ADMIN_USER = environ.get('ADMIN_USER')
-ADMIN_PASS = environ.get('ADMIN_PASS')
 
 # TODO fail if missing
 PLANT_JAR = environ.get("PLANT_JAR", "/opt/plantuml.jar")
