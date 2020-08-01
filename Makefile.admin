@@ -1,0 +1,4 @@
+LDAP_CONTAINER?=openldap
+
+backup:
+	docker exec -it $(LDAP_CONTAINER) slapcat -n 1 > backup.ldif

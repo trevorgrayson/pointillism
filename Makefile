@@ -1,3 +1,4 @@
+include Makefile.admin
 IMAGE := tgrayson/pointillism
 VERSION_NEW := $(shell ./bin/version_next)
 
