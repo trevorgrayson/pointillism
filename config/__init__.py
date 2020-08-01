@@ -3,6 +3,7 @@ import logging
 import uuid
 
 from .auth import *
+from .telemetry import *
 
 LOG_LEVEL = environ.get('LOG', environ.get('LOGLEVEL', 'INFO')).upper()
 if not LOG_LEVEL:
@@ -44,12 +45,3 @@ GITHUB_STATE = str(uuid.uuid4()) # unique for each user
 DEFAULT_USER = 'pointillismio'
 
 PAYPAL_CLIENT_ID = environ['PAYPAL_CLIENT_ID']
-
-AIRBRAKE_PROJECT_ID = environ.get('AIRBRAKE_PROJECT_ID')
-AIRBRAKE_API_KEY = environ.get('AIRBRAKE_API_KEY')
-
-
-def airbrake_env(env):
-    return {
-        "PROD": 'production'
-    }.get(env, 'development')

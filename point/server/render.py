@@ -35,7 +35,7 @@ def get_creds(repo):
     fully hydrated, or from passed token
     or from default config
     """
-    creds = User(git_token=request.args.get('token'))
+    creds = User(git_token=[request.args.get('token')])
 
     if using_ldap() and is_allowed(repo, request.args.get('token')):
         log.debug(f"Authenticated as {repo.owner}")
