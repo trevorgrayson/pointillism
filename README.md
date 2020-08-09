@@ -35,3 +35,14 @@ http://pointillism.io/{username}/{project}/{filepath}.{format}?token=XYZ
 This project's lifecycle (`compile`, `test`, `server`) is managed in its [Makefile](https://github.com/trevorgrayson/pointillism/blob/master/Makefile).
 
 pointillism is open source.
+
+## Docker
+
+Run this project yourself:
+
+```
+    docker run -e GITHUB_TOKEN=xxx -e GITHUB_CLIENT_ID=yyy pointillism/pointillism
+```
+
+You may optionally add a `HOST` env variable and change the github server that pointillism pulls files from.
+
