@@ -13,7 +13,7 @@ LOG_LEVEL = getattr(logging, LOG_LEVEL)
 logging.basicConfig(level=LOG_LEVEL)
 
 DOMAIN = environ.get('domain', 'pointillism.io')
-HOST = environ['HOST']
+HOST = environ.get('HOST', 'https://raw.githubusercontent.com')
 ENV = environ.get('ENV', "PROD")
 
 STATIC_DIR = getcwd()
@@ -44,4 +44,4 @@ GITHUB_STATE = str(uuid.uuid4()) # unique for each user
 # TODO: if bath auth, does it fail?
 DEFAULT_USER = 'pointillismio'
 
-PAYPAL_CLIENT_ID = environ['PAYPAL_CLIENT_ID']
+PAYPAL_CLIENT_ID = environ.get('PAYPAL_CLIENT_ID')
