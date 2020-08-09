@@ -1,4 +1,4 @@
-# pointillism ![build status](https://circleci.com/gh/trevorgrayson/pointillism.svg?style=svg)
+# pointillism ![build status](https://circleci.com/gh/pointillism/pointillism.svg?style=svg)
 
 [DOT](https://en.wikipedia.org/wiki/DOT_(graph_description_language)) file rendering/embedding as a Service.
 Be expressive in your documentation with diagrams.
@@ -6,15 +6,15 @@ Be expressive in your documentation with diagrams.
 ### Embedding [DOT](https://en.wikipedia.org/wiki/DOT_(graph_description_language)) Graphs in Github
 
 ```
-![pointillism.dot](https://pointillism.io/trevorgrayson/pointillism/master/pointillism.dot.svg)
+![pointillism.dot](https://pointillism.io/pointillism/pointillism/master/pointillism.dot.svg)
 ```
 
-![pointillism.dot](https://pointillism.io/trevorgrayson/pointillism/master/pointillism.dot.svg)
+![pointillism.dot](https://pointillism.io/pointillism/pointillism/master/pointillism.dot.svg)
 
 
 ### [PlantUML](https://plantuml.com/) is in Beta Testing!
 
-![beta PlantUML](https://pointillism.io/trevorgrayson/pointillism/blob/master/resources/plant/pointillism.pu.svg)
+![beta PlantUML](https://pointillism.io/pointillism/pointillism/blob/master/resources/plant/pointillism.pu.svg)
 
 ## Making a request
 
@@ -32,7 +32,7 @@ http://pointillism.io/{username}/{project}/{filepath}.{format}?token=XYZ
 
 ## Makefile
 
-This project's lifecycle (`compile`, `test`, `server`) is managed in its [Makefile](https://github.com/trevorgrayson/pointillism/blob/master/Makefile).
+This project's lifecycle (`compile`, `test`, `server`) is managed in its [Makefile](https://github.com/pointillism/pointillism/blob/master/Makefile).
 
 pointillism is open source.
 
