@@ -9,21 +9,25 @@ from config import ADMIN_PASS, LDAP_HOST, LDAP_BASE_DN, ADMIN_USER
 
 LOG = logging.getLogger(__name__)
 
-try:
-    ADMIN_NAME = nsplit(ADMIN_USER)
-    CONN = Connection(LDAP_HOST, ADMIN_NAME, ADMIN_PASS)
-    SERVER = Server(LDAP_HOST, use_ssl=False, port=389, connect_timeout=2)
-except ldapauth.utils.InvalidLDAPUser:
-    LOG.warning(f"LDAP User `{ADMIN_USER}` not valid. (May not be configured.)")
-
-
 SUCCESS_RESPONSES = ['success', 'entryAlreadyExists']
-
 
 TYPE_MAP = {
     'ou': 'organizationalUnit',
     'cn': 'inetOrgPerson'
 }
+
+CONN = None
+
+
+def conn():
+    global CONN
+
+    if CONN is None:
+        admin_name = nsplit(ADMIN_USER)
+        CONN = Connection(LDAP_HOST, admin_name, ADMIN_PASS)
+        server = Server(LDAP_HOST, use_ssl=False, port=389, connect_timeout=2)
+
+    return CONN
 
 
 class LDIFRecord:
@@ -44,11 +48,11 @@ class LDIFRecord:
         if hasattr(dn, 'dn'):
             dn = dn.dn
 
-        CONN.bind()
-        if CONN.delete(dn):
+        conn().bind()
+        if conn().delete(dn):
             return True
         else:
-            desc = CONN.result['description']
+            desc = conn().result['description']
             raise Exception(f'Request Exception: {desc}')
 
     @classmethod
@@ -58,19 +62,19 @@ class LDIFRecord:
             dn = ','.join((attributes['base_dn'], dn))
             del attributes['base_dn'] 
 
-        CONN.bind()
+        conn().bind()
         desc = None
 
         for name in node:
             dn = f'{cls.type}={name},{dn}'
             LOG.info(f'CREATING {dn}({cls.type_name()}: {attributes}')
-            CONN.add(dn, [cls.type_name()], attributes=attributes)
+            conn().add(dn, [cls.type_name()], attributes=attributes)
 
-            desc = CONN.result['description']
+            desc = conn().result['description']
             if desc not in SUCCESS_RESPONSES:
-                raise Exception(f'{dn}: {desc} {CONN.result}')
+                raise Exception(f'{dn}: {desc} {conn().result}')
 
-        CONN.unbind() 
+        conn().unbind()
 
         return desc in SUCCESS_RESPONSES
 
@@ -83,22 +87,22 @@ class LDIFRecord:
         LOG.debug(f'SEARCHING {base_dn} with: {search_filter}')
 
         try:
-            if not CONN.bind():
-                LOG.error(CONN.result)
-                raise Exception(f"Connection Exception: {CONN.result}")
+            if not conn().bind():
+                LOG.error(conn().result)
+                raise Exception(f"Connection Exception: {conn().result}")
 
-            CONN.search(base_dn,
+            conn().search(base_dn,
                         search_filter=search_filter,
                         search_scope=SUBTREE,
                         attributes=cls.attributes
                         )
 
-            results = CONN.result
+            results = conn().result
 
             # TODO is over matching. confirm tree works
             if results['description'] == 'success':
-                LOG.debug(f'SEARCHING FOUND: {len(CONN.response)}')
-                return CONN.response
+                LOG.debug(f'SEARCHING FOUND: {len(conn().response)}')
+                return conn().response
             else:
                 raise Exception(f'SEARCHING: Request Exception: {results}')
 
@@ -108,11 +112,11 @@ class LDIFRecord:
 
     @classmethod
     def write(cls, dn):
-        CONN.bind()
-        CONN.add(dn, [cls.type_name()]) # , {'sn': dn})
-        desc = CONN.result['description']
+        conn().bind()
+        conn().add(dn, [cls.type_name()]) # , {'sn': dn})
+        desc = conn().result['description']
         if desc != 'success':
-            raise Exception(desc + str(CONN.result))
-        CONN.unbind() 
+            raise Exception(desc + str(conn().result))
+        conn().unbind()
 
         return desc
