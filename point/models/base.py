@@ -1,5 +1,6 @@
 import logging
 
+import ldapauth
 from ldap3 import Server, Connection, core, SUBTREE
 # MODIFY_REPLACE, MODIFY_ADD, HASHED_SALTED_SHA
 
@@ -7,9 +8,14 @@ from ldapauth.utils import nsplit
 from config import ADMIN_PASS, LDAP_HOST, LDAP_BASE_DN, ADMIN_USER
 
 LOG = logging.getLogger(__name__)
-ADMIN_NAME = nsplit(ADMIN_USER)
-CONN = Connection(LDAP_HOST, ADMIN_NAME, ADMIN_PASS)
-SERVER = Server(LDAP_HOST, use_ssl=False, port=389, connect_timeout=2)
+
+try:
+    ADMIN_NAME = nsplit(ADMIN_USER)
+    CONN = Connection(LDAP_HOST, ADMIN_NAME, ADMIN_PASS)
+    SERVER = Server(LDAP_HOST, use_ssl=False, port=389, connect_timeout=2)
+except ldapauth.utils.InvalidLDAPUser:
+    LOG.warning(f"LDAP User `{ADMIN_USER}` not valid. (May not be configured.)")
+
 
 SUCCESS_RESPONSES = ['success', 'entryAlreadyExists']
 
