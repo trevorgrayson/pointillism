@@ -13,11 +13,15 @@ USER_MAP = {
     'admin': 'tg'
 }
 
+CLIENT = None
 
-try:
-    CLIENT = LdapAuth(LDAP_HOST, LDAP_BASE_DN, ADMIN_USER)
-except InvalidLDAPUser:
-    raise Exception(f"ADMIN_USER '{ADMIN_USER}' is malformed. Please update the ADMIN_USER env variable")
+
+def client():
+    global CLIENT
+    try:
+        CLIENT = LdapAuth(LDAP_HOST, LDAP_BASE_DN, ADMIN_USER)
+    except InvalidLDAPUser:
+        raise Exception(f"ADMIN_USER '{ADMIN_USER}' is malformed. Please update the ADMIN_USER env variable")
 
 
 def register_config(app, **config):
@@ -30,11 +34,12 @@ def register_config(app, **config):
 
 auth_routes = Blueprint('auth', __name__)
 
+
 @auth_routes.route("/login", methods=['post'])
 def login():
     if g.user:
         return make_response(redirect(
-            '/' + USER_MAP.get(user.name, user.name), 
+            '/' + USER_MAP.get(g.user.name, g.user.name),
             code=302
         ))
 
@@ -42,10 +47,9 @@ def login():
     password = request.form["password"]
 
     try:
-        user = CLIENT.authenticate(username, password)
+        user = client().authenticate(username, password)
     except NotVerified:
         return "forbidden", 403
-      
 
     if not user:
         return redirect('/', code=302)

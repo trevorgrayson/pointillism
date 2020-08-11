@@ -8,8 +8,8 @@ from point.models import GitHubUser
 # TODO token could be passed by config
 if LDAP_HOST is not None:
     DEFAULT_USER = GitHubUser.first(DEFAULT_USER)
-if DEFAULT_USER:
-    DEFAULT_TOKEN = DEFAULT_USER.git_token
+    if DEFAULT_USER:
+        DEFAULT_TOKEN = DEFAULT_USER.git_token
 
 
 class GitContent:
