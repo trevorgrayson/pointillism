@@ -16,7 +16,7 @@ class User:
     def __init__(self, **record):
         self.dn = record.get('dn')
         attrs = record.get('attributes', {})
-        self.name = next(iter(attrs.get('cn', [])), None)
+        self.name = record.get('name', next(iter(attrs.get('cn', [])), None))
         self.cn = next(iter(attrs.get('cn', [])), None)
         self.git_token = record.get('git_token', attrs.get(GIT_TOKEN, []))
         if len(self.git_token) > 0:

@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 
-from config import using_ldap, GIT_TOKEN
+from config import using_ldap, GITHUB_TOKEN
 import logging as log
 from json import dumps
 from point.server.base import get_me
@@ -35,8 +35,10 @@ def get_creds(repo):
     fully hydrated, or from passed token
     or from default config
     """
-    creds = User(git_token=[request.args.get('token', GIT_TOKEN)])
-    
+    token = request.args.get('token')
+    creds = User(git_token=[(token, GITHUB_TOKEN)[token is None]],
+                 name=('RequestToken', 'GITHUB_TOKEN')[token is None])
+
     if using_ldap() and is_allowed(repo, request.args.get('token')):
         log.debug(f"Authenticated as {repo.owner}")
         owner = GitHubUser.first(repo.owner)
@@ -88,7 +90,7 @@ def render_github_url(org, project, branch, path):
     creds = get_creds(repo)
 
     try:
-        log.debug(f"fetching {resource}")
+        log.debug(f"fetching {resource} as {creds.name}")
         body = GitContent(creds).get(org, project, branch, path)
         resp = render(body, **render_params)
         resp.headers = cache_control(is_public(creds), resp.headers)

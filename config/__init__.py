@@ -1,6 +1,5 @@
 from os import environ, path, getcwd, urandom
 import logging
-import uuid
 
 from .auth import *
 from .telemetry import *

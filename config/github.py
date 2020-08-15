@@ -1,3 +1,7 @@
+import uuid
+from os import environ
+
+
 GA_ID = environ.get("GA_ID")
 
 # for individual
