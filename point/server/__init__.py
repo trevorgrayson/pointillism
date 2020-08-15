@@ -46,7 +46,6 @@ ldap = LDAP()
 def before_request():
     g.user = None
     if 'username' in session:
-        # This is where you'd query your database to get the user info.
         g.user = get_me()
         # Create a global with the LDAP groups the user is a member of.
         # g.ldap_groups = ldap.get_user_groups(user=session['username'])

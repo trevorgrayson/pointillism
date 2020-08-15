@@ -51,7 +51,7 @@ clean:
 	find . -name "*.pyc" -delete
 	rm -rf $(VENV) $(VENV_BUILD)
 	# docker rm pointillism
-	# docker rmi tgrayson/pointillism
+	# docker rmi pointillism/pointillism
 
 package: compile
 	cd react && make -f Makefile package
