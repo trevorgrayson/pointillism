@@ -25,10 +25,6 @@ def add_exception_handling(app):
     def error404(error):
         global notifier
         logging.exception(error)
-        if airbrake_enabled():
-            notifier.notify(PtNotFoundException(
-                f"Not Found: {request.path}"
-            ))
         return "Not Found", 404
 
     @app.errorhandler(Forbidden)
