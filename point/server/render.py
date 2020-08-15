@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 
-from config import using_ldap
+from config import using_ldap, GIT_TOKEN
 import logging as log
 from json import dumps
 from point.server.base import get_me
@@ -35,8 +35,8 @@ def get_creds(repo):
     fully hydrated, or from passed token
     or from default config
     """
-    creds = User(git_token=[request.args.get('token')])
-
+    creds = User(git_token=[request.args.get('token', GIT_TOKEN)])
+    
     if using_ldap() and is_allowed(repo, request.args.get('token')):
         log.debug(f"Authenticated as {repo.owner}")
         owner = GitHubUser.first(repo.owner)

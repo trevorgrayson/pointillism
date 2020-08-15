@@ -41,7 +41,7 @@ pointillism is open source.
 Run this project yourself:
 
 ```
-    docker run -e GITHUB_TOKEN=xxx -e GITHUB_CLIENT_ID=yyy pointillism/pointillism
+    docker run -e GIT_TOKEN=xxx pointillism/pointillism
 ```
 
 You may optionally add a `HOST` env variable and change the github server that pointillism pulls files from.
