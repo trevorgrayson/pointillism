@@ -1,5 +1,5 @@
 include Makefile.admin
-IMAGE := tgrayson/pointillism
+IMAGE := pointillism/pointillism
 VERSION_NEW := $(shell ./bin/version_next)
 
 FLASK_RUN_PORT?=5000
@@ -65,7 +65,7 @@ imagePush: image # versionBump
 
 imageTest:
 	@docker stop pointillism && docker rm pointillism || echo "pointillism not running."
-	@docker run --name $(PROJECT) --env-file ENV -d -p 5001:5001 --restart=always tgrayson/$(PROJECT):latest
+	@docker run --name $(PROJECT) --env-file ENV -d -p 5001:5001 --restart=always $(IMAGE):latest
 
 deploy:
 	cat ./bin/deploy.remote.sh | ssh $(DEPLOY_HOST)

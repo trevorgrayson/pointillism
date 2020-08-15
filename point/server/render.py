@@ -60,16 +60,10 @@ def convert_endpt():
     protocol = protocol.replace(':', '')
     rest = "/".join(rest)
 
-    creds = None
-    repo = GitHubRepo.first(org, project)
-    if using_ldap() and repo:
-        owner = GitHubUser.first(repo.owner)
-        # TODO tests
-        if owner.cn == repo.owner and can(me, repo):
-            creds = repo.token
+    creds = get_creds(org, project)
 
     return dumps({
-       'url': convert(org, project, rest, creds, protocol=protocol)
+       'url': convert(org, project, rest, creds.token, protocol=protocol)
     })
 
 
