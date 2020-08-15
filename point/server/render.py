@@ -29,7 +29,7 @@ def is_public(user):
     return user.git_token is None
 
 
-def get_creds(repo):
+def get_creds(org, project):
     """
     returns a user object
     fully hydrated, or from passed token
@@ -39,10 +39,12 @@ def get_creds(repo):
     creds = User(git_token=[(token, GITHUB_TOKEN)[token is None]],
                  name=('RequestToken', 'GITHUB_TOKEN')[token is None])
 
-    if using_ldap() and is_allowed(repo, request.args.get('token')):
-        log.debug(f"Authenticated as {repo.owner}")
-        owner = GitHubUser.first(repo.owner)
-        creds = owner
+    if using_ldap():
+        repo = GitHubRepo.first(org, project)
+        if is_allowed(repo, request.args.get('token')):
+            log.debug(f"Authenticated as {repo.owner}")
+            owner = GitHubUser.first(repo.owner)
+            creds = owner
 
     return creds
 
@@ -84,10 +86,7 @@ def render_github_url(org, project, branch, path):
         "theme": request.args.get('theme'),
         "format": fmt[1:]
     }
-
-    repo = GitHubRepo.first(org, project)
-    log.debug(repo)
-    creds = get_creds(repo)
+    creds = get_creds(org, project)
 
     try:
         log.debug(f"fetching {resource} as {creds.name}")
