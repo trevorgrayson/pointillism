@@ -36,12 +36,14 @@ def get_creds(org, project):
     or from default config
     """
     token = request.args.get('token')
-    creds = User(git_token=[(token, GITHUB_TOKEN)[token is None]],
-                 name=('RequestToken', 'GITHUB_TOKEN')[token is None])
+    creds = User(git_token=[token], name='RequestToken')
+    if token is None:
+        creds = User(git_token=[GITHUB_TOKEN], name='GITHUB_TOKEN')
 
     if using_ldap():
         repo = GitHubRepo.first(org, project)
-        if is_allowed(repo, request.args.get('token')):
+
+        if is_allowed(repo, token):
             log.debug(f"Authenticated as {repo.owner}")
             owner = GitHubUser.first(repo.owner)
             creds = owner

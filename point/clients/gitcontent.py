@@ -4,7 +4,6 @@ from config import GITHUB_CLIENT_ID, GITHUB_SECRET, DEFAULT_USER, LDAP_HOST
 
 from point.models import GitHubUser
 
-# TREVOR HERE
 # TODO token could be passed by config
 if LDAP_HOST is not None:
     DEFAULT_USER = GitHubUser.first(DEFAULT_USER)
