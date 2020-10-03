@@ -15,3 +15,4 @@ GITHUB_STATE = str(uuid.uuid4())  # unique for each user
 # authenticated users get 100x more requests
 # TODO: if bath auth, does it fail?
 DEFAULT_USER = 'pointillismio'
+DEFAULT_TOKEN = environ.get("DEFAULT_TOKEN") # not likely used

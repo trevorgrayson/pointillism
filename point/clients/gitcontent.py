@@ -1,6 +1,9 @@
 from base64 import b64decode
 from github import Github
-from config import GITHUB_CLIENT_ID, GITHUB_SECRET, DEFAULT_USER, LDAP_HOST
+from config import (
+    GITHUB_CLIENT_ID, GITHUB_SECRET, LDAP_HOST,
+    DEFAULT_USER, DEFAULT_TOKEN
+)
 
 from point.models import GitHubUser
 

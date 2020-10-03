@@ -108,7 +108,7 @@ class LDIFRecord:
 
         except core.exceptions.LDAPSocketOpenError as err:
             LOG.error(err)
-            return False
+            raise err
 
     @classmethod
     def write(cls, dn):
