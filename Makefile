@@ -1,5 +1,5 @@
 include Makefile.admin
-IMAGE := pointillism/pointillism
+IMAGE := tgrayson/pointillism
 VERSION_NEW := $(shell ./bin/version_next)
 
 FLASK_RUN_PORT?=5000
