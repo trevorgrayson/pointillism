@@ -46,3 +46,17 @@ Run this project yourself:
 
 You may optionally add a `HOST` env variable and change the github server that pointillism pulls files from.
 
+
+[
+![pointillism.io](https://pointillism.io/trevorgrayson/pointillism/master//tmp/pointillism_prs/trevorgrayson/pointillism/other-branch.dot.svg?theme=auto)
+](https://pointillism.io/trevorgrayson/pointillism/master//tmp/pointillism_prs/trevorgrayson/pointillism/other-branch.dot.html)
+
+[
+![pointillism.io](https://pointillism.io/trevorgrayson/pointillism/master//tmp/pointillism_prs/trevorgrayson/pointillism/example.dot.svg?theme=auto)
+](https://pointillism.io/trevorgrayson/pointillism/master//tmp/pointillism_prs/trevorgrayson/pointillism/example.dot.html)
+
+[
+![pointillism.io](https://pointillism.io/trevorgrayson/pointillism/master//tmp/pointillism_prs/trevorgrayson/pointillism/pointillism.dot.svg?theme=auto)
+](https://pointillism.io/trevorgrayson/pointillism/master//tmp/pointillism_prs/trevorgrayson/pointillism/pointillism.dot.html)
+
+Learn more about ![pointillism.io](https://pointillism.io).
